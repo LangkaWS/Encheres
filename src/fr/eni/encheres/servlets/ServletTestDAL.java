@@ -19,6 +19,7 @@ import fr.eni.encheres.dal.ConnectionProvider;
 import fr.eni.encheres.dal.DALException;
 import fr.eni.encheres.dal.DAO;
 import fr.eni.encheres.dal.DAOFactory;
+import fr.eni.encheres.dal.DAObis;
 import fr.eni.encheres.bll.bo.*;
 /**
  * Servlet implementation class ServletTestDAL
@@ -44,6 +45,7 @@ public class ServletTestDAL extends HttpServlet {
 		DAO<Article> articleDAO = DAOFactory.getArticleDAO();
 		DAO<PickUp> pickUpDAO = DAOFactory.getPickUpDAO();
 		DAO<Category> categoryDAO = DAOFactory.getCategoryDAO();
+		DAObis<Bid> bidDAO = DAOFactory.getBidDAO();
 		
 		try {
 			//User data access testing
@@ -66,10 +68,17 @@ public class ServletTestDAL extends HttpServlet {
 				System.out.println(pu.toString());
 			}
 			
-			//Category data acess testing
+			//Category data access testing
 			System.out.println("Selection of the category with id = 1 : ");
 			Category c = categoryDAO.selectById(1);
 			System.out.println(c.toString());
+			
+			//Bid data access testing
+			System.out.println("Selection of all bids : ");
+			List<Bid> bidsList = bidDAO.selectAll();
+			for (Bid bid : bidsList) {
+				System.out.println(bid.toString());
+			}
 			
 		} catch (DALException e) {
 			e.printStackTrace();
