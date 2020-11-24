@@ -11,19 +11,20 @@ import fr.eni.encheres.bll.bo.User;
 
 public class UserDAOJDBCImpl implements DAO<User> {
 	
-	private static final String INSERT = "INSERT INTO USERS(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
-	private static final String UPDATE = "UPDATE USERS SET"
-			+ "userName = ?,"
-			+ "lastName = ?,"
-			+ "firstName = ?,"
-			+ "email = ?,"
-			+ "phone = ?,"
-			+ "street = ?,"
-			+ "postalCode = ?,"
-			+ "town = ?,"
-			+ "motDePasse = ?,"
-			+ "credit = ?,"
-			+ "admin = ?"
+	private static final String INSERT = "INSERT INTO USERS(userName, lastName, firstName, email, phone, street, postalCode, town, password, credit, admin) "
+			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+	private static final String UPDATE = "UPDATE USERS SET "
+			+ "userName = ?, "
+			+ "lastName = ?, "
+			+ "firstName = ?, "
+			+ "email = ?, "
+			+ "phone = ?, "
+			+ "street = ?, "
+			+ "postalCode = ?, "
+			+ "town = ?, "
+			+ "motDePasse = ?, "
+			+ "credit = ?, "
+			+ "admin = ? "
 			+ "WHERE userId = ?;";
 	private static final String DELETE = "DELETE FROM USERS WHERE userId = ?;";
 	private static final String SELECT_ALL = "SELECT * FROM USERS;";
@@ -40,9 +41,11 @@ public class UserDAOJDBCImpl implements DAO<User> {
 			pstmt.setString(4, data.getEmail());
 			pstmt.setString(5, data.getPhone());
 			pstmt.setString(6, data.getStreet());
-			pstmt.setString(7, data.getPostalCode());
+			pstmt.setString(7, data.getZipCode());
 			pstmt.setString(8, data.getTown());
 			pstmt.setString(9, data.getPassword());
+			pstmt.setInt(10, data.getCredit());
+			pstmt.setInt(11, data.isAdmin() ? 1 : 0);
 			pstmt.executeUpdate();
 			ResultSet rs = pstmt.getGeneratedKeys();
 			if(rs.next()) {
@@ -50,7 +53,7 @@ public class UserDAOJDBCImpl implements DAO<User> {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new DALException("User insertion into database failed - ", e);
+			throw new DALException("DATA ACCESS LAYER EXCEPTION : User insertion into database failed - ", e);
 		}
 	}
 
@@ -65,7 +68,7 @@ public class UserDAOJDBCImpl implements DAO<User> {
 			pstmt.setString(4, data.getEmail());
 			pstmt.setString(5, data.getPhone());
 			pstmt.setString(6, data.getStreet());
-			pstmt.setString(7, data.getPostalCode());
+			pstmt.setString(7, data.getZipCode());
 			pstmt.setString(8, data.getTown());
 			pstmt.setString(9, data.getPassword());
 			pstmt.setInt(10, data.getCredit());
@@ -74,7 +77,7 @@ public class UserDAOJDBCImpl implements DAO<User> {
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new DALException("User update in database failed - ", e);
+			throw new DALException("DATA ACCESS LAYER EXCEPTION : User update in database failed - ", e);
 		}
 	}
 
@@ -87,7 +90,7 @@ public class UserDAOJDBCImpl implements DAO<User> {
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new DALException("User deletion from database failed - ", e);
+			throw new DALException("DATA ACCESS LAYER EXCEPTION : User deletion from database failed - ", e);
 		}
 	}
 
@@ -117,7 +120,7 @@ public class UserDAOJDBCImpl implements DAO<User> {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new DALException("Selection of all users from database failed - ", e);
+			throw new DALException("DATA ACCESS LAYER EXCEPTION : All users selection from database failed - ", e);
 		}
 		return list;
 	}
@@ -148,7 +151,7 @@ public class UserDAOJDBCImpl implements DAO<User> {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new DALException("Selection by ID from database failed - ", e);
+			throw new DALException("DATA ACCESS LAYER EXCEPTION : User selection by ID from database failed - ", e);
 		}
 		return user;
 	}

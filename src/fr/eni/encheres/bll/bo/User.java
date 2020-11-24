@@ -9,11 +9,11 @@ public class User {
 	private String email;
 	private String phone;
 	private String street;
-	private String postalCode;
+	private String zipCode;
 	private String town;
 	private String password;
-	private int credit;
-	private boolean admin;
+	private int credit = 0; //DEFAULT 0
+	private boolean admin = false; //DEFAULT false
 	
 	/**
 	 * 
@@ -28,19 +28,19 @@ public class User {
 	 * @param email
 	 * @param phone
 	 * @param street
-	 * @param postalCode
+	 * @param zipCode
 	 * @param town
 	 * @param password
 	 */
 	public User(String userName, String lastName, String firstName, String email, String phone, String street,
-			String postalCode, String town, String password) {
+			String zipCode, String town, String password) {
 		this.userName = userName;
 		this.lastName = lastName;
 		this.firstName = firstName;
 		this.email = email;
 		this.phone = phone;
 		this.street = street;
-		this.postalCode = postalCode;
+		this.zipCode = zipCode;
 		this.town = town;
 		this.password = password;
 	}
@@ -53,14 +53,14 @@ public class User {
 	 * @param email
 	 * @param phone
 	 * @param street
-	 * @param postalCode
+	 * @param zipCode
 	 * @param town
 	 * @param password
 	 * @param credit
 	 * @param admin
 	 */
 	public User(int userId, String userName, String lastName, String firstName, String email, String phone,
-			String street, String postalCode, String town, String password, int credit, boolean admin) {
+			String street, String zipCode, String town, String password, int credit, boolean admin) {
 		this.userId = userId;
 		this.userName = userName;
 		this.lastName = lastName;
@@ -68,7 +68,7 @@ public class User {
 		this.email = email;
 		this.phone = phone;
 		this.street = street;
-		this.postalCode = postalCode;
+		this.zipCode = zipCode;
 		this.town = town;
 		this.password = password;
 		this.credit = credit;
@@ -174,17 +174,17 @@ public class User {
 	}
 	
 	/**
-	 * @return the postalCode
+	 * @return the zipCode
 	 */
-	public String getPostalCode() {
-		return postalCode;
+	public String getZipCode() {
+		return zipCode;
 	}
 	
 	/**
-	 * @param postalCode the postalCode to set
+	 * @param zipCode the zipCode to set
 	 */
-	public void setPostalCode(String postalCode) {
-		this.postalCode = postalCode;
+	public void setZipCode(String zipCode) {
+		this.zipCode = zipCode;
 	}
 	
 	/**
@@ -249,8 +249,8 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", userName=" + userName + ", lastName=" + lastName + ", firstName="
-				+ firstName + ", email=" + email + ", phone=" + phone + ", street=" + street + ", postalCode="
-				+ postalCode + ", town=" + town + ", password=" + password + ", credit=" + credit + ", admin=" + admin
+				+ firstName + ", email=" + email + ", phone=" + phone + ", street=" + street + ", zipCode="
+				+ zipCode + ", town=" + town + ", password=" + password + ", credit=" + credit + ", admin=" + admin
 				+ "]";
 	}
 	
