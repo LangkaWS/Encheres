@@ -42,10 +42,7 @@ public class ServletTestDAL extends HttpServlet {
 		
 		DAO<User> userDAO = DAOFactory.getUserDAO();
 		DAO<Article> articleDAO = DAOFactory.getArticleDAO();
-<<<<<<< Updated upstream
 		DAO<PickUp> pickUpDAO = DAOFactory.getPickUpDAO();
-=======
->>>>>>> Stashed changes
 		DAO<Category> categoryDAO = DAOFactory.getCategoryDAO();
 		
 		try {
@@ -61,27 +58,14 @@ public class ServletTestDAL extends HttpServlet {
 			System.out.println("Selection of the article with id = 2 : ");
 			Article a = articleDAO.selectById(2);
 			System.out.println(a.toString());
-			
-<<<<<<< Updated upstream
+
 			//Pick-up data access testing
 			System.out.println("Selection of all pick-ups : ");
 			List<PickUp> pickUpslist = pickUpDAO.selectAll();
 			for(PickUp pu : pickUpslist) {
 				System.out.println(pu.toString());
-=======
-			Category c = categoryDAO.selectById(1);
-			System.out.println(c.toString());
-			/*
-			System.out.println("Inserting...");
-			userDAO.insert(c);
-			System.out.println("Users list after insertion : ");
-			usersList = userDAO.selectAll();
-			for(User u : usersList) {
-				System.out.println(u.toString());
-				System.out.println();
->>>>>>> Stashed changes
 			}
-
+			
 			//Category data acess testing
 			System.out.println("Selection of the category with id = 1 : ");
 			Category c = categoryDAO.selectById(1);
