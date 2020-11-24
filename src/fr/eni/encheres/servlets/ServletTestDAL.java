@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.encheres.bll.bo.Article;
+import fr.eni.encheres.bll.bo.PickUp;
 import fr.eni.encheres.bll.bo.User;
 import fr.eni.encheres.dal.ConnectionProvider;
 import fr.eni.encheres.dal.DALException;
@@ -30,36 +31,39 @@ public class ServletTestDAL extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
+		//Connection testing
 		try {
 			Connection con = ConnectionProvider.getConnection();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
-		//User c = new User("cloclo","Resti","Claude", "cloclo@gmx.com", "0123456789", "52 rue des pious", "68000", "Colmar", "myPassword");
-		//User c = new User("bichette","Marou","Marie-Jeanine", "bichette@gmx.com", "0123456789", "52 rue des pious", "68000", "Colmar", "myPassword");
 		DAO<User> userDAO = DAOFactory.getUserDAO();
 		DAO<Article> articleDAO = DAOFactory.getArticleDAO();
+		DAO<PickUp> pickUpDAO = DAOFactory.getPickUpDAO();
 		
 		try {
+			//User data access testing
 			System.out.println("Users list : ");
 			List<User> usersList = userDAO.selectAll();
 			for(User u : usersList) {
 				System.out.println(u.toString());
 				System.out.println();
 			}
+			
+			//Article data access testing
+			System.out.println("Selection of the article with id = 2 : ");
 			Article a = articleDAO.selectById(2);
 			System.out.println(a.toString());
-			/*
-			System.out.println("Inserting...");
-			userDAO.insert(c);
-			System.out.println("Users list after insertion : ");
-			usersList = userDAO.selectAll();
-			for(User u : usersList) {
-				System.out.println(u.toString());
+			
+			//Pick-up data access testing
+			System.out.println("Selection of all pick-ups : ");
+			List<PickUp> pickUpslist = pickUpDAO.selectAll();
+			for(PickUp pu : pickUpslist) {
+				System.out.println(pu.toString());
 				System.out.println();
 			}
-			*/
 		} catch (DALException e) {
 			e.printStackTrace();
 		}

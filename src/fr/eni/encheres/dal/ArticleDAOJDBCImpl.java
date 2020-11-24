@@ -118,7 +118,7 @@ public class ArticleDAOJDBCImpl implements DAO<Article> {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new DALException("DATA ACCESS LAYER EXCEPTION : Article deletion from database failed - ", e);
+			throw new DALException("DATA ACCESS LAYER EXCEPTION : All articles selection from database failed - ", e);
 		}
 		return list;
 	}
@@ -149,7 +149,7 @@ public class ArticleDAOJDBCImpl implements DAO<Article> {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new DALException("DATA ACCESS LAYER EXCEPTION : Article deletion from database failed - ", e);
+			throw new DALException("DATA ACCESS LAYER EXCEPTION : Article selection by ID from database failed - ", e);
 		}
 		return article;
 	}
