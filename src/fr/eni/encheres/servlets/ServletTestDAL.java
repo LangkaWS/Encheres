@@ -39,6 +39,7 @@ public class ServletTestDAL extends HttpServlet {
 		DAO<Category> categoryDAO = DAOFactory.getCategoryDAO();
 		DAO<Bid> bidDAO = DAOFactory.getBidDAO();
 		
+		
 		try {
 			//User data access testing
 			System.out.println("Users list : ");
@@ -95,6 +96,34 @@ public class ServletTestDAL extends HttpServlet {
 				System.out.println(article.toString());
 			}
 			
+			//Articles selection by category
+			System.out.println("Selection by category : ");
+			list = articleDAO.selectArticlesByCategory(1);
+			for (Article article : list) {
+				System.out.println(article.toString());
+			}
+			
+			//Articles selection by name
+			System.out.println("Selection by name : ");
+			list = articleDAO.selectArticlesByName("Horloge");
+			for (Article article : list) {
+				System.out.println(article.toString());
+			}
+			
+			//Articles selection by state in progress
+			System.out.println("Selection by state in progress : ");
+			list = articleDAO.selectArticlesInProgress("in progress");
+			for (Article article : list) {
+				System.out.println(article.toString());
+			}
+			
+			//Articles selection by participating buyer
+			System.out.println("Selection by participating buyer : ");
+			list = articleDAO.selectArticlesByParticipatingBuyer(2);
+			for (Article article : list) {
+				System.out.println(article.toString());
+			}
+
 		} catch (DALException e) {
 			e.printStackTrace();
 		}
