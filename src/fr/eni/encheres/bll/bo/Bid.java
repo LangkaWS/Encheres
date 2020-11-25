@@ -1,9 +1,6 @@
 package fr.eni.encheres.bll.bo;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 public class Bid {
 	

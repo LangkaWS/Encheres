@@ -32,9 +32,11 @@ public class UserDAOJDBCImpl implements DAO<User> {
 
 	@Override
 	public void insert(User data) throws DALException {
+		Connection con = null;
+		PreparedStatement pstmt = null;
 		try {
-			Connection con = ConnectionProvider.getConnection();
-			PreparedStatement pstmt = con.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
+			con = ConnectionProvider.getConnection();
+			pstmt = con.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
 			pstmt.setString(1, data.getUserName());
 			pstmt.setString(2, data.getLastName());
 			pstmt.setString(3, data.getFirstName());
@@ -54,14 +56,28 @@ public class UserDAOJDBCImpl implements DAO<User> {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DALException("DATA ACCESS LAYER EXCEPTION : User insertion into database failed - ", e);
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new DALException("Close failed - ", e);
+			}
 		}
 	}
 
 	@Override
 	public void update(User data) throws DALException {
+		Connection con = null;
+		PreparedStatement pstmt = null;
 		try {
-			Connection con = ConnectionProvider.getConnection();
-			PreparedStatement pstmt = con.prepareStatement(UPDATE);
+			con = ConnectionProvider.getConnection();
+			pstmt = con.prepareStatement(UPDATE);
 			pstmt.setString(1, data.getUserName());
 			pstmt.setString(2, data.getLastName());
 			pstmt.setString(3, data.getFirstName());
@@ -78,28 +94,56 @@ public class UserDAOJDBCImpl implements DAO<User> {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DALException("DATA ACCESS LAYER EXCEPTION : User update in database failed - ", e);
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new DALException("Close failed - ", e);
+			}
 		}
 	}
 
 	@Override
 	public void delete(User data) throws DALException {
+		Connection con = null;
+		PreparedStatement pstmt = null;
 		try {
-			Connection con = ConnectionProvider.getConnection();
-			PreparedStatement pstmt = con.prepareStatement(DELETE);
+			con = ConnectionProvider.getConnection();
+			pstmt = con.prepareStatement(DELETE);
 			pstmt.setInt(1, data.getUserId());
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DALException("DATA ACCESS LAYER EXCEPTION : User deletion from database failed - ", e);
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new DALException("Close failed - ", e);
+			}
 		}
 	}
 
 	@Override
 	public List<User> selectAll() throws DALException {
 		List<User> list = new ArrayList<>();
+		Connection con = null;
+		PreparedStatement pstmt = null;
 		try {
-			Connection con = ConnectionProvider.getConnection();
-			PreparedStatement pstmt = con.prepareStatement(SELECT_ALL);
+			con = ConnectionProvider.getConnection();
+			pstmt = con.prepareStatement(SELECT_ALL);
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next()) {
 				User u = new User(
@@ -121,6 +165,18 @@ public class UserDAOJDBCImpl implements DAO<User> {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DALException("DATA ACCESS LAYER EXCEPTION : All users selection from database failed - ", e);
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new DALException("Close failed - ", e);
+			}
 		}
 		return list;
 	}
@@ -128,9 +184,11 @@ public class UserDAOJDBCImpl implements DAO<User> {
 	@Override
 	public User selectById(User data) throws DALException {
 		User user = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
 		try {
-			Connection con = ConnectionProvider.getConnection();
-			PreparedStatement pstmt = con.prepareStatement(SELECT_BY_ID);
+			con = ConnectionProvider.getConnection();
+			pstmt = con.prepareStatement(SELECT_BY_ID);
 			pstmt.setInt(1, data.getUserId());
 			ResultSet rs = pstmt.executeQuery();
 			if(rs.next()) {
@@ -152,6 +210,18 @@ public class UserDAOJDBCImpl implements DAO<User> {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DALException("DATA ACCESS LAYER EXCEPTION : User selection by ID from database failed - ", e);
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new DALException("Close failed - ", e);
+			}
 		}
 		return user;
 	}

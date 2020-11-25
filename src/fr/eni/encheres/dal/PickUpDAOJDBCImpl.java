@@ -23,9 +23,11 @@ public class PickUpDAOJDBCImpl implements DAO<PickUp> {
 
 	@Override
 	public void insert(PickUp data) throws DALException {
+		Connection con = null;
+		PreparedStatement pstmt = null;
 		try {
-			Connection con = ConnectionProvider.getConnection();
-			PreparedStatement pstmt = con.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
+			con = ConnectionProvider.getConnection();
+			pstmt = con.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
 			pstmt.setString(1, data.getStreet());
 			pstmt.setString(2, data.getZipCode());
 			pstmt.setString(3, data.getTown());
@@ -37,14 +39,28 @@ public class PickUpDAOJDBCImpl implements DAO<PickUp> {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DALException("DATA ACCESS LAYER EXCEPTION : Pick-up insertion into database failed - ", e);
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new DALException("Close failed - ", e);
+			}
 		}
 	}
 
 	@Override
 	public void update(PickUp data) throws DALException {
+		Connection con = null;
+		PreparedStatement pstmt = null;
 		try {
-			Connection con = ConnectionProvider.getConnection();
-			PreparedStatement pstmt = con.prepareStatement(UPDATE);
+			con = ConnectionProvider.getConnection();
+			pstmt = con.prepareStatement(UPDATE);
 			pstmt.setString(1, data.getStreet());
 			pstmt.setString(2, data.getZipCode());
 			pstmt.setString(3, data.getTown());
@@ -53,28 +69,56 @@ public class PickUpDAOJDBCImpl implements DAO<PickUp> {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DALException("DATA ACCESS LAYER EXCEPTION : Pick-up update in database failed - ", e);
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new DALException("Close failed - ", e);
+			}
 		}
 	}
 
 	@Override
 	public void delete(PickUp data) throws DALException {
+		Connection con = null;
+		PreparedStatement pstmt = null;
 		try {
-			Connection con = ConnectionProvider.getConnection();
-			PreparedStatement pstmt = con.prepareStatement(DELETE);
+			con = ConnectionProvider.getConnection();
+			pstmt = con.prepareStatement(DELETE);
 			pstmt.setInt(1, data.getPickUpId());
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DALException("DATA ACCESS LAYER EXCEPTION : Pick-up deletion from database failed - ", e);
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new DALException("Close failed - ", e);
+			}
 		}
 	}
 
 	@Override
 	public List<PickUp> selectAll() throws DALException {
 		List<PickUp> list = new ArrayList<>();
+		Connection con = null;
+		PreparedStatement pstmt = null;
 		try {
-			Connection con = ConnectionProvider.getConnection();
-			PreparedStatement pstmt = con.prepareStatement(SELECT_ALL);
+			con = ConnectionProvider.getConnection();
+			pstmt = con.prepareStatement(SELECT_ALL);
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next()) {
 				PickUp pu = new PickUp(
@@ -88,6 +132,18 @@ public class PickUpDAOJDBCImpl implements DAO<PickUp> {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DALException("DATA ACCESS LAYER EXCEPTION : All pick-ups selection from database failed - ", e);
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new DALException("Close failed - ", e);
+			}
 		}
 		return list;
 	}
@@ -95,9 +151,11 @@ public class PickUpDAOJDBCImpl implements DAO<PickUp> {
 	@Override
 	public PickUp selectById(PickUp data) throws DALException {
 		PickUp pu = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
 		try {
-			Connection con = ConnectionProvider.getConnection();
-			PreparedStatement pstmt = con.prepareStatement(SELECT_BY_ID);
+			con = ConnectionProvider.getConnection();
+			pstmt = con.prepareStatement(SELECT_BY_ID);
 			pstmt.setInt(1, data.getPickUpId());
 			ResultSet rs = pstmt.executeQuery();
 			if(rs.next()) {
@@ -111,6 +169,18 @@ public class PickUpDAOJDBCImpl implements DAO<PickUp> {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DALException("DATA ACCESS LAYER EXCEPTION : Pick-up selection by id from database failed - ", e);
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new DALException("Close failed - ", e);
+			}
 		}
 		return pu;
 	}

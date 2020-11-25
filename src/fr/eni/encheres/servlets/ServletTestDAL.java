@@ -2,6 +2,7 @@ package fr.eni.encheres.servlets;
 
 import fr.eni.encheres.bll.bo.Category;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import fr.eni.encheres.bll.bo.Article;
 import fr.eni.encheres.bll.bo.PickUp;
 import fr.eni.encheres.bll.bo.User;
+import fr.eni.encheres.dal.ArticleDAO;
 import fr.eni.encheres.dal.DALException;
 import fr.eni.encheres.dal.DAO;
 import fr.eni.encheres.dal.DAOFactory;
@@ -32,7 +34,7 @@ public class ServletTestDAL extends HttpServlet {
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 		
 		DAO<User> userDAO = DAOFactory.getUserDAO();
-		DAO<Article> articleDAO = DAOFactory.getArticleDAO();
+		ArticleDAO articleDAO = DAOFactory.getArticleDAO();
 		DAO<PickUp> pickUpDAO = DAOFactory.getPickUpDAO();
 		DAO<Category> categoryDAO = DAOFactory.getCategoryDAO();
 		DAO<Bid> bidDAO = DAOFactory.getBidDAO();
@@ -79,6 +81,19 @@ public class ServletTestDAL extends HttpServlet {
 			b.setArticleId(2);
 			b = bidDAO.selectById(b);
 			System.out.println(b.toString());
+			
+			//Precise article selection
+			List<Article> list = new ArrayList<>();
+			User user = new User();
+			user.setUserId(2);
+			list = articleDAO.selectArticlesOfSeller(user);
+			for(Article article : list) {
+				System.out.println(article.toString());
+			}
+			list = articleDAO.selectArticlesOfSellerByState(user, "ended");
+			for(Article article : list) {
+				System.out.println(article.toString());
+			}
 			
 		} catch (DALException e) {
 			e.printStackTrace();

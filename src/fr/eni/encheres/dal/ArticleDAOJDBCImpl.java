@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.encheres.bll.bo.Article;
+import fr.eni.encheres.bll.bo.User;
 
 public class ArticleDAOJDBCImpl implements ArticleDAO {
 	
@@ -29,12 +30,17 @@ public class ArticleDAOJDBCImpl implements ArticleDAO {
 	private static final String DELETE ="DELETE FROM ARTICLES WHERE articleId = ?;";
 	private static final String SELECT_ALL ="SELECT * FROM ARTICLES;";
 	private static final String SELECT_BY_ID ="SELECT * FROM ARTICLES WHERE articleId = ?;";
+	private static final String SELECT_BY_SELLER ="SELECT * FROM ARTICLES WHERE sellerId = ?;";
+	private static final String SELECT_BY_SELLER_AND_STATE ="SELECT * FROM ARTICLES WHERE sellerId = ? AND state LIKE ?;";
+	private static final String SELECT_ENDED_BY_BUYER ="SELECT * FROM ARTICLES WHERE buyerId = ? AND state LIKE 'ended';";
 
 	@Override
 	public void insert(Article data) throws DALException {
+		Connection con = null;
+		PreparedStatement pstmt = null;
 		try {
-			Connection con = ConnectionProvider.getConnection();
-			PreparedStatement pstmt = con.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
+			con = ConnectionProvider.getConnection();
+			pstmt = con.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
 			pstmt.setString(1, data.getName());
 			pstmt.setString(2, data.getDescription());
 			pstmt.setTimestamp(3, Timestamp.valueOf(data.getAuctionStartDate()));
@@ -52,14 +58,28 @@ public class ArticleDAOJDBCImpl implements ArticleDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DALException("DATA ACCESS LAYER EXCEPTION : Article insertion into database failed - ", e);
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new DALException("Close failed - ", e);
+			}
 		}
 	}
 
 	@Override
 	public void update(Article data) throws DALException {
+		Connection con = null;
+		PreparedStatement pstmt = null;
 		try {
-			Connection con = ConnectionProvider.getConnection();
-			PreparedStatement pstmt = con.prepareStatement(UPDATE);
+			con = ConnectionProvider.getConnection();
+			pstmt = con.prepareStatement(UPDATE);
 			pstmt.setString(1, data.getName());
 			pstmt.setString(2, data.getDescription());
 			pstmt.setTimestamp(3, Timestamp.valueOf(data.getAuctionStartDate()));
@@ -76,28 +96,56 @@ public class ArticleDAOJDBCImpl implements ArticleDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DALException("DATA ACCESS LAYER EXCEPTION : Article update in database failed - ", e);
+		}  finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new DALException("Close failed - ", e);
+			}
 		}
 	}
 
 	@Override
 	public void delete(Article data) throws DALException {
+		Connection con = null;
+		PreparedStatement pstmt = null;
 		try {
-			Connection con = ConnectionProvider.getConnection();
-			PreparedStatement pstmt = con.prepareStatement(DELETE);
+			con = ConnectionProvider.getConnection();
+			pstmt = con.prepareStatement(DELETE);
 			pstmt.setInt(1, data.getArticleId());
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DALException("DATA ACCESS LAYER EXCEPTION : Article deletion from database failed - ", e);
+		}  finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new DALException("Close failed - ", e);
+			}
 		}
 	}
 
 	@Override
 	public List<Article> selectAll() throws DALException {
 		List<Article> list = new ArrayList<>();
+		Connection con = null;
+		PreparedStatement pstmt = null;
 		try {
-			Connection con = ConnectionProvider.getConnection();
-			PreparedStatement pstmt = con.prepareStatement(SELECT_ALL);
+			con = ConnectionProvider.getConnection();
+			pstmt = con.prepareStatement(SELECT_ALL);
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next()) {
 				Article a = new Article(
@@ -119,6 +167,18 @@ public class ArticleDAOJDBCImpl implements ArticleDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DALException("DATA ACCESS LAYER EXCEPTION : All articles selection from database failed - ", e);
+		}  finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new DALException("Close failed - ", e);
+			}
 		}
 		return list;
 	}
@@ -126,9 +186,11 @@ public class ArticleDAOJDBCImpl implements ArticleDAO {
 	@Override
 	public Article selectById(Article data) throws DALException {
 		Article article = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
 		try {
-			Connection con = ConnectionProvider.getConnection();
-			PreparedStatement pstmt = con.prepareStatement(SELECT_BY_ID);
+			con = ConnectionProvider.getConnection();
+			pstmt = con.prepareStatement(SELECT_BY_ID);
 			pstmt.setInt(1, data.getArticleId());
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next()) {
@@ -150,8 +212,161 @@ public class ArticleDAOJDBCImpl implements ArticleDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DALException("DATA ACCESS LAYER EXCEPTION : Article selection by ID from database failed - ", e);
+		}  finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new DALException("Close failed - ", e);
+			}
 		}
 		return article;
 	}
+
+	@Override
+	public List<Article> selectWonArticles(User buyer) throws DALException {
+		List<Article> list = new ArrayList<>();
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con = ConnectionProvider.getConnection();
+			pstmt = con.prepareStatement(SELECT_ENDED_BY_BUYER);
+			pstmt.setInt(1, buyer.getUserId());
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				Article a = new Article(
+						rs.getInt(1),
+						rs.getString(2),
+						rs.getString(3),
+						rs.getTimestamp(4).toLocalDateTime(),
+						rs.getTimestamp(5).toLocalDateTime(),
+						rs.getInt(6),
+						rs.getInt(7),
+						rs.getString(8),
+						rs.getInt(9),
+						rs.getInt(10),
+						rs.getInt(11),
+						rs.getInt(12)
+						);
+				list.add(a);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DALException("DATA ACCESS LAYER EXCEPTION : Selection of articles won by user from database failed - ", e);
+		}  finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new DALException("Close failed - ", e);
+			}
+		}
+		return list;
+	}
+
+	@Override
+	public List<Article> selectArticlesOfSeller(User seller) throws DALException {
+		List<Article> list = new ArrayList<>();
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con = ConnectionProvider.getConnection();
+			pstmt = con.prepareStatement(SELECT_BY_SELLER);
+			pstmt.setInt(1, seller.getUserId());
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				Article a = new Article(
+						rs.getInt(1),
+						rs.getString(2),
+						rs.getString(3),
+						rs.getTimestamp(4).toLocalDateTime(),
+						rs.getTimestamp(5).toLocalDateTime(),
+						rs.getInt(6),
+						rs.getInt(7),
+						rs.getString(8),
+						rs.getInt(9),
+						rs.getInt(10),
+						rs.getInt(11),
+						rs.getInt(12)
+						);
+				list.add(a);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DALException("DATA ACCESS LAYER EXCEPTION : Selection of all buyer's articles from database failed - ", e);
+		}  finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new DALException("Close failed - ", e);
+			}
+		}
+		return list;
+	}
+	
+	@Override
+	public List<Article> selectArticlesOfSellerByState(User seller, String state) throws DALException {
+		List<Article> list = new ArrayList<>();
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con = ConnectionProvider.getConnection();
+			pstmt = con.prepareStatement(SELECT_BY_SELLER_AND_STATE);
+			pstmt.setInt(1, seller.getUserId());
+			pstmt.setString(2, state);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				Article a = new Article(
+						rs.getInt(1),
+						rs.getString(2),
+						rs.getString(3),
+						rs.getTimestamp(4).toLocalDateTime(),
+						rs.getTimestamp(5).toLocalDateTime(),
+						rs.getInt(6),
+						rs.getInt(7),
+						rs.getString(8),
+						rs.getInt(9),
+						rs.getInt(10),
+						rs.getInt(11),
+						rs.getInt(12)
+						);
+				list.add(a);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DALException("DATA ACCESS LAYER EXCEPTION : Selection of seller's articles with the state '" + state + "' from database failed - ", e);
+		}  finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new DALException("Close failed - ", e);
+			}
+		}
+		return list;
+	}
+
+
 
 }
