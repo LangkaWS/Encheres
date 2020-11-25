@@ -11,7 +11,7 @@ import fr.eni.encheres.bll.bo.User;
 
 public class UserDAOJDBCImpl implements DAO<User> {
 	
-	private static final String INSERT = "INSERT INTO USERS(userName, lastName, firstName, email, phone, street, postalCode, town, password, credit, admin) "
+	private static final String INSERT = "INSERT INTO USERS(userName, lastName, firstName, email, phone, street, zipCode, town, password, credit, admin) "
 			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 	private static final String UPDATE = "UPDATE USERS SET "
 			+ "userName = ?, "
@@ -20,7 +20,7 @@ public class UserDAOJDBCImpl implements DAO<User> {
 			+ "email = ?, "
 			+ "phone = ?, "
 			+ "street = ?, "
-			+ "postalCode = ?, "
+			+ "zipCode = ?, "
 			+ "town = ?, "
 			+ "motDePasse = ?, "
 			+ "credit = ?, "
