@@ -2,11 +2,12 @@ package fr.eni.encheres.bll.bo;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Bid {
 	
-	private String bidDate;
+	private LocalDateTime bidDate;
 	private int amount;
 	private int buyerId;
 	private int articleId;
@@ -25,7 +26,7 @@ public class Bid {
 	 */
 	public Bid(int buyerId, int articleId, int amount) {
 		super();
-		this.bidDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SS").format(new Date());
+		this.bidDate = LocalDateTime.now();
 		this.amount = amount;
 		this.buyerId = buyerId;
 		this.articleId = articleId;
@@ -39,7 +40,7 @@ public class Bid {
 	 * @param buyerId
 	 * @param articleId
 	 */
-	public Bid(int buyerId, int articleId, int amount, String bidDate) {
+	public Bid(int buyerId, int articleId, int amount, LocalDateTime bidDate) {
 		super();
 		this.bidDate = bidDate;
 		this.amount = amount;
@@ -50,22 +51,22 @@ public class Bid {
 	/**
 	 * @return the bidDate
 	 */
-	public String getBidDate() {
+	public LocalDateTime getBidDate() {
 		return bidDate;
 	}
 
 	/**
 	 * @param bidDate the bidDate to set
 	 */
-	public void setBidDate(LocalDate bidDate) {
-		this.bidDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SS").format(bidDate);
+	public void setBidDate(LocalDateTime bidDate) {
+		this.bidDate = bidDate;
 	}
 	
 	/**
 	 * Set bidDate at the today's date
 	 */
 	public void setBidDate() {
-		this.bidDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SS").format(new Date());
+		this.bidDate = LocalDateTime.now();
 	}
 
 	/**

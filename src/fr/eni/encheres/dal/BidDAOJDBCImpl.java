@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class BidDAOJDBCImpl implements DAO<Bid> {
 			pstmt.setInt(1, data.getBuyerId());
 			pstmt.setInt(2, data.getArticleId());
 			pstmt.setInt(3, data.getAmount());
-			pstmt.setString(4, data.getBidDate());
+			pstmt.setTimestamp(4, Timestamp.valueOf(data.getBidDate()));
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -58,7 +59,7 @@ public class BidDAOJDBCImpl implements DAO<Bid> {
 			con = ConnectionProvider.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 			pstmt.setInt(1, data.getAmount());
-			pstmt.setString(2, data.getBidDate());
+			pstmt.setTimestamp(2, Timestamp.valueOf(data.getBidDate()));
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -120,7 +121,7 @@ public class BidDAOJDBCImpl implements DAO<Bid> {
 				Bid b = new Bid(rs.getInt(1),
 						rs.getInt(2),
 						rs.getInt(3),
-						rs.getString(4));
+						rs.getTimestamp(4).toLocalDateTime());
 				list.add(b);
 			}
 		} catch (SQLException e) {
@@ -157,7 +158,7 @@ public class BidDAOJDBCImpl implements DAO<Bid> {
 				b = new Bid(rs.getInt(1),
 						rs.getInt(2),
 						rs.getInt(3),
-						rs.getString(4));
+						rs.getTimestamp(4).toLocalDateTime());
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
