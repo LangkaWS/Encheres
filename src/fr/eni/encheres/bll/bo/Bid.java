@@ -58,6 +58,13 @@ public class Bid {
 	 * @param bidDate the bidDate to set
 	 */
 	public void setBidDate(LocalDate bidDate) {
+		this.bidDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SS").format(bidDate);
+	}
+	
+	/**
+	 * Set bidDate at the today's date
+	 */
+	public void setBidDate() {
 		this.bidDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SS").format(new Date());
 	}
 
