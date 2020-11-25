@@ -1,14 +1,14 @@
 package fr.eni.encheres.bll.bo;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Article {
 	
 	private int articleId;
 	private String name;
 	private String description;
-	private LocalDate auctionStartDate;
-	private LocalDate auctionEndDate;
+	private LocalDateTime auctionStartDate;
+	private LocalDateTime auctionEndDate;
 	private int startPrice;
 	private int sellingPrice;
 	private String state = "created"; // DEFAULT "created"
@@ -32,7 +32,7 @@ public class Article {
 	 * @param categoryId
 	 * @param pickUpId
 	 */
-	public Article(String name, String description, LocalDate auctionStartDate, int startPrice, int sellerId,
+	public Article(String name, String description, LocalDateTime auctionStartDate, int startPrice, int sellerId,
 			int categoryId, int pickUpId) {
 		this.name = name;
 		this.description = description;
@@ -57,7 +57,7 @@ public class Article {
 	 * @param categoryId
 	 * @param pickUpId
 	 */
-	public Article(int articleId, String name, String description, LocalDate auctionStartDate, LocalDate auctionEndDate,
+	public Article(int articleId, String name, String description, LocalDateTime auctionStartDate, LocalDateTime auctionEndDate,
 			int startPrice, int sellingPrice, String state, int sellerId, int buyerId, int categoryId, int pickUpId) {
 		this.articleId = articleId;
 		this.name = name;
@@ -118,28 +118,28 @@ public class Article {
 	/**
 	 * @return the auctionStartDate
 	 */
-	public LocalDate getAuctionStartDate() {
+	public LocalDateTime getAuctionStartDate() {
 		return auctionStartDate;
 	}
 	
 	/**
 	 * @param auctionStartDate the auctionStartDate to set
 	 */
-	public void setAuctionStartDate(LocalDate auctionStartDate) {
+	public void setAuctionStartDate(LocalDateTime auctionStartDate) {
 		this.auctionStartDate = auctionStartDate;
 	}
 	
 	/**
 	 * @return the auctionEndDate
 	 */
-	public LocalDate getAuctionEndDate() {
+	public LocalDateTime getAuctionEndDate() {
 		return auctionEndDate;
 	}
 	
 	/**
 	 * @param auctionEndDate the auctionEndDate to set
 	 */
-	public void setAuctionEndDate(LocalDate auctionEndDate) {
+	public void setAuctionEndDate(LocalDateTime auctionEndDate) {
 		this.auctionEndDate = auctionEndDate;
 	}
 	

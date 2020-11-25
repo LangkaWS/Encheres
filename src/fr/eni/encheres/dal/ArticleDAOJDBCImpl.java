@@ -1,10 +1,10 @@
 package fr.eni.encheres.dal;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +24,7 @@ public class ArticleDAOJDBCImpl implements ArticleDAO {
 			+ "sellerId = ?, "
 			+ "buyerId = ?, "
 			+ "categoryId = ?, "
-			+ "pickUpId = ?"
+			+ "pickUpId = ? "
 			+ "WHERE articleId = ?;";
 	private static final String DELETE ="DELETE FROM ARTICLES WHERE articleId = ?;";
 	private static final String SELECT_ALL ="SELECT * FROM ARTICLES;";
@@ -37,8 +37,8 @@ public class ArticleDAOJDBCImpl implements ArticleDAO {
 			PreparedStatement pstmt = con.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS);
 			pstmt.setString(1, data.getName());
 			pstmt.setString(2, data.getDescription());
-			pstmt.setDate(3, Date.valueOf(data.getAuctionStartDate()));
-			pstmt.setDate(4, Date.valueOf(data.getAuctionEndDate()));
+			pstmt.setTimestamp(3, Timestamp.valueOf(data.getAuctionStartDate()));
+			pstmt.setTimestamp(4, Timestamp.valueOf(data.getAuctionEndDate()));
 			pstmt.setInt(5, data.getStartPrice());
 			pstmt.setString(6, data.getState());
 			pstmt.setInt(7, data.getSellerId());
@@ -62,8 +62,8 @@ public class ArticleDAOJDBCImpl implements ArticleDAO {
 			PreparedStatement pstmt = con.prepareStatement(UPDATE);
 			pstmt.setString(1, data.getName());
 			pstmt.setString(2, data.getDescription());
-			pstmt.setDate(3, Date.valueOf(data.getAuctionStartDate()));
-			pstmt.setDate(4, Date.valueOf(data.getAuctionEndDate()));
+			pstmt.setTimestamp(3, Timestamp.valueOf(data.getAuctionStartDate()));
+			pstmt.setTimestamp(4, Timestamp.valueOf(data.getAuctionEndDate()));
 			pstmt.setInt(5, data.getStartPrice());
 			pstmt.setInt(6, data.getSellingPrice());
 			pstmt.setString(7, data.getState());
@@ -104,8 +104,8 @@ public class ArticleDAOJDBCImpl implements ArticleDAO {
 						rs.getInt(1),
 						rs.getString(2),
 						rs.getString(3),
-						rs.getDate(4).toLocalDate(),
-						rs.getDate(5).toLocalDate(),
+						rs.getTimestamp(4).toLocalDateTime(),
+						rs.getTimestamp(5).toLocalDateTime(),
 						rs.getInt(6),
 						rs.getInt(7),
 						rs.getString(8),
@@ -136,8 +136,8 @@ public class ArticleDAOJDBCImpl implements ArticleDAO {
 						rs.getInt(1),
 						rs.getString(2),
 						rs.getString(3),
-						rs.getDate(4).toLocalDate(),
-						rs.getDate(5).toLocalDate(),
+						rs.getTimestamp(4).toLocalDateTime(),
+						rs.getTimestamp(5).toLocalDateTime(),
 						rs.getInt(6),
 						rs.getInt(7),
 						rs.getString(8),
