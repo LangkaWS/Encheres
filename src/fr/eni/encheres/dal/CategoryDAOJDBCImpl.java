@@ -12,8 +12,8 @@ import fr.eni.encheres.bll.bo.Category;
 public class CategoryDAOJDBCImpl implements DAO<Category> {
 	
 	private static final String INSERT = "INSERT INTO CATEGORIES(name) VALUES (?);";
-	private static final String UPDATE = "UPDATE CATEGORIES SET"
-			+ "name = ?,"
+	private static final String UPDATE = "UPDATE CATEGORIES SET "
+			+ "name = ?, "
 			+ "WHERE categoryId = ?;";
 	private static final String DELETE = "DELETE FROM CATEGORIES WHERE categoryId = ?;";
 	private static final String SELECT_ALL = "SELECT * FROM CATEGORIES;";
@@ -139,14 +139,14 @@ public class CategoryDAOJDBCImpl implements DAO<Category> {
 		return list;
 	}
 	@Override
-	public Category selectById(int id) throws DALException {
+	public Category selectById(Category data) throws DALException {
 		Category c = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
 			con = ConnectionProvider.getConnection();
 			pstmt = con.prepareStatement(SELECT_BY_ID);
-			pstmt.setInt(1, id);
+			pstmt.setInt(1, data.getCategoryId());
 			ResultSet rs = pstmt.executeQuery();
 			if (rs.next()) {
 				c = new Category(rs.getInt(1),

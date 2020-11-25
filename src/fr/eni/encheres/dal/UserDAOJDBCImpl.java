@@ -126,12 +126,12 @@ public class UserDAOJDBCImpl implements DAO<User> {
 	}
 
 	@Override
-	public User selectById(int id) throws DALException {
+	public User selectById(User data) throws DALException {
 		User user = null;
 		try {
 			Connection con = ConnectionProvider.getConnection();
 			PreparedStatement pstmt = con.prepareStatement(SELECT_BY_ID);
-			pstmt.setInt(1, id);
+			pstmt.setInt(1, data.getUserId());
 			ResultSet rs = pstmt.executeQuery();
 			if(rs.next()) {
 				user = new User(

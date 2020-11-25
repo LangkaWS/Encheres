@@ -2,8 +2,6 @@ package fr.eni.encheres.servlets;
 
 import fr.eni.encheres.bll.bo.Category;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -15,12 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 import fr.eni.encheres.bll.bo.Article;
 import fr.eni.encheres.bll.bo.PickUp;
 import fr.eni.encheres.bll.bo.User;
-import fr.eni.encheres.dal.ConnectionProvider;
 import fr.eni.encheres.dal.DALException;
 import fr.eni.encheres.dal.DAO;
 import fr.eni.encheres.dal.DAOFactory;
-import fr.eni.encheres.dal.DAObis;
 import fr.eni.encheres.bll.bo.*;
+
 /**
  * Servlet implementation class ServletTestDAL
  */
@@ -34,18 +31,11 @@ public class ServletTestDAL extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 		
-		//Connection testing
-		try {
-			Connection con = ConnectionProvider.getConnection();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
 		DAO<User> userDAO = DAOFactory.getUserDAO();
 		DAO<Article> articleDAO = DAOFactory.getArticleDAO();
 		DAO<PickUp> pickUpDAO = DAOFactory.getPickUpDAO();
 		DAO<Category> categoryDAO = DAOFactory.getCategoryDAO();
-		DAObis<Bid> bidDAO = DAOFactory.getBidDAO();
+		DAO<Bid> bidDAO = DAOFactory.getBidDAO();
 		
 		try {
 			//User data access testing
@@ -58,7 +48,9 @@ public class ServletTestDAL extends HttpServlet {
 			
 			//Article data access testing
 			System.out.println("Selection of the article with id = 2 : ");
-			Article a = articleDAO.selectById(2);
+			Article a = new Article();
+			a.setArticleId(2);
+			 a = articleDAO.selectById(a);
 			System.out.println(a.toString());
 
 			//Pick-up data access testing
@@ -70,7 +62,9 @@ public class ServletTestDAL extends HttpServlet {
 			
 			//Category data access testing
 			System.out.println("Selection of the category with id = 1 : ");
-			Category c = categoryDAO.selectById(1);
+			Category c = new Category();
+			c.setCategoryId(1);
+			c = categoryDAO.selectById(c);
 			System.out.println(c.toString());
 			
 			//Bid data access testing
@@ -79,6 +73,12 @@ public class ServletTestDAL extends HttpServlet {
 			for (Bid bid : bidsList) {
 				System.out.println(bid.toString());
 			}
+			System.out.println("Selection by id : ");
+			Bid b = new Bid();
+			b.setBuyerId(3);
+			b.setArticleId(2);
+			b = bidDAO.selectById(b);
+			System.out.println(b.toString());
 			
 		} catch (DALException e) {
 			e.printStackTrace();

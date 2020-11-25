@@ -12,6 +12,6 @@ public interface DAO<T> {
 	
 	public List<T> selectAll() throws DALException;
 	
-	public T selectById(int id) throws DALException;
+	public T selectById(T data) throws DALException;
 
 }

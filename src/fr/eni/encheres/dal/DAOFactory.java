@@ -1,6 +1,5 @@
 package fr.eni.encheres.dal;
 
-import fr.eni.encheres.bll.bo.Article;
 import fr.eni.encheres.bll.bo.Bid;
 import fr.eni.encheres.bll.bo.PickUp;
 import fr.eni.encheres.bll.bo.Category;
@@ -12,7 +11,7 @@ public abstract class DAOFactory {
 		return new UserDAOJDBCImpl();
 	}
 	
-	public static DAO<Article> getArticleDAO() {
+	public static ArticleDAO getArticleDAO() {
 		return new ArticleDAOJDBCImpl();
 	}
 	
@@ -25,7 +24,7 @@ public abstract class DAOFactory {
 
 	}
 	
-	public static DAObis<Bid> getBidDAO() {
+	public static DAO<Bid> getBidDAO() {
 		return new BidDAOJDBCImpl();
 
 	}

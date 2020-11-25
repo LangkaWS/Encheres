@@ -10,7 +10,7 @@ import java.util.List;
 
 import fr.eni.encheres.bll.bo.Article;
 
-public class ArticleDAOJDBCImpl implements DAO<Article> {
+public class ArticleDAOJDBCImpl implements ArticleDAO {
 	
 	private static final String INSERT ="INSERT INTO ARTICLES(name, description, auctionStartDate, auctionEndDate, startPrice, state, sellerId, categoryId, pickUpId) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?);";
 	private static final String UPDATE ="UPDATE ARTICLES SET "
@@ -124,12 +124,12 @@ public class ArticleDAOJDBCImpl implements DAO<Article> {
 	}
 
 	@Override
-	public Article selectById(int id) throws DALException {
+	public Article selectById(Article data) throws DALException {
 		Article article = null;
 		try {
 			Connection con = ConnectionProvider.getConnection();
 			PreparedStatement pstmt = con.prepareStatement(SELECT_BY_ID);
-			pstmt.setInt(1, id);
+			pstmt.setInt(1, data.getArticleId());
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next()) {
 				article = new Article(

@@ -1,7 +1,6 @@
 package fr.eni.encheres.dal;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,20 +8,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.encheres.bll.bo.Bid;
-import fr.eni.encheres.bll.bo.Category;
 
-public class BidDAOJDBCImpl implements DAObis<Bid> {
+public class BidDAOJDBCImpl implements DAO<Bid> {
 	private static final String INSERT = "INSERT INTO BIDS(buyerId, articleId, amount, bidDate) VALUES (?, ?, ?, ?);";
-	private static final String UPDATE = "UPDATE BIDS SET"
-			+ "amount = ?,"
-			+ "bidDate = ?,"
-			+ "WHERE buyerId = ?"
+	private static final String UPDATE = "UPDATE BIDS SET "
+			+ "amount = ?, "
+			+ "bidDate = ?, "
+			+ "WHERE buyerId = ? "
 			+ "AND articleId = ?;";
-	private static final String DELETE = "DELETE FROM BIDS WHERE buyerId = ?"
-			+ "AND articleId = ?;";
+	private static final String DELETE = "DELETE FROM BIDS WHERE buyerId = ? AND articleId = ?;";
 	private static final String SELECT_ALL = "SELECT * FROM BIDS;";
-	private static final String SELECT_BY_ID = "SELECT * FROM BIDS WHERE buyerId = ?"
-			+ "articleId = ?;";
+	private static final String SELECT_BY_ID = "SELECT * FROM BIDS WHERE buyerId = ? AND articleId = ?;";
 	
 	@Override
 	public void insert(Bid data) throws DALException {
@@ -147,15 +143,15 @@ public class BidDAOJDBCImpl implements DAObis<Bid> {
 	}
 
 	@Override
-	public Bid selectById(int firstId, int secondId) throws DALException {
+	public Bid selectById(Bid data) throws DALException {
 		Bid b = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
 			con = ConnectionProvider.getConnection();
 			pstmt = con.prepareStatement(SELECT_BY_ID);
-			pstmt.setInt(1, firstId);
-			pstmt.setInt(2, secondId);
+			pstmt.setInt(1, data.getBuyerId());
+			pstmt.setInt(2, data.getArticleId());
 			ResultSet rs = pstmt.executeQuery();
 			if (rs.next()) {
 				b = new Bid(rs.getInt(1),
@@ -182,4 +178,5 @@ public class BidDAOJDBCImpl implements DAObis<Bid> {
 		
 		return b;
 	}
+
 }
