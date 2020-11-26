@@ -16,28 +16,28 @@ public class UserManager {
 	}
 	
 	public void addUser(User user) throws BLLException {
-		if(!this.validateUser(user)) {
-			throw new BLLException("Invalid user. Please check again data.");
-		} else {
+		if(this.validateUser(user)) {
 			try {
 				userDAO.insert(user);
 			} catch (DALException e) {
 				e.printStackTrace();
 				throw new BLLException("User adding failed - ", e);
 			}
+		} else {
+			throw new BLLException("Invalid user. Please check again data.");
 		}
 	}
 	
 	public void updateUser(User user) throws BLLException {
-		if(!this.validateUser(user)) {
-			throw new BLLException("Invalid user. Please check again data.");
-		} else {
+		if(this.validateUser(user)) {
 			try {
 				userDAO.update(user);
 			} catch (DALException e) {
 				e.printStackTrace();
 				throw new BLLException("User update failed - ", e);
 			}
+		} else {
+			throw new BLLException("Invalid user. Please check again data.");
 		}
 	}
 	
@@ -111,43 +111,20 @@ public class UserManager {
 		return isValid;
 	}
 	
-	private boolean validatePassword(String password) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	private boolean validateTown(String town) throws BLLException {
+	public boolean validateUserName(String userName, List<User> listAllUsers) throws BLLException {
 		boolean isValid = true;
-		if(!town.matches("(?i)^[a-z0-9 ,.'-]+$")) {
-			isValid = false;
-			throw new BLLException("The town must contain only letters, numbers, white spaces and some special characters (,.'-)");
+		//User name test : must be unique
+		for(User u : listAllUsers) {
+			if (userName.equals(u.getUserName())) {
+				isValid = false;
+				throw new BLLException("The user name must be unique.");
+			}
 		}
-		return isValid;
-	}
-
-	private boolean validateZipCode(String zipCode) throws BLLException {
-		boolean isValid = true;
-		if(!zipCode.matches("^\\d{5}$")) {
+		
+		//User name test : only alphanumerical characters
+		if(!userName.matches("^\\w+$")) {
 			isValid = false;
-			throw new BLLException("The zip code must be 5 digits long.");
-		}
-		return isValid;
-	}
-
-	private boolean validateStreet(String street) throws BLLException {
-		boolean isValid = true;
-		if(!street.matches("(?i)^[a-z0-9 ,.'-]+$")) {
-			isValid = false;
-			throw new BLLException("The street must contain only letters, numbers, white spaces and some special characters (,.'-)");
-		}
-		return isValid;
-	}
-
-	private boolean validatePhone(String phone) throws BLLException {
-		boolean isValid = true;
-		if(!phone.matches("^\\d{10}$")) {
-			isValid = false;
-			throw new BLLException("The phone number must be 10 digits long.");
+			throw new BLLException("The user name must contain only letters, numbers and _");
 		}
 		return isValid;
 	}
@@ -170,25 +147,6 @@ public class UserManager {
 		return isValid;
 	}
 
-
-	public boolean validateUserName(String userName, List<User> listAllUsers) throws BLLException {
-		boolean isValid = true;
-		//User name test : must be unique
-		for(User u : listAllUsers) {
-			if (userName.equals(u.getUserName())) {
-				isValid = false;
-				throw new BLLException("The user name must be unique.");
-			}
-		}
-		
-		//User name test : only alphanumerical characters
-		if(!userName.matches("^\\w+$")) {
-			isValid = false;
-			throw new BLLException("The user name must contain only letters, numbers and _");
-		}
-		return isValid;
-	}
-	
 	public boolean validateEmail(String email, List<User> listAllUsers) throws BLLException {
 		boolean isValid = true;
 		//User email test : must be something like xxx@xxx.xx
@@ -206,5 +164,47 @@ public class UserManager {
 		}
 		return isValid;
 	}
+	
+	private boolean validatePhone(String phone) throws BLLException {
+		boolean isValid = true;
+		if(!phone.matches("^\\d{10}$")) {
+			isValid = false;
+			throw new BLLException("The phone number must be 10 digits long.");
+		}
+		return isValid;
+	}
+	
+	private boolean validateStreet(String street) throws BLLException {
+		boolean isValid = true;
+		if(!street.matches("(?i)^[a-z0-9 ,.'-]+$")) {
+			isValid = false;
+			throw new BLLException("The street must contain only letters, numbers, white spaces and some special characters (,.'-)");
+		}
+		return isValid;
+	}
+	
+	private boolean validateZipCode(String zipCode) throws BLLException {
+		boolean isValid = true;
+		if(!zipCode.matches("^\\d{5}$")) {
+			isValid = false;
+			throw new BLLException("The zip code must be 5 digits long.");
+		}
+		return isValid;
+	}
+	
+	private boolean validateTown(String town) throws BLLException {
+		boolean isValid = true;
+		if(!town.matches("(?i)^[a-z0-9 ,.'-]+$")) {
+			isValid = false;
+			throw new BLLException("The town must contain only letters, numbers, white spaces and some special characters (,.'-)");
+		}
+		return isValid;
+	}
+	
+	private boolean validatePassword(String password) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 
 }

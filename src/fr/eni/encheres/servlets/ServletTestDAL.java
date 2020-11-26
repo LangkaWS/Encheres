@@ -96,11 +96,11 @@ public class ServletTestDAL extends HttpServlet {
 			List<Article> list = new ArrayList<>();
 			User user = new User();
 			user.setUserId(2);
-			list = articleDAO.selectArticlesOfSeller(user);
+			list = articleDAO.selectArticlesOfSeller(user.getUserId());
 			for(Article article : list) {
 				System.out.println(article.toString());
 			}
-			list = articleDAO.selectArticlesOfSellerByState(user, "ended");
+			list = articleDAO.selectArticlesOfSellerByState(user.getUserId(), "ended");
 			for(Article article : list) {
 				System.out.println(article.toString());
 			}
