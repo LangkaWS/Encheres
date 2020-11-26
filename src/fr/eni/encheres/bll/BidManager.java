@@ -29,26 +29,86 @@ public class BidManager {
 	 * [v] amount is a number
 	 * [v] bidDate is a LocalDateTime
 	 * 
-	 * [] On add : remove amount credit / add credit to previous max buyer
+	 * [v] On add : remove amount credit / add credit to previous max buyer
 	 * [] On update : remove difference between previous and current amount / add credit to previous max buyer (if different)
 	 * [] On delete : add amount credit
 	 */
 	
-	public void addBid(Bid bid) {
-		
+	public void addBid(Bid bid) throws BLLException {
+		Article article;
+		User newBidder;
+		try {
+			article = articleDAO.selectById(new Article(bid.getArticleId()));
+			newBidder = userDAO.selectById(new User(bid.getBuyerId()));
+			if(this.validateBid(bid, article, newBidder)) {
+				//Give back credits to previous bidder
+				User previousBidder = userDAO.selectById(new User(article.getBuyerId()));
+				previousBidder.setCredit(previousBidder.getCredit() + article.getSellingPrice());
+				userDAO.update(previousBidder);
+				
+				//Take credits from new bidder
+				newBidder.setCredit(newBidder.getCredit() - bid.getAmount());
+				userDAO.update(newBidder);
+				
+				//Update article selling price and buyer ID
+				article.setSellingPrice(bid.getAmount());
+				article.setBuyerId(bid.getBuyerId());
+				articleDAO.update(article);
+				
+				//Insert bid into database
+				bidDAO.insert(bid);
+			}
+		} catch (DALException e2) {
+			e2.printStackTrace();
+			throw new BLLException("Something went wrong...");
+		}
 	}
 	
-	private boolean validateBid(Bid bid) throws BLLException {
-		boolean isValid = true;
-		Article a = new Article();
-		a.setArticleId(bid.getArticleId());
-		Article article = null;
+	public void updateBid(Bid bid) throws BLLException {
+		Article article;
+		User newBidder;
 		try {
-			article = articleDAO.selectById(a);
+			article = articleDAO.selectById(new Article(bid.getArticleId()));
+			newBidder = userDAO.selectById(new User(bid.getBuyerId()));
+			if(this.validateBid(bid, article, newBidder)) {
+				//Give back credits to previous bidder
+				User previousBidder = userDAO.selectById(new User(article.getBuyerId()));
+				previousBidder.setCredit(previousBidder.getCredit() + article.getSellingPrice());
+				userDAO.update(previousBidder);
+				
+				//Take credits from new bidder
+				newBidder.setCredit(newBidder.getCredit() - bid.getAmount());
+				userDAO.update(newBidder);
+				
+				//Update article selling price and buyer ID
+				article.setSellingPrice(bid.getAmount());
+				article.setBuyerId(bid.getBuyerId());
+				articleDAO.update(article);
+				
+				//Update bid in database
+				bidDAO.update(bid);
+			}
 		} catch (DALException e) {
 			e.printStackTrace();
-			throw new BLLException("Article selection failed - ", e);
 		}
+	}
+	
+	public void deleteBid(Bid bid) {
+		Article article;
+		User bidder;
+		try {
+			article = articleDAO.selectById(new Article(bid.getArticleId()));
+			bidder = userDAO.selectById(new User(bid.getBuyerId()));
+			
+			//Remove selling price and 
+			
+		} catch (DALException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private boolean validateBid(Bid bid, Article article, User bidder) throws BLLException {
+		boolean isValid = true;
 		if(!validateBidArticle(article)) {
 			isValid = false;
 			throw new BLLException("Article is invalid.");
@@ -57,7 +117,7 @@ public class BidManager {
 			isValid = false;
 			throw new BLLException("Amount is invalid.");
 		}
-		if(!validateBidBuyer(bid.getBuyerId(), bid)) {
+		if(!validateBidBuyer(bid, bidder)) {
 			isValid = false;
 			throw new BLLException("Buyer is invalid.");
 		}
@@ -92,18 +152,10 @@ public class BidManager {
 		return isValid;
 	}
 	
-	private boolean validateBidBuyer(int buyerId, Bid bid) throws BLLException {
+	private boolean validateBidBuyer(Bid bid, User bidder) throws BLLException {
 		boolean isValid = false;
-		User u = new User();
-		u.setUserId(buyerId);
-		try {
-			u = userDAO.selectById(u);
-		} catch (DALException e) {
-			e.printStackTrace();
-			throw new BLLException("Buyer selection failed - ", e);
-		}
-		if(u != null) {
-			if(u.getCredit() >= bid.getAmount()) {
+		if(bidder != null) {
+			if(bidder.getCredit() >= bid.getAmount()) {
 				isValid = true;
 			} else {
 				throw new BLLException("Buyer's credit is insufficient.");

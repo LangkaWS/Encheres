@@ -24,6 +24,13 @@ public class Article {
 	}
 	
 	/**
+	 * @param articleId
+	 */
+	public Article(int articleId) {
+		this.articleId = articleId;
+	}
+	
+	/**
 	 * @param name
 	 * @param description
 	 * @param auctionStartDate

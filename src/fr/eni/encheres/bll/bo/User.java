@@ -22,6 +22,13 @@ public class User {
 	}
 	
 	/**
+	 * @param userId
+	 */
+	public User(int userId) {
+		this.userId = userId;
+	}
+	
+	/**
 	 * @param userName
 	 * @param lastName
 	 * @param firstName
