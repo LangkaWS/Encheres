@@ -48,10 +48,10 @@ public class PickUpManager {
 		}
 	}
 	
-	public PickUp getPickUp(PickUp pickup) throws BLLException {
+	public PickUp getPickUp(int id) throws BLLException {
 		PickUp pu = null;
 		try {
-			pu = pickUpDAO.selectById(pickup);
+			pu = pickUpDAO.selectById(id);
 		} catch (DALException e) {
 			e.printStackTrace();
 			throw new BLLException("Pick-up selection failed - ", e);

@@ -4,18 +4,18 @@ import java.time.LocalDateTime;
 
 public class Article {
 	
-	private int articleId;
+	private Integer articleId;
 	private String name;
 	private String description;
 	private LocalDateTime auctionStartDate;
 	private LocalDateTime auctionEndDate;
 	private int startPrice;
-	private int sellingPrice;
+	private Integer sellingPrice;
 	private String state = "created"; // DEFAULT "created"
-	private int sellerId;
-	private int buyerId;
-	private int categoryId;
-	private int pickUpId;
+	private Integer sellerId;
+	private Integer buyerId;
+	private Integer categoryId;
+	private Integer pickUpId;
 	
 	/**
 	 * 
@@ -87,14 +87,14 @@ public class Article {
 	/**
 	 * @return the articleId
 	 */
-	public int getArticleId() {
+	public Integer getArticleId() {
 		return articleId;
 	}
 	
 	/**
 	 * @param articleId the articleId to set
 	 */
-	public void setArticleId(int articleId) {
+	public void setArticleId(Integer articleId) {
 		this.articleId = articleId;
 	}
 	
@@ -157,7 +157,7 @@ public class Article {
 	/**
 	 * @return the startPrice
 	 */
-	public int getStartPrice() {
+	public Integer getStartPrice() {
 		return startPrice;
 	}
 	
@@ -171,7 +171,7 @@ public class Article {
 	/**
 	 * @return the sellingPrice
 	 */
-	public int getSellingPrice() {
+	public Integer getSellingPrice() {
 		return sellingPrice;
 	}
 	
@@ -199,7 +199,7 @@ public class Article {
 	/**
 	 * @return the sellerId
 	 */
-	public int getSellerId() {
+	public Integer getSellerId() {
 		return sellerId;
 	}
 	
@@ -213,7 +213,7 @@ public class Article {
 	/**
 	 * @return the buyerId
 	 */
-	public int getBuyerId() {
+	public Integer getBuyerId() {
 		return buyerId;
 	}
 	
@@ -227,7 +227,7 @@ public class Article {
 	/**
 	 * @return the categoryId
 	 */
-	public int getCategoryId() {
+	public Integer getCategoryId() {
 		return categoryId;
 	}
 	
@@ -241,7 +241,7 @@ public class Article {
 	/**
 	 * @return the pickUpId
 	 */
-	public int getPickUpId() {
+	public Integer getPickUpId() {
 		return pickUpId;
 	}
 	

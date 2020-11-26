@@ -149,14 +149,20 @@ public class PickUpDAOJDBCImpl implements DAO<PickUp> {
 	}
 
 	@Override
-	public PickUp selectById(PickUp data) throws DALException {
+	public PickUp selectByIds(int id1, int id2) throws DALException {
+		// unused method
+		return null;
+	}
+
+	@Override
+	public PickUp selectById(int id) throws DALException {
 		PickUp pu = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
 			con = ConnectionProvider.getConnection();
 			pstmt = con.prepareStatement(SELECT_BY_ID);
-			pstmt.setInt(1, data.getPickUpId());
+			pstmt.setInt(1, id);
 			ResultSet rs = pstmt.executeQuery();
 			if(rs.next()) {
 				pu = new PickUp(

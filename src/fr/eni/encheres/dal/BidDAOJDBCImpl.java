@@ -144,15 +144,15 @@ public class BidDAOJDBCImpl implements DAO<Bid> {
 	}
 
 	@Override
-	public Bid selectById(Bid data) throws DALException {
+	public Bid selectByIds(int id1, int id2) throws DALException {
 		Bid b = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
 			con = ConnectionProvider.getConnection();
 			pstmt = con.prepareStatement(SELECT_BY_ID);
-			pstmt.setInt(1, data.getBuyerId());
-			pstmt.setInt(2, data.getArticleId());
+			pstmt.setInt(1, id1);
+			pstmt.setInt(2, id2);
 			ResultSet rs = pstmt.executeQuery();
 			if (rs.next()) {
 				b = new Bid(rs.getInt(1),
@@ -178,6 +178,11 @@ public class BidDAOJDBCImpl implements DAO<Bid> {
 		}
 		
 		return b;
+	}
+	@Override
+	public Bid selectById(int id) throws DALException {
+		// unused method
+		return null;
 	}
 
 }

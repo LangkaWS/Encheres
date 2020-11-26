@@ -17,7 +17,7 @@ public class CategoryManager {
 	}
 	
 	public void addCategory(Category c) throws BLLException {
-		if (c.getCategoryId()!=0) {
+		if (c.getCategoryId() != null) {
 			throw new BLLException("Category already exists - ");
 		}
 		try {
@@ -63,9 +63,9 @@ public class CategoryManager {
 		}
 	}
 	
-	public void selectCategory(Category c) throws BLLException {
+	public void selectCategory(int id) throws BLLException {
 		try {
-			categoryDAO.selectById(c);
+			categoryDAO.selectById(id);
 		} catch (DALException e) {
 			e.printStackTrace();
 			throw new BLLException("Category selecting failed - ", e);
@@ -77,6 +77,14 @@ public class CategoryManager {
 		if(name.equals("")) {
 			isValid = false;
 			throw new BLLException("The name can't be empty.");
+		}
+		if(name == null) {
+			isValid = false;
+			throw new BLLException("The name can't be null.");
+		}
+		if(name.length() > 30) {
+			isValid = false;
+			throw new BLLException("The name can't be longer than 30 characters.");
 		}
 		return isValid;
 	}

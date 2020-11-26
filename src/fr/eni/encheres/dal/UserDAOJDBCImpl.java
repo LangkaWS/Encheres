@@ -182,14 +182,20 @@ public class UserDAOJDBCImpl implements DAO<User> {
 	}
 
 	@Override
-	public User selectById(User data) throws DALException {
+	public User selectByIds(int id1, int id2) throws DALException {
+		// unused method
+		return null;
+	}
+
+	@Override
+	public User selectById(int id) throws DALException {
 		User user = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
 			con = ConnectionProvider.getConnection();
 			pstmt = con.prepareStatement(SELECT_BY_ID);
-			pstmt.setInt(1, data.getUserId());
+			pstmt.setInt(1, id);
 			ResultSet rs = pstmt.executeQuery();
 			if(rs.next()) {
 				user = new User(

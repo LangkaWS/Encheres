@@ -187,51 +187,6 @@ public class ArticleDAOJDBCImpl implements ArticleDAO {
 	}
 
 	@Override
-	public Article selectById(Article data) throws DALException {
-		Article article = null;
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		try {
-			con = ConnectionProvider.getConnection();
-			pstmt = con.prepareStatement(SELECT_BY_ID);
-			pstmt.setInt(1, data.getArticleId());
-			ResultSet rs = pstmt.executeQuery();
-			while(rs.next()) {
-				article = new Article(
-						rs.getInt(1),
-						rs.getString(2),
-						rs.getString(3),
-						rs.getTimestamp(4).toLocalDateTime(),
-						rs.getTimestamp(5).toLocalDateTime(),
-						rs.getInt(6),
-						rs.getInt(7),
-						rs.getString(8),
-						rs.getInt(9),
-						rs.getInt(10),
-						rs.getInt(11),
-						rs.getInt(12)
-						);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new DALException("DATA ACCESS LAYER EXCEPTION : Article selection by ID from database failed - ", e);
-		}  finally {
-			try {
-				if (pstmt != null) {
-					pstmt.close();
-				}
-				if (con != null) {
-					con.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-				throw new DALException("Close failed - ", e);
-			}
-		}
-		return article;
-	}
-
-	@Override
 	public List<Article> selectWonArticles(int buyerId) throws DALException {
 		List<Article> list = new ArrayList<>();
 		Connection con = null;
@@ -551,6 +506,57 @@ public class ArticleDAOJDBCImpl implements ArticleDAO {
 			}
 		}
 		return list;
+	}
+
+	@Override
+	public Article selectByIds(int id1, int id2) throws DALException {
+		// unused method
+		return null;
+	}
+
+	@Override
+	public Article selectById(int id) throws DALException {
+		Article article = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con = ConnectionProvider.getConnection();
+			pstmt = con.prepareStatement(SELECT_BY_ID);
+			pstmt.setInt(1, id);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				article = new Article(
+						rs.getInt(1),
+						rs.getString(2),
+						rs.getString(3),
+						rs.getTimestamp(4).toLocalDateTime(),
+						rs.getTimestamp(5).toLocalDateTime(),
+						rs.getInt(6),
+						rs.getInt(7),
+						rs.getString(8),
+						rs.getInt(9),
+						rs.getInt(10),
+						rs.getInt(11),
+						rs.getInt(12)
+						);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DALException("DATA ACCESS LAYER EXCEPTION : Article selection by ID from database failed - ", e);
+		}  finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new DALException("Close failed - ", e);
+			}
+		}
+		return article;
 	}
 
 	

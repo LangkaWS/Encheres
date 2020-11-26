@@ -138,15 +138,21 @@ public class CategoryDAOJDBCImpl implements DAO<Category> {
 		}
 		return list;
 	}
+
 	@Override
-	public Category selectById(Category data) throws DALException {
+	public Category selectByIds(int id1, int id2) throws DALException {
+		// unused method
+		return null;
+	}
+	@Override
+	public Category selectById(int id) throws DALException {
 		Category c = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
 			con = ConnectionProvider.getConnection();
 			pstmt = con.prepareStatement(SELECT_BY_ID);
-			pstmt.setInt(1, data.getCategoryId());
+			pstmt.setInt(1, id);
 			ResultSet rs = pstmt.executeQuery();
 			if (rs.next()) {
 				c = new Category(rs.getInt(1),

@@ -38,11 +38,11 @@ public class BidManager {
 		Article article;
 		User newBidder;
 		try {
-			article = articleDAO.selectById(new Article(bid.getArticleId()));
-			newBidder = userDAO.selectById(new User(bid.getBuyerId()));
+			article = articleDAO.selectById(bid.getArticleId());
+			newBidder = userDAO.selectById(bid.getBuyerId());
 			if(this.validateBid(bid, article, newBidder)) {
 				//Give back credits to previous bidder
-				User previousBidder = userDAO.selectById(new User(article.getBuyerId()));
+				User previousBidder = userDAO.selectById(article.getBuyerId());
 				previousBidder.setCredit(previousBidder.getCredit() + article.getSellingPrice());
 				userDAO.update(previousBidder);
 				
@@ -68,11 +68,11 @@ public class BidManager {
 		Article article;
 		User newBidder;
 		try {
-			article = articleDAO.selectById(new Article(bid.getArticleId()));
-			newBidder = userDAO.selectById(new User(bid.getBuyerId()));
+			article = articleDAO.selectById(bid.getArticleId());
+			newBidder = userDAO.selectById(bid.getBuyerId());
 			if(this.validateBid(bid, article, newBidder)) {
 				//Give back credits to previous bidder
-				User previousBidder = userDAO.selectById(new User(article.getBuyerId()));
+				User previousBidder = userDAO.selectById(article.getBuyerId());
 				previousBidder.setCredit(previousBidder.getCredit() + article.getSellingPrice());
 				userDAO.update(previousBidder);
 				
@@ -97,8 +97,8 @@ public class BidManager {
 		Article article;
 		User bidder;
 		try {
-			article = articleDAO.selectById(new Article(bid.getArticleId()));
-			bidder = userDAO.selectById(new User(bid.getBuyerId()));
+			article = articleDAO.selectById(bid.getArticleId());
+			bidder = userDAO.selectById(bid.getBuyerId());
 			
 			//Remove selling price and 
 			

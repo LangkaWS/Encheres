@@ -2,7 +2,7 @@ package fr.eni.encheres.bll.bo;
 
 public class User {
 	
-	private int userId;
+	private Integer userId;
 	private String userName;
 	private String lastName;
 	private String firstName;
@@ -85,7 +85,7 @@ public class User {
 	/**
 	 * @return the userId
 	 */
-	public int getUserId() {
+	public Integer getUserId() {
 		return userId;
 	}
 	

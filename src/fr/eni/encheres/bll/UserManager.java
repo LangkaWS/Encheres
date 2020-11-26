@@ -50,10 +50,10 @@ public class UserManager {
 		}
 	}
 	
-	public User getUser(User user) throws BLLException {
+	public User getUser(int id) throws BLLException {
 		User u = null;
 		try {
-			u = userDAO.selectById(user);
+			u = userDAO.selectById(id);
 		} catch (DALException e) {
 			e.printStackTrace();
 			throw new BLLException("User selection failed - ", e);

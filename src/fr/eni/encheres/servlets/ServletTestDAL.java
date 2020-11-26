@@ -61,8 +61,7 @@ public class ServletTestDAL extends HttpServlet {
 			//Article data access testing
 			System.out.println("Selection of the article with id = 2 : ");
 			Article a = new Article();
-			a.setArticleId(2);
-			 a = articleDAO.selectById(a);
+			a = articleDAO.selectById(2);
 			System.out.println(a.toString());
 
 			//Pick-up data access testing
@@ -75,8 +74,7 @@ public class ServletTestDAL extends HttpServlet {
 			//Category data access testing
 			System.out.println("Selection of the category with id = 1 : ");
 			Category c = new Category();
-			c.setCategoryId(1);
-			c = categoryDAO.selectById(c);
+			c = categoryDAO.selectById(1);
 			System.out.println(c.toString());
 			
 			//Bid data access testing
@@ -87,9 +85,7 @@ public class ServletTestDAL extends HttpServlet {
 			}
 			System.out.println("Selection by id : ");
 			Bid b = new Bid();
-			b.setBuyerId(3);
-			b.setArticleId(2);
-			b = bidDAO.selectById(b);
+			b = bidDAO.selectByIds(3, 2);
 			System.out.println(b.toString());
 			
 			//Precise article selection

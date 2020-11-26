@@ -2,7 +2,7 @@ package fr.eni.encheres.bll.bo;
 
 public class Category {
 	
-	private int categoryId;
+	private Integer categoryId;
 	private String name;
 	
 	/**
@@ -33,7 +33,7 @@ public class Category {
 	/**
 	 * @return the categoryId
 	 */
-	public int getCategoryId() {
+	public Integer getCategoryId() {
 		return categoryId;
 	}
 
