@@ -2,6 +2,7 @@ package fr.eni.encheres.servlets;
 
 import fr.eni.encheres.bll.bo.Category;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,6 +49,12 @@ public class ServletTestDAL extends HttpServlet {
 				System.out.println(u.toString());
 				System.out.println();
 			}
+			
+			//Article inserting testing
+			System.out.println("Insertion of a new article : ");
+			Article a2 = new Article("Karcher", "Karcher 3200 très peu servi, parfait état de fonctionnement", LocalDateTime.parse("2020-11-30T15:30:45.157"), LocalDateTime.parse("2020-12-15T15:30:05.520"), 100, "created", 3, 1, 1);
+			articleDAO.insert(a2);
+			System.out.println(a2.toString());
 			
 			//Article data access testing
 			System.out.println("Selection of the article with id = 2 : ");

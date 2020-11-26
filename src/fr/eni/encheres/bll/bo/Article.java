@@ -27,17 +27,21 @@ public class Article {
 	 * @param name
 	 * @param description
 	 * @param auctionStartDate
+	 * @param auctionEndDate
 	 * @param startPrice
+	 * @param state
 	 * @param sellerId
 	 * @param categoryId
 	 * @param pickUpId
 	 */
-	public Article(String name, String description, LocalDateTime auctionStartDate, int startPrice, int sellerId,
-			int categoryId, int pickUpId) {
+	public Article(String name, String description, LocalDateTime auctionStartDate, LocalDateTime auctionEndDate,
+			int startPrice, String state, int sellerId, int categoryId, int pickUpId) {
 		this.name = name;
 		this.description = description;
 		this.auctionStartDate = auctionStartDate;
+		this.auctionEndDate = auctionEndDate;
 		this.startPrice = startPrice;
+		this.state = state;
 		this.sellerId = sellerId;
 		this.categoryId = categoryId;
 		this.pickUpId = pickUpId;
