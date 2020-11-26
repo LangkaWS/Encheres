@@ -15,32 +15,87 @@ public class UserManager {
 		this.userDAO = DAOFactory.getUserDAO();
 	}
 	
-	public void addUser(String userName, String lastName, String firstName, String email, String phone, String street, String zipCode, String town, String password) throws BLLException {
-		User user = new User(userName, lastName, firstName, email, phone, street, zipCode, town, password);
+	public void addUser(User user) throws BLLException {
+		if(!this.validateUser(user)) {
+			throw new BLLException("Invalid user. Please check again data.");
+		} else {
+			try {
+				userDAO.insert(user);
+			} catch (DALException e) {
+				e.printStackTrace();
+				throw new BLLException("User adding failed - ", e);
+			}
+		}
+	}
+	
+	public void updateUser(User user) throws BLLException {
+		if(!this.validateUser(user)) {
+			throw new BLLException("Invalid user. Please check again data.");
+		} else {
+			try {
+				userDAO.update(user);
+			} catch (DALException e) {
+				e.printStackTrace();
+				throw new BLLException("User update failed - ", e);
+			}
+		}
+	}
+	
+	public void deleteUser(User user) throws BLLException {
 		try {
-			List<User> list = userDAO.selectAll();
-			if(!this.validateUserName(userName, list)) {
+			userDAO.delete(user);
+		} catch (DALException e) {
+			e.printStackTrace();
+			throw new BLLException("User deletion failed - ", e);
+		}
+	}
+	
+	public User getUser(User user) throws BLLException {
+		User u = null;
+		try {
+			u = userDAO.selectById(user);
+		} catch (DALException e) {
+			e.printStackTrace();
+			throw new BLLException("User selection failed - ", e);
+		}
+		return u;
+	}
+	
+	private boolean validateUser(User user) throws BLLException {
+		boolean isValid = true;
+		List<User> list;
+		try {
+			list = userDAO.selectAll();
+			if(!this.validateUserName(user.getUserName(), list)) {
+				isValid=false;
 				throw new BLLException("The user name is invalid.");
 			}
-			if(!this.validateLastName(lastName)) {
+			if(!this.validateLastName(user.getLastName())) {
+				isValid=false;
 				throw new BLLException("The last name is invalid.");
 			}
-			if(!this.validateFirstName(firstName)) {
+			if(!this.validateFirstName(user.getFirstName())) {
+				isValid=false;
 				throw new BLLException("The first name is invalid.");
 			}
-			if(!this.validateEmail(email, list)) {
+			if(!this.validateEmail(user.getEmail(), list)) {
+				isValid=false;
 				throw new BLLException("The user name is invalid.");
 			}
-			if(!this.validatePhone(phone)) {
+			if(!this.validatePhone(user.getPhone())) {
+				isValid=false;
 				throw new BLLException("The phone number is invalid.");
 			}
-			if(!this.validateStreet(street)) {
+			if(!this.validateStreet(user.getStreet())) {
+				isValid=false;
 				throw new BLLException("The street is invalid.");
 			}
-			if(!this.validateZipCode(zipCode)) {
+			if(!this.validateZipCode(user.getZipCode())) {
+				isValid=false;
 				throw new BLLException("The zip code is invalid.");
 			}
-			if(!this.validateTown(town)) {
+			if(!this.validateTown(user.getTown())) {
+				isValid=false;
 				throw new BLLException("The town is invalid.");
 			}
 			/*
@@ -48,18 +103,12 @@ public class UserManager {
 				throw new BLLException("The password is invalid.");
 			}
 			*/
-			try {
-				userDAO.insert(user);
-			} catch (DALException e) {
-				e.printStackTrace();
-				throw new BLLException("User adding failed - ", e);
-			}
-		} catch (DALException e1) {
-			e1.printStackTrace();
-			throw new BLLException("All users selection failed - ", e1);
+		} catch (DALException e) {
+			e.printStackTrace();
+			throw new BLLException("All users selection failed - ", e);
 		}
 
-
+		return isValid;
 	}
 	
 	private boolean validatePassword(String password) {

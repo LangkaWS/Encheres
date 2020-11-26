@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.encheres.bll.BLLException;
 import fr.eni.encheres.bll.UserManager;
+import fr.eni.encheres.bll.bo.User;
 
 /**
  * Servlet implementation class ServletTestBLL
@@ -31,11 +32,18 @@ public class ServletTestBLL extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 		UserManager um = new UserManager();
+		/*
+		User u = new User("nanou", "Bibi", "Nougat", "nougatdu57@gmx.com", "0123456789", "28 rue des abeilles", "68000", "colmar", "meow");
 		try {
-			um.addUser("bichette", "Dupuis", "Jeannine", "bichette@gmx.com", "0123456789", "28 rue des abeilles", "68000", "colmar", "bichounette");
+			um.addUser(u);
+			System.out.println(u.getUserId());
+			User test = um.getUser(u);
+			System.out.println(test.toString());
+			//um.updateUser(u);
 		} catch (BLLException e) {
 			e.printStackTrace();
 		}
+		*/
 	}
 
 	/**

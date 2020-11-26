@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.encheres.bll.bo.Article;
-import fr.eni.encheres.bll.bo.User;
 
 public class ArticleDAOJDBCImpl implements ArticleDAO {
 	
@@ -233,14 +232,14 @@ public class ArticleDAOJDBCImpl implements ArticleDAO {
 	}
 
 	@Override
-	public List<Article> selectWonArticles(User buyer) throws DALException {
+	public List<Article> selectWonArticles(int buyerId) throws DALException {
 		List<Article> list = new ArrayList<>();
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
 			con = ConnectionProvider.getConnection();
 			pstmt = con.prepareStatement(SELECT_ENDED_BY_BUYER);
-			pstmt.setInt(1, buyer.getUserId());
+			pstmt.setInt(1, buyerId);
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next()) {
 				Article a = new Article(
@@ -279,14 +278,14 @@ public class ArticleDAOJDBCImpl implements ArticleDAO {
 	}
 
 	@Override
-	public List<Article> selectArticlesOfSeller(User seller) throws DALException {
+	public List<Article> selectArticlesOfSeller(int sellerId) throws DALException {
 		List<Article> list = new ArrayList<>();
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
 			con = ConnectionProvider.getConnection();
 			pstmt = con.prepareStatement(SELECT_BY_SELLER);
-			pstmt.setInt(1, seller.getUserId());
+			pstmt.setInt(1, sellerId);
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next()) {
 				Article a = new Article(
@@ -325,14 +324,14 @@ public class ArticleDAOJDBCImpl implements ArticleDAO {
 	}
 	
 	@Override
-	public List<Article> selectArticlesOfSellerByState(User seller, String state) throws DALException {
+	public List<Article> selectArticlesOfSellerByState(int sellerId, String state) throws DALException {
 		List<Article> list = new ArrayList<>();
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
 			con = ConnectionProvider.getConnection();
 			pstmt = con.prepareStatement(SELECT_BY_SELLER_AND_STATE);
-			pstmt.setInt(1, seller.getUserId());
+			pstmt.setInt(1, sellerId);
 			pstmt.setString(2, state);
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next()) {
