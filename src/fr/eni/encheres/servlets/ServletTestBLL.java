@@ -8,8 +8,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.encheres.bll.BLLException;
+import fr.eni.encheres.bll.CategoryManager;
 import fr.eni.encheres.bll.UserManager;
 import fr.eni.encheres.bll.bo.User;
+import fr.eni.encheres.bll.bo.Category;
 
 /**
  * Servlet implementation class ServletTestBLL
@@ -31,6 +33,14 @@ public class ServletTestBLL extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.getWriter().append("Served at: ").append(request.getContextPath());
+		CategoryManager cm = new CategoryManager();
+		/*
+		Category c = new Category("Jardinage");
+		try {
+			cm.addCategory(c);
+		} catch (BLLException e) {
+			e.printStackTrace();
+		}
 		UserManager um = new UserManager();
 		/*
 		User u = new User("nanou", "Bibi", "Nougat", "nougatdu57@gmx.com", "0123456789", "28 rue des abeilles", "68000", "colmar", "meow");
