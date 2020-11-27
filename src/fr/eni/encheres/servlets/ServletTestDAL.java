@@ -1,8 +1,6 @@
 package fr.eni.encheres.servlets;
 
-import fr.eni.encheres.bll.bo.Category;
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,13 +11,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.encheres.bll.bo.Article;
+import fr.eni.encheres.bll.bo.Bid;
+import fr.eni.encheres.bll.bo.Category;
 import fr.eni.encheres.bll.bo.PickUp;
 import fr.eni.encheres.bll.bo.User;
 import fr.eni.encheres.dal.ArticleDAO;
+import fr.eni.encheres.dal.BidDAO;
 import fr.eni.encheres.dal.DALException;
-import fr.eni.encheres.dal.DAO;
 import fr.eni.encheres.dal.DAOFactory;
-import fr.eni.encheres.bll.bo.*;
+import fr.eni.encheres.dal.SingleIdDAO;
 
 /**
  * Servlet implementation class ServletTestDAL
@@ -34,11 +34,11 @@ public class ServletTestDAL extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 		
-		DAO<User> userDAO = DAOFactory.getUserDAO();
+		SingleIdDAO<User> userDAO = DAOFactory.getUserDAO();
 		ArticleDAO articleDAO = DAOFactory.getArticleDAO();
-		DAO<PickUp> pickUpDAO = DAOFactory.getPickUpDAO();
-		DAO<Category> categoryDAO = DAOFactory.getCategoryDAO();
-		DAO<Bid> bidDAO = DAOFactory.getBidDAO();
+		SingleIdDAO<PickUp> pickUpDAO = DAOFactory.getPickUpDAO();
+		SingleIdDAO<Category> categoryDAO = DAOFactory.getCategoryDAO();
+		BidDAO bidDAO = DAOFactory.getBidDAO();
 		
 		
 		try {
@@ -85,7 +85,7 @@ public class ServletTestDAL extends HttpServlet {
 			}
 			System.out.println("Selection by id : ");
 			Bid b = new Bid();
-			b = bidDAO.selectByIds(3, 2);
+			b = bidDAO.selectByIds(2, 3);
 			System.out.println(b.toString());
 			
 			//Precise article selection

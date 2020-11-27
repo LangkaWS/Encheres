@@ -9,7 +9,7 @@ import java.util.List;
 
 import fr.eni.encheres.bll.bo.Category;
 
-public class CategoryDAOJDBCImpl implements DAO<Category> {
+public class CategoryDAOJDBCImpl implements SingleIdDAO<Category> {
 	
 	private static final String INSERT = "INSERT INTO CATEGORIES(name) VALUES (?);";
 	private static final String UPDATE = "UPDATE CATEGORIES SET "
@@ -80,13 +80,13 @@ public class CategoryDAOJDBCImpl implements DAO<Category> {
 		
 	}
 	@Override
-	public void delete(Category data) throws DALException {
+	public void delete(int id) throws DALException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
 			con = ConnectionProvider.getConnection();
 			pstmt = con.prepareStatement(DELETE);
-			pstmt.setInt(1, data.getCategoryId());
+			pstmt.setInt(1, id);
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -139,11 +139,6 @@ public class CategoryDAOJDBCImpl implements DAO<Category> {
 		return list;
 	}
 
-	@Override
-	public Category selectByIds(int id1, int id2) throws DALException {
-		// unused method
-		return null;
-	}
 	@Override
 	public Category selectById(int id) throws DALException {
 		Category c = null;

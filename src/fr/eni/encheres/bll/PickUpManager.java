@@ -2,12 +2,12 @@ package fr.eni.encheres.bll;
 
 import fr.eni.encheres.bll.bo.PickUp;
 import fr.eni.encheres.dal.DALException;
-import fr.eni.encheres.dal.DAO;
 import fr.eni.encheres.dal.DAOFactory;
+import fr.eni.encheres.dal.SingleIdDAO;
 
 public class PickUpManager {
 	
-	private DAO<PickUp> pickUpDAO;
+	private SingleIdDAO<PickUp> pickUpDAO;
 	
 	public PickUpManager() {
 		this.pickUpDAO = DAOFactory.getPickUpDAO();
@@ -39,9 +39,9 @@ public class PickUpManager {
 		}
 	}
 	
-	public void deletePickUp(PickUp pickup) throws BLLException {
+	public void deletePickUp(int id) throws BLLException {
 		try {
-			pickUpDAO.delete(pickup);
+			pickUpDAO.delete(id);
 		} catch (DALException e) {
 			e.printStackTrace();
 			throw new BLLException("Pick-up deletion failed - ", e);

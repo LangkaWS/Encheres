@@ -9,7 +9,7 @@ import java.util.List;
 
 import fr.eni.encheres.bll.bo.User;
 
-public class UserDAOJDBCImpl implements DAO<User> {
+public class UserDAOJDBCImpl implements SingleIdDAO<User> {
 	
 	private static final String INSERT = "INSERT INTO USERS(userName, lastName, firstName, email, phone, street, zipCode, town, password, credit, admin) "
 			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
@@ -110,13 +110,13 @@ public class UserDAOJDBCImpl implements DAO<User> {
 	}
 
 	@Override
-	public void delete(User data) throws DALException {
+	public void delete(int id) throws DALException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
 			con = ConnectionProvider.getConnection();
 			pstmt = con.prepareStatement(DELETE);
-			pstmt.setInt(1, data.getUserId());
+			pstmt.setInt(1, id);
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -179,12 +179,6 @@ public class UserDAOJDBCImpl implements DAO<User> {
 			}
 		}
 		return list;
-	}
-
-	@Override
-	public User selectByIds(int id1, int id2) throws DALException {
-		// unused method
-		return null;
 	}
 
 	@Override

@@ -10,16 +10,16 @@ import java.util.List;
 
 import fr.eni.encheres.bll.bo.Bid;
 
-public class BidDAOJDBCImpl implements DAO<Bid> {
+public class BidDAOJDBCImpl implements BidDAO {
 	private static final String INSERT = "INSERT INTO BIDS(buyerId, articleId, amount, bidDate) VALUES (?, ?, ?, ?);";
 	private static final String UPDATE = "UPDATE BIDS SET "
 			+ "amount = ?, "
 			+ "bidDate = ?, "
 			+ "WHERE buyerId = ? "
 			+ "AND articleId = ?;";
-	private static final String DELETE = "DELETE FROM BIDS WHERE buyerId = ? AND articleId = ?;";
+	private static final String DELETE = "DELETE FROM BIDS WHERE articleId = ? AND buyerId = ?;";
 	private static final String SELECT_ALL = "SELECT * FROM BIDS;";
-	private static final String SELECT_BY_ID = "SELECT * FROM BIDS WHERE buyerId = ? AND articleId = ?;";
+	private static final String SELECT_BY_ID = "SELECT * FROM BIDS WHERE articleId = ? AND buyerId = ?;";
 	
 	@Override
 	public void insert(Bid data) throws DALException {
@@ -81,34 +81,6 @@ public class BidDAOJDBCImpl implements DAO<Bid> {
 	}
 	
 	@Override
-	public void delete(Bid data) throws DALException {
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		try {
-			con = ConnectionProvider.getConnection();
-			pstmt = con.prepareStatement(DELETE);
-			pstmt.setInt(1, data.getBuyerId());
-			pstmt.setInt(2, data.getArticleId());
-			pstmt.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new DALException("Bid deletion from database failed - ", e);
-		} finally {
-			try {
-				if (pstmt != null) {
-					pstmt.close();
-				}
-				if (con != null) {
-					con.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-				throw new DALException("Close failed - ", e);
-			}
-		}
-	}
-	
-	@Override
 	public List<Bid> selectAll() throws DALException {
 		List<Bid> list = new ArrayList<>();
 		Connection con = null;
@@ -144,15 +116,15 @@ public class BidDAOJDBCImpl implements DAO<Bid> {
 	}
 
 	@Override
-	public Bid selectByIds(int id1, int id2) throws DALException {
+	public Bid selectByIds(int articleId, int buyerId) throws DALException {
 		Bid b = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
 			con = ConnectionProvider.getConnection();
 			pstmt = con.prepareStatement(SELECT_BY_ID);
-			pstmt.setInt(1, id1);
-			pstmt.setInt(2, id2);
+			pstmt.setInt(1, articleId);
+			pstmt.setInt(2, buyerId);
 			ResultSet rs = pstmt.executeQuery();
 			if (rs.next()) {
 				b = new Bid(rs.getInt(1),
@@ -178,11 +150,6 @@ public class BidDAOJDBCImpl implements DAO<Bid> {
 		}
 		
 		return b;
-	}
-	@Override
-	public Bid selectById(int id) throws DALException {
-		// unused method
-		return null;
 	}
 
 }

@@ -4,15 +4,16 @@ import fr.eni.encheres.bll.bo.Article;
 import fr.eni.encheres.bll.bo.Bid;
 import fr.eni.encheres.bll.bo.User;
 import fr.eni.encheres.dal.ArticleDAO;
+import fr.eni.encheres.dal.BidDAO;
 import fr.eni.encheres.dal.DALException;
-import fr.eni.encheres.dal.DAO;
 import fr.eni.encheres.dal.DAOFactory;
+import fr.eni.encheres.dal.SingleIdDAO;
 
 public class BidManager {
 	
-	private DAO<Bid> bidDAO;
+	private BidDAO bidDAO;
 	private ArticleDAO articleDAO;
-	private DAO<User> userDAO;
+	private SingleIdDAO<User> userDAO;
 	
 	public BidManager() {
 		this.bidDAO = DAOFactory.getBidDAO();
@@ -88,20 +89,6 @@ public class BidManager {
 				//Update bid in database
 				bidDAO.update(bid);
 			}
-		} catch (DALException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public void deleteBid(Bid bid) {
-		Article article;
-		User bidder;
-		try {
-			article = articleDAO.selectById(bid.getArticleId());
-			bidder = userDAO.selectById(bid.getBuyerId());
-			
-			//Remove selling price and 
-			
 		} catch (DALException e) {
 			e.printStackTrace();
 		}

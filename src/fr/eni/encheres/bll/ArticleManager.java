@@ -2,15 +2,14 @@ package fr.eni.encheres.bll;
 
 import java.time.LocalDateTime;
 
-import com.sun.org.apache.bcel.internal.generic.DALOAD;
-
 import fr.eni.encheres.bll.bo.Article;
 import fr.eni.encheres.bll.bo.Category;
 import fr.eni.encheres.bll.bo.PickUp;
 import fr.eni.encheres.bll.bo.User;
+import fr.eni.encheres.dal.ArticleDAO;
 import fr.eni.encheres.dal.DALException;
-import fr.eni.encheres.dal.DAO;
 import fr.eni.encheres.dal.DAOFactory;
+import fr.eni.encheres.dal.SingleIdDAO;
 
 public class ArticleManager {
 	
@@ -30,10 +29,10 @@ public class ArticleManager {
 	 * 
 	 * */
 	
-	private DAO<Article> articleDAO;
-	private DAO<User> userDAO;
-	private DAO<Category> categoryDAO;
-	private DAO<PickUp> pickUpDAO;
+	private ArticleDAO articleDAO;
+	private SingleIdDAO<User> userDAO;
+	private SingleIdDAO<Category> categoryDAO;
+	private SingleIdDAO<PickUp> pickUpDAO;
 	
 	public ArticleManager() {
 		this.articleDAO = DAOFactory.getArticleDAO();

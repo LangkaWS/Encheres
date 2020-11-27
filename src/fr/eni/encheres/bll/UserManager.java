@@ -4,12 +4,12 @@ import java.util.List;
 
 import fr.eni.encheres.bll.bo.User;
 import fr.eni.encheres.dal.DALException;
-import fr.eni.encheres.dal.DAO;
 import fr.eni.encheres.dal.DAOFactory;
+import fr.eni.encheres.dal.SingleIdDAO;
 
 public class UserManager {
 	
-	private DAO<User> userDAO;
+	private SingleIdDAO<User> userDAO;
 	
 	public UserManager() {
 		this.userDAO = DAOFactory.getUserDAO();
@@ -41,9 +41,9 @@ public class UserManager {
 		}
 	}
 	
-	public void deleteUser(User user) throws BLLException {
+	public void deleteUser(int id) throws BLLException {
 		try {
-			userDAO.delete(user);
+			userDAO.delete(id);
 		} catch (DALException e) {
 			e.printStackTrace();
 			throw new BLLException("User deletion failed - ", e);

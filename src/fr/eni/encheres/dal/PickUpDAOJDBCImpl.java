@@ -9,7 +9,7 @@ import java.util.List;
 
 import fr.eni.encheres.bll.bo.PickUp;
 
-public class PickUpDAOJDBCImpl implements DAO<PickUp> {
+public class PickUpDAOJDBCImpl implements SingleIdDAO<PickUp> {
 	
 	private static final String INSERT ="INSERT INTO PICKUPS(street, zipCode, town) VALUES (?, ?, ?);";
 	private static final String UPDATE ="UPDATE PICKUPS SET "
@@ -85,13 +85,13 @@ public class PickUpDAOJDBCImpl implements DAO<PickUp> {
 	}
 
 	@Override
-	public void delete(PickUp data) throws DALException {
+	public void delete(int id) throws DALException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
 			con = ConnectionProvider.getConnection();
 			pstmt = con.prepareStatement(DELETE);
-			pstmt.setInt(1, data.getPickUpId());
+			pstmt.setInt(1, id);
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -146,12 +146,6 @@ public class PickUpDAOJDBCImpl implements DAO<PickUp> {
 			}
 		}
 		return list;
-	}
-
-	@Override
-	public PickUp selectByIds(int id1, int id2) throws DALException {
-		// unused method
-		return null;
 	}
 
 	@Override

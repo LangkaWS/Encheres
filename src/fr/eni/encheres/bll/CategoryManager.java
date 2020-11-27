@@ -7,10 +7,11 @@ import fr.eni.encheres.bll.bo.Category;
 import fr.eni.encheres.dal.DALException;
 import fr.eni.encheres.dal.DAO;
 import fr.eni.encheres.dal.DAOFactory;
+import fr.eni.encheres.dal.SingleIdDAO;
 
 public class CategoryManager {
 	
-	private DAO<Category> categoryDAO;
+	private SingleIdDAO<Category> categoryDAO;
 	
 	public CategoryManager() {
 		this.categoryDAO = DAOFactory.getCategoryDAO();
@@ -54,9 +55,9 @@ public class CategoryManager {
 		}
 	}
 	
-	public void removeCategory(Category c) throws BLLException {
+	public void removeCategory(int id) throws BLLException {
 		try {
-			categoryDAO.delete(c);
+			categoryDAO.delete(id);
 		} catch (DALException e) {
 			e.printStackTrace();
 			throw new BLLException("Category deleting failed - ", e);

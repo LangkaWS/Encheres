@@ -1,13 +1,12 @@
 package fr.eni.encheres.dal;
 
-import fr.eni.encheres.bll.bo.Bid;
 import fr.eni.encheres.bll.bo.PickUp;
 import fr.eni.encheres.bll.bo.Category;
 import fr.eni.encheres.bll.bo.User;
 
 public abstract class DAOFactory {
 	
-	public static DAO<User> getUserDAO() {
+	public static SingleIdDAO<User> getUserDAO() {
 		return new UserDAOJDBCImpl();
 	}
 	
@@ -15,16 +14,16 @@ public abstract class DAOFactory {
 		return new ArticleDAOJDBCImpl();
 	}
 	
-	public static DAO<PickUp> getPickUpDAO() {
+	public static SingleIdDAO<PickUp> getPickUpDAO() {
 		return new PickUpDAOJDBCImpl();
 	}
 		
-	public static DAO<Category> getCategoryDAO() {
+	public static SingleIdDAO<Category> getCategoryDAO() {
 		return new CategoryDAOJDBCImpl();
 
 	}
 	
-	public static DAO<Bid> getBidDAO() {
+	public static BidDAO getBidDAO() {
 		return new BidDAOJDBCImpl();
 
 	}

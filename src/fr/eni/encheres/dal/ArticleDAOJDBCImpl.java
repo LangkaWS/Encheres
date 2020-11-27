@@ -115,13 +115,13 @@ public class ArticleDAOJDBCImpl implements ArticleDAO {
 	}
 
 	@Override
-	public void delete(Article data) throws DALException {
+	public void delete(int id) throws DALException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
 			con = ConnectionProvider.getConnection();
 			pstmt = con.prepareStatement(DELETE);
-			pstmt.setInt(1, data.getArticleId());
+			pstmt.setInt(1, id);
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -184,6 +184,51 @@ public class ArticleDAOJDBCImpl implements ArticleDAO {
 			}
 		}
 		return list;
+	}
+	
+	@Override
+	public Article selectById(int id) throws DALException {
+		Article article = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con = ConnectionProvider.getConnection();
+			pstmt = con.prepareStatement(SELECT_BY_ID);
+			pstmt.setInt(1, id);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				article = new Article(
+						rs.getInt(1),
+						rs.getString(2),
+						rs.getString(3),
+						rs.getTimestamp(4).toLocalDateTime(),
+						rs.getTimestamp(5).toLocalDateTime(),
+						rs.getInt(6),
+						rs.getInt(7),
+						rs.getString(8),
+						rs.getInt(9),
+						rs.getInt(10),
+						rs.getInt(11),
+						rs.getInt(12)
+						);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DALException("DATA ACCESS LAYER EXCEPTION : Article selection by ID from database failed - ", e);
+		}  finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new DALException("Close failed - ", e);
+			}
+		}
+		return article;
 	}
 
 	@Override
@@ -508,56 +553,7 @@ public class ArticleDAOJDBCImpl implements ArticleDAO {
 		return list;
 	}
 
-	@Override
-	public Article selectByIds(int id1, int id2) throws DALException {
-		// unused method
-		return null;
-	}
 
-	@Override
-	public Article selectById(int id) throws DALException {
-		Article article = null;
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		try {
-			con = ConnectionProvider.getConnection();
-			pstmt = con.prepareStatement(SELECT_BY_ID);
-			pstmt.setInt(1, id);
-			ResultSet rs = pstmt.executeQuery();
-			while(rs.next()) {
-				article = new Article(
-						rs.getInt(1),
-						rs.getString(2),
-						rs.getString(3),
-						rs.getTimestamp(4).toLocalDateTime(),
-						rs.getTimestamp(5).toLocalDateTime(),
-						rs.getInt(6),
-						rs.getInt(7),
-						rs.getString(8),
-						rs.getInt(9),
-						rs.getInt(10),
-						rs.getInt(11),
-						rs.getInt(12)
-						);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new DALException("DATA ACCESS LAYER EXCEPTION : Article selection by ID from database failed - ", e);
-		}  finally {
-			try {
-				if (pstmt != null) {
-					pstmt.close();
-				}
-				if (con != null) {
-					con.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-				throw new DALException("Close failed - ", e);
-			}
-		}
-		return article;
-	}
 
 	
 

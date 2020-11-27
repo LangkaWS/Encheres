@@ -4,7 +4,7 @@ import java.util.List;
 
 import fr.eni.encheres.bll.bo.Article;
 
-public interface ArticleDAO extends DAO<Article> {
+public interface ArticleDAO extends SingleIdDAO<Article> {
 	
 	public List<Article> selectArticlesByCategory(int categoryId) throws DALException;
 	
