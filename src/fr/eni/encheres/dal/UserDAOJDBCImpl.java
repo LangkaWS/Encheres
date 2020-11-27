@@ -22,7 +22,7 @@ public class UserDAOJDBCImpl implements SingleIdDAO<User> {
 			+ "street = ?, "
 			+ "zipCode = ?, "
 			+ "town = ?, "
-			+ "motDePasse = ?, "
+			+ "password = ?, "
 			+ "credit = ?, "
 			+ "admin = ? "
 			+ "WHERE userId = ?;";

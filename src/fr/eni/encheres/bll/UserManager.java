@@ -66,7 +66,7 @@ public class UserManager {
 		List<User> list;
 		try {
 			list = userDAO.selectAll();
-			if(!this.validateUserName(user.getUserName(), list)) {
+			if(!this.validateUserName(user, list)) {
 				isValid=false;
 				throw new BLLException("The user name is invalid.");
 			}
@@ -78,7 +78,7 @@ public class UserManager {
 				isValid=false;
 				throw new BLLException("The first name is invalid.");
 			}
-			if(!this.validateEmail(user.getEmail(), list)) {
+			if(!this.validateEmail(user, list)) {
 				isValid=false;
 				throw new BLLException("The user name is invalid.");
 			}
@@ -107,24 +107,27 @@ public class UserManager {
 			e.printStackTrace();
 			throw new BLLException("All users selection failed - ", e);
 		}
-
 		return isValid;
 	}
 	
-	public boolean validateUserName(String userName, List<User> listAllUsers) throws BLLException {
+	public boolean validateUserName(User user, List<User> listAllUsers) throws BLLException {
 		boolean isValid = true;
+		
+		//User name test : only alphanumerical characters
+		if(!user.getUserName().matches("^\\w+$")) {
+			isValid = false;
+			throw new BLLException("The user name must contain only letters, numbers and _");
+		}
+		
 		//User name test : must be unique
 		for(User u : listAllUsers) {
-			if (userName.equals(u.getUserName())) {
+			if (user.getUserName().equals(u.getUserName())) {
+				if(user.getUserId() != null && user.getUserId() == u.getUserId()) {
+					continue;
+				}
 				isValid = false;
 				throw new BLLException("The user name must be unique.");
 			}
-		}
-		
-		//User name test : only alphanumerical characters
-		if(!userName.matches("^\\w+$")) {
-			isValid = false;
-			throw new BLLException("The user name must contain only letters, numbers and _");
 		}
 		return isValid;
 	}
@@ -147,17 +150,20 @@ public class UserManager {
 		return isValid;
 	}
 
-	public boolean validateEmail(String email, List<User> listAllUsers) throws BLLException {
+	public boolean validateEmail(User user, List<User> listAllUsers) throws BLLException {
 		boolean isValid = true;
 		//User email test : must be something like xxx@xxx.xx
-		if(!email.matches("\\A(?=[a-z0-9@.!#$%&'*+/=?^_‘{|}~-]{6,254}\\z)(?=[a-z0-9.!#$%&'*+/=?^_‘{|}~-]{1,64}@)[a-z0-9!#$%&'*+/=?^_‘{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_‘{|}~-]+)*@(?:(?=[a-z0-9-]{1,63}\\.)[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+(?=[a-z0-9-]{1,63}\\z)[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\z")) {
+		if(!user.getEmail().matches("\\A(?=[a-z0-9@.!#$%&'*+/=?^_‘{|}~-]{6,254}\\z)(?=[a-z0-9.!#$%&'*+/=?^_‘{|}~-]{1,64}@)[a-z0-9!#$%&'*+/=?^_‘{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_‘{|}~-]+)*@(?:(?=[a-z0-9-]{1,63}\\.)[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+(?=[a-z0-9-]{1,63}\\z)[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\z")) {
 			isValid = false;
 			throw new BLLException("The email address must be valid.");
 		}
 		
 		//User name test : must be unique
 		for(User u : listAllUsers) {
-			if (email.equals(u.getEmail())) {
+			if (user.getUserId() != null && user.getEmail().equals(u.getEmail())) {
+				if(user.getUserId() == u.getUserId()) {
+					continue;
+				}
 				isValid = false;
 				throw new BLLException("The email must be unique.");
 			}
