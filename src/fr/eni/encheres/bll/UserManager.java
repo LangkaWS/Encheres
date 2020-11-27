@@ -98,11 +98,9 @@ public class UserManager {
 				isValid=false;
 				throw new BLLException("The town is invalid.");
 			}
-			/*
-			if(!this.validatePassword(password)) {
+			if(!this.validatePassword(user.getPassword())) {
 				throw new BLLException("The password is invalid.");
 			}
-			*/
 		} catch (DALException e) {
 			e.printStackTrace();
 			throw new BLLException("All users selection failed - ", e);
@@ -112,6 +110,12 @@ public class UserManager {
 	
 	public boolean validateUserName(User user, List<User> listAllUsers) throws BLLException {
 		boolean isValid = true;
+		
+		//User name test : maximum length = 30
+		if(!(user.getUserName().length() <= 30)) {
+			isValid = false;
+			throw new BLLException("The user name must be up to 30 characters long.");
+		}
 		
 		//User name test : only alphanumerical characters
 		if(!user.getUserName().matches("^\\w+$")) {
@@ -134,6 +138,12 @@ public class UserManager {
 
 	private boolean validateLastName(String lastName) throws BLLException {
 		boolean isValid = true;
+		
+		if(!(lastName.length() <= 30)) {
+			isValid = false;
+			throw new BLLException("The last name must be up to 30 characters long.");
+		}
+		
 		if(!lastName.matches("(?i)^[a-z .'-]+$")) {
 			isValid = false;
 			throw new BLLException("The last name must contain only letters, white spaces and some special characters (.'-)");
@@ -143,6 +153,12 @@ public class UserManager {
 	
 	private boolean validateFirstName(String firstName) throws BLLException {
 		boolean isValid = true;
+		
+		if(!(firstName.length() <= 30)) {
+			isValid = false;
+			throw new BLLException("The first name must be up to 30 characters long.");
+		}
+		
 		if(!firstName.matches("(?i)^[a-z .'-]+$")) {
 			isValid = false;
 			throw new BLLException("The first name must contain only letters, white spaces and some special characters (.'-)");
@@ -152,6 +168,12 @@ public class UserManager {
 
 	public boolean validateEmail(User user, List<User> listAllUsers) throws BLLException {
 		boolean isValid = true;
+		
+		if(!(user.getEmail().length() <= 50)) {
+			isValid = false;
+			throw new BLLException("The email must be up to 50 characters long.");
+		}
+		
 		//User email test : must be something like xxx@xxx.xx
 		if(!user.getEmail().matches("\\A(?=[a-z0-9@.!#$%&'*+/=?^_‘{|}~-]{6,254}\\z)(?=[a-z0-9.!#$%&'*+/=?^_‘{|}~-]{1,64}@)[a-z0-9!#$%&'*+/=?^_‘{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_‘{|}~-]+)*@(?:(?=[a-z0-9-]{1,63}\\.)[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+(?=[a-z0-9-]{1,63}\\z)[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\z")) {
 			isValid = false;
@@ -173,6 +195,12 @@ public class UserManager {
 	
 	private boolean validatePhone(String phone) throws BLLException {
 		boolean isValid = true;
+		
+		if(!(phone.length() <= 20)) {
+			isValid = false;
+			throw new BLLException("The phone must be up to 20 characters long.");
+		}
+		
 		if(!phone.matches("^\\d{10}$")) {
 			isValid = false;
 			throw new BLLException("The phone number must be 10 digits long.");
@@ -182,6 +210,12 @@ public class UserManager {
 	
 	private boolean validateStreet(String street) throws BLLException {
 		boolean isValid = true;
+		
+		if(!(street.length() <= 50)) {
+			isValid = false;
+			throw new BLLException("The street must be up to 50 characters long.");
+		}
+		
 		if(!street.matches("(?i)^[a-z0-9 ,.'-]+$")) {
 			isValid = false;
 			throw new BLLException("The street must contain only letters, numbers, white spaces and some special characters (,.'-)");
@@ -191,6 +225,7 @@ public class UserManager {
 	
 	private boolean validateZipCode(String zipCode) throws BLLException {
 		boolean isValid = true;
+			
 		if(!zipCode.matches("^\\d{5}$")) {
 			isValid = false;
 			throw new BLLException("The zip code must be 5 digits long.");
@@ -200,6 +235,12 @@ public class UserManager {
 	
 	private boolean validateTown(String town) throws BLLException {
 		boolean isValid = true;
+		
+		if(!(town.length() <= 30)) {
+			isValid = false;
+			throw new BLLException("The town must be up to 30 characters long.");
+		}
+		
 		if(!town.matches("(?i)^[a-z0-9 ,.'-]+$")) {
 			isValid = false;
 			throw new BLLException("The town must contain only letters, numbers, white spaces and some special characters (,.'-)");
@@ -207,9 +248,16 @@ public class UserManager {
 		return isValid;
 	}
 	
-	private boolean validatePassword(String password) {
+	private boolean validatePassword(String password) throws BLLException {
+		boolean isValid = true;
+		
+		if(!(password.length() <= 30)) {
+			isValid = false;
+			throw new BLLException("The password must be up to 30 characters long.");
+		}
+		
 		// TODO Auto-generated method stub
-		return false;
+		return isValid;
 	}
 
 
