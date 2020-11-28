@@ -463,7 +463,7 @@ public class ArticleDAOJDBCImpl implements ArticleDAO {
 	}
 
 	@Override
-	public List<Article> selectArticlesInProgress(String state) throws DALException {
+	public List<Article> selectArticlesInProgress() throws DALException {
 		List<Article> list = new ArrayList<>();
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -490,7 +490,7 @@ public class ArticleDAOJDBCImpl implements ArticleDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new DALException("DATA ACCESS LAYER EXCEPTION : Selection of articles with the state '" + state + "' from database failed - ", e);
+			throw new DALException("DATA ACCESS LAYER EXCEPTION : Selection of articles with the state 'in progress' from database failed - ", e);
 		}  finally {
 			try {
 				if (pstmt != null) {

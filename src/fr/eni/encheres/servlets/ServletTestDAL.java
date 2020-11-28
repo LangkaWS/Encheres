@@ -117,7 +117,7 @@ public class ServletTestDAL extends HttpServlet {
 			
 			//Articles selection by state in progress
 			System.out.println("Selection by state in progress : ");
-			list = articleDAO.selectArticlesInProgress("in progress");
+			list = articleDAO.selectArticlesInProgress();
 			for (Article article : list) {
 				System.out.println(article.toString());
 			}

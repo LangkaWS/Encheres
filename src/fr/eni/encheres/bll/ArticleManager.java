@@ -1,6 +1,8 @@
 package fr.eni.encheres.bll;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import fr.eni.encheres.bll.bo.Article;
 import fr.eni.encheres.bll.bo.Category;
@@ -42,45 +44,175 @@ public class ArticleManager {
 	}
 	
 	public void addArticle(Article a) throws BLLException {
+		if (this.validateArticle(a)) {
+			try {
+				articleDAO.insert(a);
+			} catch (DALException e) {
+				e.printStackTrace();
+				throw new BLLException("Inserting article failed.", e);
+			}
+		} else {
+			throw new BLLException("Article invalid. Please check again data.");
+		}
+	}
+	
+	public void updateArticle(Article a) throws BLLException {
+		if (this.validateArticle(a)) {
+			try {
+				articleDAO.update(a);
+			} catch (DALException e) {
+				e.printStackTrace();
+				throw new BLLException("Updating article failed.", e);
+			}
+		} else {
+			throw new BLLException("Article invalid. Please check again data.");
+		}
+	}
+	
+	public void deleteArticle(int id) throws BLLException {
 		try {
-			if (a.getArticleId() != null) {
-				throw new BLLException("Inserting article failed, article already exists.");
-			}
-			if (!this.validateArticleName(a.getName())) {
-				throw new BLLException("Article invalid.");
-			}
-			if (!this.validateArticleDescription(a.getDescription())) {
-				throw new BLLException("Article invalid.");
-			}
-			if (!this.validateArticleStartDate(a.getAuctionStartDate())) {
-				throw new BLLException("Article invalid.");
-			}
-			if (!this.validateArticleEndDate(a.getAuctionEndDate(), a.getAuctionStartDate())) {
-				throw new BLLException("Article invalid.");
-			}
-			if (!this.validateArticleStartPrice(a.getStartPrice())) {
-				throw new BLLException("Article invalid.");
-			}
-			if (!this.validateArticleState(a.getState())) {
-				throw new BLLException("Article invalid.");
-			}
-			if (!this.validateArticleSellerId(a.getSellerId())) {
-				throw new BLLException("Article invalid.");
-			}
-			if (!this.validateArticleBuyerId(a.getBuyerId())) {
-				throw new BLLException("Article invalid.");
-			}
-			if (!this.validateArticleCategoryId(a.getCategoryId())) {
-				throw new BLLException("Article invalid.");
-			}
-			if (!this.validateArticlePickUpId(a.getPickUpId())) {
-				throw new BLLException("Article invalid.");
-			}
-			articleDAO.insert(a);
+			articleDAO.delete(id);
 		} catch (DALException e) {
 			e.printStackTrace();
-			throw new BLLException("Inserting article failed.", e);
+			throw new BLLException("Article deletion failed - ", e);
 		}
+	}
+	
+	public Article getArticleById(int id) throws BLLException {
+		Article article = null;
+		try {
+			article = articleDAO.selectById(id);
+		} catch (DALException e) {
+			e.printStackTrace();
+			throw new BLLException("Article selection failed - ", e);
+		}
+		return article;
+	}
+	
+	public List<Article> getArticlesByCategory(int id) throws BLLException {
+		List<Article> list = new ArrayList<>();
+		try {
+			list = articleDAO.selectArticlesByCategory(id);
+		} catch (DALException e) {
+			e.printStackTrace();
+			throw new BLLException("Article selection failed - ", e);
+		}
+		return list;
+	}
+	
+	public List<Article> getArticlesByName(String name) throws BLLException {
+		List<Article> list = new ArrayList<>();
+		try {
+			list = articleDAO.selectArticlesByName(name);
+		} catch (DALException e) {
+			e.printStackTrace();
+			throw new BLLException("Article selection failed - ", e);
+		}
+		return list;
+	}
+	
+	public List<Article> getArticlesInProgress() throws BLLException {
+		List<Article> list = new ArrayList<>();
+		try {
+			list = articleDAO.selectArticlesInProgress();
+		} catch (DALException e) {
+			e.printStackTrace();
+			throw new BLLException("Article selection failed - ", e);
+		}
+		return list;
+	}
+	
+	public List<Article> getArticlesByParticipatingBuyer(int buyerId) throws BLLException {
+		List<Article> list = new ArrayList<>();
+		try {
+			list = articleDAO.selectArticlesByParticipatingBuyer(buyerId);
+		} catch (DALException e) {
+			e.printStackTrace();
+			throw new BLLException("Article selection failed - ", e);
+		}
+		return list;
+	}
+	
+	public List<Article> getWonArticles(int buyerId) throws BLLException {
+		List<Article> list = new ArrayList<>();
+		try {
+			list = articleDAO.selectWonArticles(buyerId);
+		} catch (DALException e) {
+			e.printStackTrace();
+			throw new BLLException("Article selection failed - ", e);
+		}
+		return list;
+	}
+	
+	public List<Article> getArticlesOfSeller(int sellerId) throws BLLException {
+		List<Article> list = new ArrayList<>();
+		try {
+			list = articleDAO.selectArticlesOfSeller(sellerId);
+		} catch (DALException e) {
+			e.printStackTrace();
+			throw new BLLException("Article selection failed - ", e);
+		}
+		return list;
+	}
+	
+	public List<Article> getArticlesOfSellerByState(int sellerId, String state) throws BLLException {
+		List<Article> list = new ArrayList<>();
+		try {
+			list = articleDAO.selectArticlesOfSellerByState(sellerId, state);
+		} catch (DALException e) {
+			e.printStackTrace();
+			throw new BLLException("Article selection failed - ", e);
+		}
+		return list;
+	}
+		
+	private boolean validateArticle(Article a) throws BLLException {
+		boolean isValid = true;
+		if (a.getArticleId() != null) {
+			isValid = false;
+			throw new BLLException("Inserting article failed, article already exists.");
+		}
+		if (!this.validateArticleName(a.getName())) {
+			isValid = false;
+			throw new BLLException("Article invalid.");
+		}
+		if (!this.validateArticleDescription(a.getDescription())) {
+			isValid = false;
+			throw new BLLException("Article invalid.");
+		}
+		if (!this.validateArticleStartDate(a.getAuctionStartDate())) {
+			isValid = false;
+			throw new BLLException("Article invalid.");
+		}
+		if (!this.validateArticleEndDate(a.getAuctionEndDate(), a.getAuctionStartDate())) {
+			isValid = false;
+			throw new BLLException("Article invalid.");
+		}
+		if (!this.validateArticleStartPrice(a.getStartPrice())) {
+			isValid = false;
+			throw new BLLException("Article invalid.");
+		}
+		if (!this.validateArticleState(a.getState())) {
+			isValid = false;
+			throw new BLLException("Article invalid.");
+		}
+		if (!this.validateArticleSellerId(a.getSellerId())) {
+			isValid = false;
+			throw new BLLException("Article invalid.");
+		}
+		if (!this.validateArticleBuyerId(a.getBuyerId())) {
+			isValid = false;
+			throw new BLLException("Article invalid.");
+		}
+		if (!this.validateArticleCategoryId(a.getCategoryId())) {
+			isValid = false;
+			throw new BLLException("Article invalid.");
+		}
+		if (!this.validateArticlePickUpId(a.getPickUpId())) {
+			isValid = false;
+			throw new BLLException("Article invalid.");
+		}
+		return isValid;
 	}
 	
 	private boolean validateArticleName(String name) throws BLLException {
@@ -88,10 +220,6 @@ public class ArticleManager {
 		if(name.equals("")) {
 			isValid = false;
 			throw new BLLException("The name can't be empty.");
-		}
-		if(name == null) {
-			isValid = false;
-			throw new BLLException("The name can't be null.");
 		}
 		if(name.length() > 30) {
 			isValid = false;
@@ -106,10 +234,6 @@ public class ArticleManager {
 			isValid = false;
 			throw new BLLException("The description can't be empty.");
 		}
-		if(description == null) {
-			isValid = false;
-			throw new BLLException("The description can't be null.");
-		}
 		if(description.length() > 300) {
 			isValid = false;
 			throw new BLLException("The description can't be longer than 300 characters.");
@@ -123,10 +247,6 @@ public class ArticleManager {
 			isValid = false;
 			throw new BLLException("The start date of the auction can't be passed.");
 		}
-		if (startDate == null) {
-			isValid = false;
-			throw new BLLException("The start date of the auction can't be null.");
-		}
 		return isValid;
 	}
 	
@@ -136,10 +256,6 @@ public class ArticleManager {
 			isValid = false;
 			throw new BLLException("The end date of the auction can't be before start date.");
 		}
-		if (endDate == null) {
-			isValid = false;
-			throw new BLLException("The end date of the auction can't be null.");
-		}
 		return isValid;
 	}
 	
@@ -148,10 +264,6 @@ public class ArticleManager {
 		if (price < 0) {
 			isValid = false;
 			throw new BLLException("The price can't be negative.");
-		}
-		if (price == null) {
-			isValid = false;
-			throw new BLLException("The price can't be null.");
 		}
 		return isValid;
 	}
