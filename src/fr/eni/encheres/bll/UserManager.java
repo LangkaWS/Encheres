@@ -119,9 +119,9 @@ public class UserManager {
 		}
 		
 		//User name test : only alphanumerical characters
-		if(!user.getUserName().matches("^\\w+$")) {
+		if(!user.getUserName().matches("^[A-Za-zÀ-ÖØ-öø-ÿ0-9]+$")) {
 			isValid = false;
-			throw new BLLException("The user name must contain only letters, numbers and _");
+			throw new BLLException("The user name must contain only letters and numbers");
 		}
 		
 		//User name test : must be unique
@@ -145,7 +145,7 @@ public class UserManager {
 			throw new BLLException("The last name must be up to 30 characters long.");
 		}
 		
-		if(!lastName.matches("(?i)^[a-z .'-]+$")) {
+		if(!lastName.matches("(?i)^[A-Za-zÀ-ÖØ-öø-ÿ .'-]+$")) {
 			isValid = false;
 			throw new BLLException("The last name must contain only letters, white spaces and some special characters (.'-)");
 		}
@@ -160,7 +160,7 @@ public class UserManager {
 			throw new BLLException("The first name must be up to 30 characters long.");
 		}
 		
-		if(!firstName.matches("(?i)^[a-z .'-]+$")) {
+		if(!firstName.matches("(?i)^[A-Za-zÀ-ÖØ-öø-ÿ .'-]+$")) {
 			isValid = false;
 			throw new BLLException("The first name must contain only letters, white spaces and some special characters (.'-)");
 		}
@@ -197,6 +197,10 @@ public class UserManager {
 	private boolean validatePhone(String phone) throws BLLException {
 		boolean isValid = true;
 		
+		if(phone.isEmpty()) {
+			return isValid;
+		}
+		
 		if(!(phone.length() <= 20)) {
 			isValid = false;
 			throw new BLLException("The phone must be up to 20 characters long.");
@@ -217,7 +221,7 @@ public class UserManager {
 			throw new BLLException("The street must be up to 50 characters long.");
 		}
 		
-		if(!street.matches("(?i)^[a-z0-9 ,.'-]+$")) {
+		if(!street.matches("(?i)^[A-Za-zÀ-ÖØ-öø-ÿ0-9 ,.'-]+$")) {
 			isValid = false;
 			throw new BLLException("The street must contain only letters, numbers, white spaces and some special characters (,.'-)");
 		}
@@ -242,9 +246,9 @@ public class UserManager {
 			throw new BLLException("The town must be up to 30 characters long.");
 		}
 		
-		if(!town.matches("(?i)^[a-z0-9 ,.'-]+$")) {
+		if(!town.matches("(?i)^[A-Za-zÀ-ÖØ-öø-ÿ ,.'-]+$")) {
 			isValid = false;
-			throw new BLLException("The town must contain only letters, numbers, white spaces and some special characters (,.'-)");
+			throw new BLLException("The town must contain only letters, white spaces and some special characters (,.'-)");
 		}
 		return isValid;
 	}

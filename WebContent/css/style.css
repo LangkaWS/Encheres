@@ -1,21 +1,74 @@
 @charset "UTF-8";
 
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap');
 
-/*
-#11b37a : primary
-#ff7919 : secondary
-#ff193c : warning
-#363636 : gris
-*/
+:root {
+	--primary-color: #11b37a;
+	--secondary-color: #ff7919;
+	--tertiary-color: #ff193c;
+	--cust-gray: #363636;
+}
 
 * {
 	margin: 0;
 	padding: 0;
-	font-family: 'Open Sans';
-	border: none;
+	font-family: 'Josefin Sans';
+	font-size: 1.2rem;
+}
+
+h2 {
+	text-align: center;
 }
 
 .error {
-	background-color: ;
+	width: 80%;
+	margin: 20px auto;
+	padding: 5px;
+	text-align: center;
+	border-radius: 3px;
+	background-color: var(--tertiary-color);
+}
+
+.error:empty {
+	display: none;
+}
+
+/* SIGN UP PAGE */
+#signUpFormTable {
+	border-spacing: 20px;
+	margin: auto;
+}
+
+.tableLabel {
+	padding-left: 20px;
+}
+
+.tableInput {
+	padding-right: 20px;
+}
+
+#submitBox {
+	display: flex;
+	flex-wrap: nowrap;
+	justify-content: space-around;
+	width: 50%;
+	margin: auto;
+}
+
+.formButton {
+	padding: 10px 20px;;
+	margin: 0px auto;
+	width: 140px;
+	border: none;
+	border-radius: 3px;
+	box-shadow: 3px 3px var(--cust-gray);
+	color: white;
+}
+
+#submitButton {
+	background-color: var(--primary-color);
+}
+
+#cancelButton {
+	background-color: var(--secondary-color);
 }
