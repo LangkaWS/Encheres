@@ -40,10 +40,6 @@ header {
 	padding: 20px;
 }
 
-#signInLink {
-	float: right;
-}
-
 #searchDiv {
 	margin: 40px;
 	display: flex;
@@ -65,6 +61,12 @@ header {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-around;
+}
+
+#logOutLink {
+    color: -webkit-link;
+    cursor: pointer;
+    text-decoration: underline;
 }
 
 .articleTile {
@@ -92,9 +94,13 @@ header {
 	border-radius: 3px;
 }
 
-/* SIGN UP PAGE */
+.logLink {
+	float: right;
+}
 
-#signUpFormTable {
+/* SIGN UP AND IN PAGES */
+
+.signUpInFormTable {
 	border-spacing: 20px;
 	margin: auto;
 }
@@ -107,18 +113,33 @@ header {
 	padding-right: 20px;
 }
 
-#submitBox {
+.submitBox {
 	display: flex;
 	flex-wrap: nowrap;
 	justify-content: space-around;
 	width: 50%;
 	margin: auto;
+	margin-bottom: 20px;
+}
+
+#forgotPassword {
+	display: flex;
+	flex-wrap: nowrap;
+	justify-content: center;
+	align-items: center;
+	width: 50%;
+	margin: auto;
+	margin-bottom: 20px;
+}
+
+#rememberMe {
+	margin-right: 20px;
 }
 
 .formButton {
 	padding: 10px 20px;;
 	margin: 0px auto;
-	width: 140px;
+	min-width: 140px;
 	border: none;
 	border-radius: 3px;
 	box-shadow: 3px 3px var(--cust-gray);
@@ -129,6 +150,17 @@ header {
 	background-color: var(--primary-color);
 }
 
-#cancelButton {
+.cancelButton {
 	background-color: var(--secondary-color);
+}
+
+.pageTitle {
+	display: flex;
+	justify-content: space-around;
+	margin: 30px auto;
+
+}
+
+.mainTitle {
+	font-size: 30px;
 }
