@@ -33,7 +33,67 @@ h2 {
 	display: none;
 }
 
+/* WELCOME PAGE */
+
+header {
+	height: 3rem;
+	padding: 20px;
+}
+
+#signInLink {
+	float: right;
+}
+
+#searchDiv {
+	margin: 40px;
+	display: flex;
+}
+
+#filterSearch {
+	width: 320px;
+	max-width: 25vw;
+	margin-right: 40px;
+	margin-bottom: 10px;
+}
+
+#searchButton {
+	height: 100%;
+	padding: 20px;
+}
+
+#articlesDisplayWelcome {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+}
+
+.articleTile {
+	width: 25%;
+	padding: 10px;
+	border: solid 3px #dedede;
+	border-radius: 3px;
+}
+
+.articleName {
+	text-align: center;
+	margin: auto;
+}
+
+.articleDescription {
+	color: var(--cust-gray);
+	font-size: 0.8rem;
+	margin: 10px 0px;
+}
+
+.articlePrice {
+	text-align: center;
+	padding: 5px 0px;
+	background-color: var(--primary-color);
+	border-radius: 3px;
+}
+
 /* SIGN UP PAGE */
+
 #signUpFormTable {
 	border-spacing: 20px;
 	margin: auto;

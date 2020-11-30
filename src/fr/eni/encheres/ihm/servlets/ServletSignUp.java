@@ -26,48 +26,6 @@ public class ServletSignUp extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String userName = request.getParameter("userNameInput");
-		String lastName = request.getParameter("lastNameInput");
-		String firstName = request.getParameter("firstNameInput");
-		String email = request.getParameter("emailInput");
-		String phone = request.getParameter("phoneInput");
-		String street = request.getParameter("streetInput");
-		String zipCode = request.getParameter("zipCodeInput");
-		String town = request.getParameter("townInput");
-		String password = request.getParameter("passwordInput");
-		String confirmPassword = request.getParameter("confirmPasswordInput");
-		
-
-		
-		User newUser = new User(userName, lastName, firstName, email, phone, street, zipCode, town, password);
-		
-		System.out.println(newUser.toString());
-		
-		UserManager um = ManagerFactory.getUserManager();
-		
-		try {
-			if(!password.equals(confirmPassword)) {
-				throw new BLLException("Error - The password and the confirmation are different. Please check again.");
-			}
-			um.addUser(newUser);
-			System.out.println(newUser.toString());
-			RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
-			rd.forward(request, response);
-		} catch (BLLException e) {
-			e.printStackTrace();
-			request.setAttribute("exception", "An error occured : " + e.getMessage());
-			request.setAttribute("userName", userName);
-			request.setAttribute("lastName", lastName);
-			request.setAttribute("firstName", firstName);
-			request.setAttribute("email", email);
-			request.setAttribute("phone", phone);
-			request.setAttribute("street", street);
-			request.setAttribute("zipCode", zipCode);
-			request.setAttribute("town", town);
-			request.setAttribute("password", password);
-			RequestDispatcher rd = request.getRequestDispatcher("/signUp.jsp");
-			rd.forward(request, response);
-		}
 	}
 
 	/**
