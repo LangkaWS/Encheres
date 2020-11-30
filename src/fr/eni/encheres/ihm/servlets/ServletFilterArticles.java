@@ -33,20 +33,23 @@ public class ServletFilterArticles extends HttpServlet {
 		ArticleManager am = new ArticleManager();
 		
 		List<Article> artList = new ArrayList<>();
+		List<Article> tmpList = new ArrayList<>();
 		List<Article> filteredList = new ArrayList<>();
 		try {
 			artList = am.getArticlesInProgress();
 			for(Article a : artList) {
 				if(a.getName().contains(contains)) {
-					filteredList.add(a);
+					tmpList.add(a);
 				}
 			}
 			if(!category.equals("all")) {
-				for(Article a : filteredList) {
-					if(a.getCategoryId() != Integer.parseInt(category)) {
-						filteredList.remove(a);
+				for(Article a : tmpList) {
+					if(a.getCategoryId() == Integer.parseInt(category)) {
+						filteredList.add(a);
 					}
 				}
+			} else {
+				filteredList = tmpList;
 			}
 		} catch (BLLException e) {
 			e.printStackTrace();
