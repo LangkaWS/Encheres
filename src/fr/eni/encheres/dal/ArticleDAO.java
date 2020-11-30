@@ -10,7 +10,7 @@ public interface ArticleDAO extends SingleIdDAO<Article> {
 	
 	public List<Article> selectArticlesByName(String name) throws DALException;
 	
-	public List<Article> selectArticlesInProgress(String state) throws DALException;
+	public List<Article> selectArticlesInProgress() throws DALException;
 	
 	public List<Article> selectArticlesByParticipatingBuyer(int buyerId) throws DALException;
 	
