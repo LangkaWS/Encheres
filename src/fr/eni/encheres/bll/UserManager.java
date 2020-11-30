@@ -43,6 +43,7 @@ public class UserManager {
 	
 	public void deleteUser(int id) throws BLLException {
 		try {
+			//Get All articles, if buyerId = userId, throw exception "Cannot delete account if best bidder"
 			userDAO.delete(id);
 		} catch (DALException e) {
 			e.printStackTrace();

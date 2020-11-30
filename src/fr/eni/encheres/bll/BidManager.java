@@ -32,7 +32,6 @@ public class BidManager {
 	 * 
 	 * [v] On add : remove amount credit / add credit to previous max buyer
 	 * [] On update : remove difference between previous and current amount / add credit to previous max buyer (if different)
-	 * [] On delete : add amount credit
 	 */
 	
 	public void addBid(Bid bid) throws BLLException {
