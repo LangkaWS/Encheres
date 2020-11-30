@@ -6,10 +6,11 @@ import fr.eni.encheres.bll.bo.User;
 import fr.eni.encheres.dal.DALException;
 import fr.eni.encheres.dal.DAOFactory;
 import fr.eni.encheres.dal.SingleIdDAO;
+import fr.eni.encheres.dal.UserDAO;
 
 public class UserManager {
 	
-	private SingleIdDAO<User> userDAO;
+	private UserDAO userDAO;
 	
 	public UserManager() {
 		this.userDAO = DAOFactory.getUserDAO();
@@ -55,6 +56,17 @@ public class UserManager {
 		User u = null;
 		try {
 			u = userDAO.selectById(id);
+		} catch (DALException e) {
+			e.printStackTrace();
+			throw new BLLException("User selection failed - ", e);
+		}
+		return u;
+	}
+	
+	public User getUser(String email) throws BLLException {
+		User u = null;
+		try {
+			u = userDAO.selectUserByEmail(email);
 		} catch (DALException e) {
 			e.printStackTrace();
 			throw new BLLException("User selection failed - ", e);
