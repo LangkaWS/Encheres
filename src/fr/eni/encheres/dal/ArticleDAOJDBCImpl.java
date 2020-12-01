@@ -35,8 +35,15 @@ public class ArticleDAOJDBCImpl implements ArticleDAO {
 	private static final String SELECT_BY_CATEGORY = "SELECT * FROM ARTICLES WHERE categoryId = ?;";
 	private static final String SELECT_BY_NAME = "SELECT * FROM ARTICLES WHERE name LIKE ?;";
 	private static final String SELECT_IN_PROGRESS = "SELECT * FROM ARTICLES WHERE state = 'in progress';";
-	private static final String SELECT_BY_PARTICIPATING_BUYER = "select a.articleId, a.name, a.description, a.auctionStartDate, a.auctionEndDate, a.startPrice, a.sellingPrice, a.state, a.sellerId, a.buyerId, a.categoryId, a.pickUpId from articles a, users u, bids b where b.buyerId = u.userId and b.articleId = a.articleId and u.userId = ?;";
-
+	private static final String SELECT_BY_PARTICIPATING_BUYER = "SELECT * FROM ARTICLES a "
+			+ "INNER JOIN BIDS b ON a.articleId = b.articleId "
+			+ "INNER JOIN USERS u ON b.buyerId = u.userId "
+			+ "WHERE userId = ?;";
+	private static final String SELECT_IN_PROGRESS_BY_PARTICIPATING_BUYER = "SELECT * FROM ARTICLES a "
+			+ "INNER JOIN BIDS b ON a.articleId = b.articleId "
+			+ "INNER JOIN USERS u ON b.buyerId = u.userId "
+			+ "WHERE userId = ? AND state LIKE 'in progress';";
+	
 	@Override
 	public void insert(Article data) throws DALException {
 		Connection con = null;
@@ -232,6 +239,235 @@ public class ArticleDAOJDBCImpl implements ArticleDAO {
 	}
 
 	@Override
+	public List<Article> selectArticlesByCategory(int categoryId) throws DALException {
+		List<Article> list = new ArrayList<>();
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con = ConnectionProvider.getConnection();
+			pstmt = con.prepareStatement(SELECT_BY_CATEGORY);
+			pstmt.setInt(1, categoryId);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				Article a = new Article(
+						rs.getInt(1),
+						rs.getString(2),
+						rs.getString(3),
+						rs.getTimestamp(4).toLocalDateTime(),
+						rs.getTimestamp(5).toLocalDateTime(),
+						rs.getInt(6),
+						rs.getInt(7),
+						rs.getString(8),
+						rs.getInt(9),
+						rs.getInt(10),
+						rs.getInt(11),
+						rs.getInt(12)
+						);
+				list.add(a);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DALException("DATA ACCESS LAYER EXCEPTION : Selection of articles with the category '" + categoryId + "' from database failed - ", e);
+		}  finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new DALException("Close failed - ", e);
+			}
+		}
+		return list;
+	}
+	
+	@Override
+	public List<Article> selectArticlesByName(String name) throws DALException {
+		List<Article> list = new ArrayList<>();
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con = ConnectionProvider.getConnection();
+			pstmt = con.prepareStatement(SELECT_BY_NAME);
+			pstmt.setString(1, name);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				Article a = new Article(
+						rs.getInt(1),
+						rs.getString(2),
+						rs.getString(3),
+						rs.getTimestamp(4).toLocalDateTime(),
+						rs.getTimestamp(5).toLocalDateTime(),
+						rs.getInt(6),
+						rs.getInt(7),
+						rs.getString(8),
+						rs.getInt(9),
+						rs.getInt(10),
+						rs.getInt(11),
+						rs.getInt(12)
+						);
+				list.add(a);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DALException("DATA ACCESS LAYER EXCEPTION : Selection of articles with the name '" + name + "' from database failed - ", e);
+		}  finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new DALException("Close failed - ", e);
+			}
+		}
+		return list;
+	}
+	
+	@Override
+	public List<Article> selectArticlesInProgress() throws DALException {
+		List<Article> list = new ArrayList<>();
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con = ConnectionProvider.getConnection();
+			pstmt = con.prepareStatement(SELECT_IN_PROGRESS);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				Article a = new Article(
+						rs.getInt(1),
+						rs.getString(2),
+						rs.getString(3),
+						rs.getTimestamp(4).toLocalDateTime(),
+						rs.getTimestamp(5).toLocalDateTime(),
+						rs.getInt(6),
+						rs.getInt(7),
+						rs.getString(8),
+						rs.getInt(9),
+						rs.getInt(10),
+						rs.getInt(11),
+						rs.getInt(12)
+						);
+				list.add(a);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DALException("DATA ACCESS LAYER EXCEPTION : Selection of articles with the state 'in progress' from database failed - ", e);
+		}  finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new DALException("Close failed - ", e);
+			}
+		}
+		return list;
+	}
+	
+	@Override
+	public List<Article> selectArticlesByParticipatingBuyer(int buyerId) throws DALException {
+		List<Article> list = new ArrayList<>();
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con = ConnectionProvider.getConnection();
+			pstmt = con.prepareStatement(SELECT_BY_PARTICIPATING_BUYER);
+			pstmt.setInt(1, buyerId);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				Article a = new Article(
+						rs.getInt(1),
+						rs.getString(2),
+						rs.getString(3),
+						rs.getTimestamp(4).toLocalDateTime(),
+						rs.getTimestamp(5).toLocalDateTime(),
+						rs.getInt(6),
+						rs.getInt(7),
+						rs.getString(8),
+						rs.getInt(9),
+						rs.getInt(10),
+						rs.getInt(11),
+						rs.getInt(12)
+						);
+				list.add(a);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DALException("DATA ACCESS LAYER EXCEPTION : Selection of articles with participating User with id '" + buyerId + "' from database failed - ", e);
+		}  finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new DALException("Close failed - ", e);
+			}
+		}
+		return list;
+	}
+	
+	@Override
+	public List<Article> selectArticlesInProgressByParticipatingBuyer(int buyerId) throws DALException {
+		List<Article> list = new ArrayList<>();
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con = ConnectionProvider.getConnection();
+			pstmt = con.prepareStatement(SELECT_IN_PROGRESS_BY_PARTICIPATING_BUYER);
+			pstmt.setInt(1, buyerId);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				Article a = new Article(
+						rs.getInt(1),
+						rs.getString(2),
+						rs.getString(3),
+						rs.getTimestamp(4).toLocalDateTime(),
+						rs.getTimestamp(5).toLocalDateTime(),
+						rs.getInt(6),
+						rs.getInt(7),
+						rs.getString(8),
+						rs.getInt(9),
+						rs.getInt(10),
+						rs.getInt(11),
+						rs.getInt(12)
+						);
+				list.add(a);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DALException("DATA ACCESS LAYER EXCEPTION : Selection of in progress articles with participating User with id '" + buyerId + "' from database failed - ", e);
+		}  finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new DALException("Close failed - ", e);
+			}
+		}
+		return list;
+	}
+	
+	@Override
 	public List<Article> selectWonArticles(int buyerId) throws DALException {
 		List<Article> list = new ArrayList<>();
 		Connection con = null;
@@ -369,192 +605,5 @@ public class ArticleDAOJDBCImpl implements ArticleDAO {
 		}
 		return list;
 	}
-
-	@Override
-	public List<Article> selectArticlesByCategory(int categoryId) throws DALException {
-		List<Article> list = new ArrayList<>();
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		try {
-			con = ConnectionProvider.getConnection();
-			pstmt = con.prepareStatement(SELECT_BY_CATEGORY);
-			pstmt.setInt(1, categoryId);
-			ResultSet rs = pstmt.executeQuery();
-			while(rs.next()) {
-				Article a = new Article(
-						rs.getInt(1),
-						rs.getString(2),
-						rs.getString(3),
-						rs.getTimestamp(4).toLocalDateTime(),
-						rs.getTimestamp(5).toLocalDateTime(),
-						rs.getInt(6),
-						rs.getInt(7),
-						rs.getString(8),
-						rs.getInt(9),
-						rs.getInt(10),
-						rs.getInt(11),
-						rs.getInt(12)
-						);
-				list.add(a);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new DALException("DATA ACCESS LAYER EXCEPTION : Selection of articles with the category '" + categoryId + "' from database failed - ", e);
-		}  finally {
-			try {
-				if (pstmt != null) {
-					pstmt.close();
-				}
-				if (con != null) {
-					con.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-				throw new DALException("Close failed - ", e);
-			}
-		}
-		return list;
-	}
-	
-	@Override
-	public List<Article> selectArticlesByName(String name) throws DALException {
-		List<Article> list = new ArrayList<>();
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		try {
-			con = ConnectionProvider.getConnection();
-			pstmt = con.prepareStatement(SELECT_BY_NAME);
-			pstmt.setString(1, name);
-			ResultSet rs = pstmt.executeQuery();
-			while(rs.next()) {
-				Article a = new Article(
-						rs.getInt(1),
-						rs.getString(2),
-						rs.getString(3),
-						rs.getTimestamp(4).toLocalDateTime(),
-						rs.getTimestamp(5).toLocalDateTime(),
-						rs.getInt(6),
-						rs.getInt(7),
-						rs.getString(8),
-						rs.getInt(9),
-						rs.getInt(10),
-						rs.getInt(11),
-						rs.getInt(12)
-						);
-				list.add(a);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new DALException("DATA ACCESS LAYER EXCEPTION : Selection of articles with the name '" + name + "' from database failed - ", e);
-		}  finally {
-			try {
-				if (pstmt != null) {
-					pstmt.close();
-				}
-				if (con != null) {
-					con.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-				throw new DALException("Close failed - ", e);
-			}
-		}
-		return list;
-	}
-
-	@Override
-	public List<Article> selectArticlesInProgress() throws DALException {
-		List<Article> list = new ArrayList<>();
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		try {
-			con = ConnectionProvider.getConnection();
-			pstmt = con.prepareStatement(SELECT_IN_PROGRESS);
-			ResultSet rs = pstmt.executeQuery();
-			while(rs.next()) {
-				Article a = new Article(
-						rs.getInt(1),
-						rs.getString(2),
-						rs.getString(3),
-						rs.getTimestamp(4).toLocalDateTime(),
-						rs.getTimestamp(5).toLocalDateTime(),
-						rs.getInt(6),
-						rs.getInt(7),
-						rs.getString(8),
-						rs.getInt(9),
-						rs.getInt(10),
-						rs.getInt(11),
-						rs.getInt(12)
-						);
-				list.add(a);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new DALException("DATA ACCESS LAYER EXCEPTION : Selection of articles with the state 'in progress' from database failed - ", e);
-		}  finally {
-			try {
-				if (pstmt != null) {
-					pstmt.close();
-				}
-				if (con != null) {
-					con.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-				throw new DALException("Close failed - ", e);
-			}
-		}
-		return list;
-	}
-
-	@Override
-	public List<Article> selectArticlesByParticipatingBuyer(int buyerId) throws DALException {
-		List<Article> list = new ArrayList<>();
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		try {
-			con = ConnectionProvider.getConnection();
-			pstmt = con.prepareStatement(SELECT_BY_PARTICIPATING_BUYER);
-			pstmt.setInt(1, buyerId);
-			ResultSet rs = pstmt.executeQuery();
-			while(rs.next()) {
-				Article a = new Article(
-						rs.getInt(1),
-						rs.getString(2),
-						rs.getString(3),
-						rs.getTimestamp(4).toLocalDateTime(),
-						rs.getTimestamp(5).toLocalDateTime(),
-						rs.getInt(6),
-						rs.getInt(7),
-						rs.getString(8),
-						rs.getInt(9),
-						rs.getInt(10),
-						rs.getInt(11),
-						rs.getInt(12)
-						);
-				list.add(a);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new DALException("DATA ACCESS LAYER EXCEPTION : Selection of articles with participating User with id '" + buyerId + "' from database failed - ", e);
-		}  finally {
-			try {
-				if (pstmt != null) {
-					pstmt.close();
-				}
-				if (con != null) {
-					con.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-				throw new DALException("Close failed - ", e);
-			}
-		}
-		return list;
-	}
-
-
-
-	
 
 }

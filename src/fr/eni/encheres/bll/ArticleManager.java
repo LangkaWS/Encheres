@@ -15,22 +15,6 @@ import fr.eni.encheres.dal.SingleIdDAO;
 
 public class ArticleManager {
 	
-	/* Validates :
-	 * 
-	 * [v] name <= 30, not null
-	 * [v] description varchar(300) not null
-	 * [v] auctionStartDate datetime not null, not passed
-	 * [v] auctionEndDate datetime not null, after startDate
-	 * [v] startPrice int not null,
-	 * [v] sellingPrice int
-	 * [v] state varchar(30)
-	 * [v] sellerId int not null
-	 * [v] buyerId int no need of validate at article instantiation, only for update with bid
-	 * [v] categoryId int not null
-	 * [v] pickUpId int not null
-	 * 
-	 * */
-	
 	private ArticleDAO articleDAO;
 	private SingleIdDAO<User> userDAO;
 	private SingleIdDAO<Category> categoryDAO;
@@ -78,13 +62,25 @@ public class ArticleManager {
 		}
 	}
 	
+	public List<Article> getAllArticles() throws BLLException {
+		List<Article> list = new ArrayList<>();
+		try {
+			list = articleDAO.selectAll();
+		} catch (DALException e) {
+			e.printStackTrace();
+			throw new BLLException("Selection of all articles failed - ", e);
+		}
+		return list;
+	}
+	
+	
 	public Article getArticleById(int id) throws BLLException {
 		Article article = null;
 		try {
 			article = articleDAO.selectById(id);
 		} catch (DALException e) {
 			e.printStackTrace();
-			throw new BLLException("Article selection failed - ", e);
+			throw new BLLException("Article selection by ID (id: " + id + ") failed - ", e);
 		}
 		return article;
 	}
@@ -95,7 +91,7 @@ public class ArticleManager {
 			list = articleDAO.selectArticlesByCategory(id);
 		} catch (DALException e) {
 			e.printStackTrace();
-			throw new BLLException("Article selection failed - ", e);
+			throw new BLLException("Article selection by category (category ID: " + id + ") failed - ", e);
 		}
 		return list;
 	}
@@ -106,7 +102,7 @@ public class ArticleManager {
 			list = articleDAO.selectArticlesByName(name);
 		} catch (DALException e) {
 			e.printStackTrace();
-			throw new BLLException("Article selection failed - ", e);
+			throw new BLLException("Article selection by name (name: " + name + ") failed - ", e);
 		}
 		return list;
 	}
@@ -117,7 +113,7 @@ public class ArticleManager {
 			list = articleDAO.selectArticlesInProgress();
 		} catch (DALException e) {
 			e.printStackTrace();
-			throw new BLLException("Article selection failed - ", e);
+			throw new BLLException("Selection of in progress articles failed - ", e);
 		}
 		return list;
 	}
@@ -128,7 +124,18 @@ public class ArticleManager {
 			list = articleDAO.selectArticlesByParticipatingBuyer(buyerId);
 		} catch (DALException e) {
 			e.printStackTrace();
-			throw new BLLException("Article selection failed - ", e);
+			throw new BLLException("Selection of articles where user " + buyerId + " participates failed - ", e);
+		}
+		return list;
+	}
+	
+	public List<Article> getInProgressArticlesByParticipatingBuyer(int buyerId) throws BLLException {
+		List<Article> list = new ArrayList<>();
+		try {
+			list = articleDAO.selectArticlesInProgressByParticipatingBuyer(buyerId);
+		} catch (DALException e) {
+			e.printStackTrace();
+			throw new BLLException("Selection of in progress articles where user " + buyerId + " participates failedd - ", e);
 		}
 		return list;
 	}
@@ -139,7 +146,7 @@ public class ArticleManager {
 			list = articleDAO.selectWonArticles(buyerId);
 		} catch (DALException e) {
 			e.printStackTrace();
-			throw new BLLException("Article selection failed - ", e);
+			throw new BLLException("Selection of articles which user " + buyerId + " have won failed - ", e);
 		}
 		return list;
 	}
@@ -150,7 +157,7 @@ public class ArticleManager {
 			list = articleDAO.selectArticlesOfSeller(sellerId);
 		} catch (DALException e) {
 			e.printStackTrace();
-			throw new BLLException("Article selection failed - ", e);
+			throw new BLLException("Selection of articles of seller " + sellerId + " failed - ", e);
 		}
 		return list;
 	}
@@ -161,7 +168,7 @@ public class ArticleManager {
 			list = articleDAO.selectArticlesOfSellerByState(sellerId, state);
 		} catch (DALException e) {
 			e.printStackTrace();
-			throw new BLLException("Article selection failed - ", e);
+			throw new BLLException("Selection of " + state + " articles of seller " + sellerId + " failed - ", e);
 		}
 		return list;
 	}
@@ -174,43 +181,43 @@ public class ArticleManager {
 		}
 		if (!this.validateArticleName(a.getName())) {
 			isValid = false;
-			throw new BLLException("Article invalid.");
+			throw new BLLException("Article name is invalid.");
 		}
 		if (!this.validateArticleDescription(a.getDescription())) {
 			isValid = false;
-			throw new BLLException("Article invalid.");
+			throw new BLLException("Article description is invalid.");
 		}
 		if (!this.validateArticleStartDate(a.getAuctionStartDate())) {
 			isValid = false;
-			throw new BLLException("Article invalid.");
+			throw new BLLException("Article start date is invalid.");
 		}
 		if (!this.validateArticleEndDate(a.getAuctionEndDate(), a.getAuctionStartDate())) {
 			isValid = false;
-			throw new BLLException("Article invalid.");
+			throw new BLLException("Article end date is invalid.");
 		}
 		if (!this.validateArticleStartPrice(a.getStartPrice())) {
 			isValid = false;
-			throw new BLLException("Article invalid.");
+			throw new BLLException("Article start price is invalid.");
 		}
 		if (!this.validateArticleState(a.getState())) {
 			isValid = false;
-			throw new BLLException("Article invalid.");
+			throw new BLLException("Article state is invalid.");
 		}
 		if (!this.validateArticleSellerId(a.getSellerId())) {
 			isValid = false;
-			throw new BLLException("Article invalid.");
+			throw new BLLException("Article seller id is invalid.");
 		}
 		if (!this.validateArticleBuyerId(a.getBuyerId())) {
 			isValid = false;
-			throw new BLLException("Article invalid.");
+			throw new BLLException("Article buyer id is invalid.");
 		}
 		if (!this.validateArticleCategoryId(a.getCategoryId())) {
 			isValid = false;
-			throw new BLLException("Article invalid.");
+			throw new BLLException("Article category id is invalid.");
 		}
 		if (!this.validateArticlePickUpId(a.getPickUpId())) {
 			isValid = false;
-			throw new BLLException("Article invalid.");
+			throw new BLLException("Article pick-up id is invalid.");
 		}
 		return isValid;
 	}

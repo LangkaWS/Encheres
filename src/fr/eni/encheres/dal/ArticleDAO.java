@@ -14,6 +14,8 @@ public interface ArticleDAO extends SingleIdDAO<Article> {
 	
 	public List<Article> selectArticlesByParticipatingBuyer(int buyerId) throws DALException;
 	
+	public List<Article> selectArticlesInProgressByParticipatingBuyer(int buyerId) throws DALException;
+	
 	public List<Article> selectWonArticles(int buyerId) throws DALException;
 	
 	public List<Article> selectArticlesOfSeller(int sellerId) throws DALException;

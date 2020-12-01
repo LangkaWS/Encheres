@@ -56,6 +56,11 @@ header {
 	margin-bottom: 10px;
 }
 
+#buyFilterCheckbox, #sellFilterCheckbox, #buyFilterParams, #sellFilterParams {
+	/*display: none;*/
+	color: red;
+}
+
 #searchButton {
 	height: 100%;
 	padding: 20px;
