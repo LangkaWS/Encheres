@@ -9,6 +9,7 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  
   <servlet>
     <servlet-name>index</servlet-name>
     <jsp-file>/index.jsp</jsp-file>
@@ -17,6 +18,7 @@
     <servlet-name>index</servlet-name>
     <url-pattern>/welcome</url-pattern>
   </servlet-mapping>
+  
   <servlet>
     <servlet-name>signIn</servlet-name>
     <jsp-file>/signIn.jsp</jsp-file>
@@ -25,6 +27,7 @@
     <servlet-name>signIn</servlet-name>
     <url-pattern>/signIn</url-pattern>
   </servlet-mapping>
+  
   <servlet>
     <servlet-name>signUp</servlet-name>
     <jsp-file>/signUp.jsp</jsp-file>
@@ -33,4 +36,14 @@
     <servlet-name>signUp</servlet-name>
     <url-pattern>/signUp</url-pattern>
   </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>showUser</servlet-name>
+    <jsp-file>/showUser.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>showUser</servlet-name>
+    <url-pattern>/users/*</url-pattern>
+  </servlet-mapping>
+  
 </web-app>
