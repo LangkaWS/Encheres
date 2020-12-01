@@ -22,9 +22,13 @@
 		
 		<% if (session.getAttribute("currentUser") != null) { %>
 			
+			<form id="showDashBoard" method="POST" action="<%=request.getContextPath()%>/ServletShowUser?userId=<%= currentUser.getUserId()%>">
+				<a class="logLink" id="dashBoardLink" onclick="this.closest('form').submit();return false;">Mon profil</a>
+			</form>
 			<form id="signOutForm" method="POST" action="<%=request.getContextPath()%>/ServletSignOut">
 				<a class="logLink" id="logOutLink" onclick="this.closest('form').submit();return false;">Se déconnecter</a>
 			</form>
+
 		
 		<% } else { %>
 		

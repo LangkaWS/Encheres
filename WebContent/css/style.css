@@ -67,12 +67,6 @@ header {
 	justify-content: space-around;
 }
 
-#logOutLink {
-    color: -webkit-link;
-    cursor: pointer;
-    text-decoration: underline;
-}
-
 .articleTile {
 	width: 25%;
 	padding: 10px;
@@ -100,6 +94,13 @@ header {
 
 .logLink {
 	float: right;
+    color: -webkit-link;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+#logOutLink{
+	margin-right: 20px;
 }
 
 /* SIGN UP AND IN PAGES */
@@ -166,4 +167,28 @@ header {
 
 .mainTitle {
 	font-size: 30px;
+}
+
+/* USER PAGES : SHOW, EDIT */
+
+.showPage {
+	text-align: center;
+}
+
+.showPage h1 {
+	margin: 40px auto;
+}
+
+#tableShowUser {
+	display: flex;
+	justify-content: center;
+}
+
+.showPage td {
+	text-align: left;
+	padding: 10px;
+}
+
+.showPage button {
+	margin-top: 20px;
 }
