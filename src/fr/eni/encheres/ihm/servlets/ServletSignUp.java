@@ -60,7 +60,7 @@ public class ServletSignUp extends HttpServlet {
 			}
 			um.addUser(newUser);
 			System.out.println(newUser.toString());
-			RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/index");
 			rd.forward(request, response);
 		} catch (BLLException e) {
 			e.printStackTrace();

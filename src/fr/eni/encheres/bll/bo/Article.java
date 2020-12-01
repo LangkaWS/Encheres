@@ -9,7 +9,7 @@ public class Article {
 	private String description;
 	private LocalDateTime auctionStartDate;
 	private LocalDateTime auctionEndDate;
-	private int startPrice;
+	private Integer startPrice;
 	private Integer sellingPrice;
 	private String state = "created"; // DEFAULT "created"
 	private Integer sellerId;
@@ -26,7 +26,7 @@ public class Article {
 	/**
 	 * @param articleId
 	 */
-	public Article(int articleId) {
+	public Article(Integer articleId) {
 		this.articleId = articleId;
 	}
 	
@@ -42,7 +42,7 @@ public class Article {
 	 * @param pickUpId
 	 */
 	public Article(String name, String description, LocalDateTime auctionStartDate, LocalDateTime auctionEndDate,
-			int startPrice, String state, int sellerId, int categoryId, int pickUpId) {
+			Integer startPrice, String state, Integer sellerId, Integer categoryId, Integer pickUpId) {
 		this.name = name;
 		this.description = description;
 		this.auctionStartDate = auctionStartDate;
@@ -68,8 +68,8 @@ public class Article {
 	 * @param categoryId
 	 * @param pickUpId
 	 */
-	public Article(int articleId, String name, String description, LocalDateTime auctionStartDate, LocalDateTime auctionEndDate,
-			int startPrice, int sellingPrice, String state, int sellerId, int buyerId, int categoryId, int pickUpId) {
+	public Article(Integer articleId, String name, String description, LocalDateTime auctionStartDate, LocalDateTime auctionEndDate,
+			Integer startPrice, Integer sellingPrice, String state, Integer sellerId, Integer buyerId, Integer categoryId, Integer pickUpId) {
 		this.articleId = articleId;
 		this.name = name;
 		this.description = description;
@@ -164,7 +164,7 @@ public class Article {
 	/**
 	 * @param startPrice the startPrice to set
 	 */
-	public void setStartPrice(int startPrice) {
+	public void setStartPrice(Integer startPrice) {
 		this.startPrice = startPrice;
 	}
 	
@@ -178,7 +178,7 @@ public class Article {
 	/**
 	 * @param sellingPrice the sellingPrice to set
 	 */
-	public void setSellingPrice(int sellingPrice) {
+	public void setSellingPrice(Integer sellingPrice) {
 		this.sellingPrice = sellingPrice;
 	}
 	
@@ -206,7 +206,7 @@ public class Article {
 	/**
 	 * @param sellerId the sellerId to set
 	 */
-	public void setSellerId(int sellerId) {
+	public void setSellerId(Integer sellerId) {
 		this.sellerId = sellerId;
 	}
 	
@@ -220,7 +220,7 @@ public class Article {
 	/**
 	 * @param buyerId the buyerId to set
 	 */
-	public void setBuyerId(int buyerId) {
+	public void setBuyerId(Integer buyerId) {
 		this.buyerId = buyerId;
 	}
 	
@@ -234,7 +234,7 @@ public class Article {
 	/**
 	 * @param categoryId the categoryId to set
 	 */
-	public void setCategoryId(int categoryId) {
+	public void setCategoryId(Integer categoryId) {
 		this.categoryId = categoryId;
 	}
 	
@@ -248,7 +248,7 @@ public class Article {
 	/**
 	 * @param pickUpId the pickUpId to set
 	 */
-	public void setPickUpId(int pickUpId) {
+	public void setPickUpId(Integer pickUpId) {
 		this.pickUpId = pickUpId;
 	}
 	
@@ -263,6 +263,35 @@ public class Article {
 				+ ", buyerId=" + buyerId + ", categoryId=" + categoryId + ", pickUpId=" + pickUpId + "]";
 	}
 	
-	
+	@Override
+	public boolean equals(Object obj) {
+		
+		//If the object is compared with itself then return true
+		if(obj == this) {
+			return true;
+		}
+		
+		//If the object is not an article return false
+		if(!(obj instanceof Article)) {
+			return false;
+		}
+		
+		//Now we can cast object to Article so we can compare data members
+		Article a = (Article) obj;
+		
+		//Compare the data members and return true or false
+		return (this.articleId.equals(a.articleId))
+				 && (this.name.equals(a.name))
+				 && (this.description.equals(a.description))
+				 && (this.auctionStartDate.equals(a.auctionStartDate))
+				 && (this.auctionEndDate.equals(a.auctionEndDate))
+				 && (this.startPrice.equals(a.startPrice))
+				 && (this.sellingPrice.equals(a.sellingPrice))
+				 && (this.state.equals(a.state))
+				 && (this.sellerId.equals(a.sellerId))
+				 && (this.buyerId.equals(a.buyerId))
+				 && (this.categoryId.equals(a.categoryId))
+				 && (this.pickUpId.equals(a.pickUpId));
+	}
 
 }

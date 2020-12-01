@@ -66,22 +66,22 @@
 					<div id="buyFilterCheckbox">
 						<input type="checkbox" id="buyInProgressAuctions" name="buyInProgressAuctions" value="c" checked />
 						<label for="buyInProgressAuctions">enchères ouvertes</label>
-						<input type="checkbox" id="buyParticipatingInProgressAuctions" name="buyInProgressAuctions" value="c" />
-						<label for="buyInProgressAuctions">mes enchères en cours</label>
-						<input type="checkbox" id="buyParticipatingEnded" name="buyInProgressAuctions" value="c" />
-						<label for="buyInProgressAuctions">mes enchères remportées</label>
+						<input type="checkbox" id="buyParticipatingInProgressAuctions" name="buyParticipatingInProgressAuctions" value="c" />
+						<label for="buyParticipatingInProgressAuctions">mes enchères en cours</label>
+						<input type="checkbox" id="buyParticipatingEnded" name="buyParticipatingEnded" value="c" />
+						<label for="buyParticipatingEnded">mes enchères remportées</label>
 					</div>
 				</div>
 				<div id="sellFilterParams">
 					<input type="radio" id="listSell" name="filterBuyOrSell" value="sell" />
 					<label for="listSell">Mes ventes</label>
 					<div id="sellFilterCheckbox">
-						<input type="checkbox" id="sellInProgress" name="buyInProgressAuctions" value="c" />
-						<label for="buyInProgressAuctions">mes ventes en cours</label>
-						<input type="checkbox" id="sellCreated" name="buyInProgressAuctions" value="c" />
-						<label for="buyInProgressAuctions">ventes non débutées</label>
-						<input type="checkbox" id="sellEnded" name="buyInProgressAuctions" value="c" />
-						<label for="buyInProgressAuctions">ventes terminées</label>
+						<input type="checkbox" id="sellInProgress" name="sellInProgress" value="c" />
+						<label for="sellInProgress">mes ventes en cours</label>
+						<input type="checkbox" id="sellCreated" name="sellCreated" value="c" />
+						<label for="sellCreated">ventes non débutées</label>
+						<input type="checkbox" id="sellEnded" name="sellEnded" value="c" />
+						<label for="sellEnded">ventes terminées</label>
 					</div>
 				</div>
 			</div>

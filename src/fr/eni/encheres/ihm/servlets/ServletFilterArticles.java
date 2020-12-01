@@ -53,7 +53,7 @@ public class ServletFilterArticles extends HttpServlet {
 			if(buyOrSell.equals("buy")) {
 				
 				//Listing in progress auctions
-				if(buyInProgressAuctions.equals("c")) {
+				if(buyInProgressAuctions != null && buyInProgressAuctions.equals("c")) {
 					requestList = am.getArticlesInProgress();
 					for(Article a : requestList) {
 						if(!tmpList.contains(a)) {
@@ -63,7 +63,7 @@ public class ServletFilterArticles extends HttpServlet {
 				}
 				
 				//Listing in progress auctions to which the user participates
-				if(buyParticipatingInProgressAuctions.equals("c")) {
+				if(buyParticipatingInProgressAuctions != null && buyParticipatingInProgressAuctions.equals("c")) {
 					requestList = am.getInProgressArticlesByParticipatingBuyer(userId);
 					for(Article a : requestList) {
 						if(!tmpList.contains(a)) {
@@ -73,7 +73,7 @@ public class ServletFilterArticles extends HttpServlet {
 				}
 				
 				//Listing ended auctions where the user is the final buyer
-				if((buyParticipatingEnded).equals("c")) {
+				if(buyParticipatingEnded != null && buyParticipatingEnded.equals("c")) {
 					requestList = am.getWonArticles(userId);
 					for(Article a : requestList) {
 						if(!tmpList.contains(a)) {
@@ -87,7 +87,7 @@ public class ServletFilterArticles extends HttpServlet {
 			if(buyOrSell.equals("sell")) {
 				
 				//Listing seller's current selling list
-				if(sellInProgress.equals("c")) {
+				if(sellInProgress != null && sellInProgress.equals("c")) {
 					requestList = am.getArticlesOfSellerByState(userId, "in progress");
 					for(Article a : requestList) {
 						if(!tmpList.contains(a)) {
@@ -97,7 +97,7 @@ public class ServletFilterArticles extends HttpServlet {
 				}
 				
 				//Listing seller's created articles (but not in progress)
-				if(sellCreated.equals("c")) {
+				if(sellCreated != null && sellCreated.equals("c")) {
 					requestList = am.getArticlesOfSellerByState(userId, "created");
 					for(Article a : requestList) {
 						if(!tmpList.contains(a)) {
@@ -107,7 +107,7 @@ public class ServletFilterArticles extends HttpServlet {
 				}
 				
 				//Listing seller's ended articles
-				if(sellEnded.equals("c")) {
+				if(sellEnded != null && sellEnded.equals("c")) {
 					requestList = am.getArticlesOfSellerByState(userId, "ended");
 					for(Article a : requestList) {
 						if(!tmpList.contains(a)) {

@@ -41,7 +41,7 @@ public class ServletSignIn extends HttpServlet {
 			} else {
 				session.setAttribute("currentUser", user);
 				
-				RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
+				RequestDispatcher rd = request.getRequestDispatcher("/index");
 				rd.forward(request, response);
 			}
 		} catch (BLLException e) {
