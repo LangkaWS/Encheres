@@ -6,7 +6,7 @@ import fr.eni.encheres.bll.bo.User;
 
 public abstract class DAOFactory {
 	
-	public static SingleIdDAO<User> getUserDAO() {
+	public static UserDAO getUserDAO() {
 		return new UserDAOJDBCImpl();
 	}
 	

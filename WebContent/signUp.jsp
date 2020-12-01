@@ -17,7 +17,7 @@
 	<div class="error">${exception}</div>
 	
 	<form id="signUpForm" method="POST" action="<%=request.getContextPath()%>/ServletSignUp">
-	<table id="signUpFormTable">
+	<table class="signUpInFormTable">
 		<tbody>
 			<tr>
 				<td class="tableLabel">
@@ -95,9 +95,9 @@
 			</tr>
 		</tbody>
 	</table>
-		<div id="submitBox">
+		<div class="submitBox">
 			<input type="submit" value="Créer" id="submitButton" class="formButton" />
-			<button id="cancelButton" class="formButton" onclick="location.href='.'">Annuler</button>
+			<button class="formButton cancelButton" onclick="location.href='.'">Annuler</button>
 		</div>
 	</form>
 

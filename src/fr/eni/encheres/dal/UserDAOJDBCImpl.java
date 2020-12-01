@@ -9,7 +9,7 @@ import java.util.List;
 
 import fr.eni.encheres.bll.bo.User;
 
-public class UserDAOJDBCImpl implements SingleIdDAO<User> {
+public class UserDAOJDBCImpl implements UserDAO {
 	
 	private static final String INSERT = "INSERT INTO USERS(userName, lastName, firstName, email, phone, street, zipCode, town, password, credit, admin) "
 			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
@@ -29,6 +29,7 @@ public class UserDAOJDBCImpl implements SingleIdDAO<User> {
 	private static final String DELETE = "DELETE FROM USERS WHERE userId = ?;";
 	private static final String SELECT_ALL = "SELECT * FROM USERS;";
 	private static final String SELECT_BY_ID = "SELECT * FROM USERS WHERE userId = ?;";
+	private static final String SELECT_BY_EMAIL = "SELECT * FROM USERS WHERE email = ?;";
 
 	@Override
 	public void insert(User data) throws DALException {
@@ -210,6 +211,50 @@ public class UserDAOJDBCImpl implements SingleIdDAO<User> {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DALException("DATA ACCESS LAYER EXCEPTION : User selection by ID from database failed - ", e);
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new DALException("Close failed - ", e);
+			}
+		}
+		return user;
+	}
+	
+	public User selectUserByEmail(String email) throws DALException {
+		User user = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con = ConnectionProvider.getConnection();
+			pstmt = con.prepareStatement(SELECT_BY_EMAIL);
+			pstmt.setString(1, email);
+			ResultSet rs = pstmt.executeQuery();
+			if(rs.next()) {
+				user = new User(
+						rs.getInt(1),
+						rs.getString(2),
+						rs.getString(3),
+						rs.getString(4),
+						rs.getString(5),
+						rs.getString(6),
+						rs.getString(7),
+						rs.getString(8),
+						rs.getString(9),
+						rs.getString(10),
+						rs.getInt(11),
+						(rs.getInt(12) == 1)	
+						);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DALException("DATA ACCESS LAYER EXCEPTION : User selection by email from database failed - ", e);
 		} finally {
 			try {
 				if (pstmt != null) {
