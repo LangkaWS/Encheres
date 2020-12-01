@@ -60,10 +60,10 @@
 				</select>
 			</div>
 			<div id="searchParamsConnected">
-				<div id="buyFilterParams">
+				<div id="buyFilterParams"class="connectedParams" >
 					<input type="radio" id="listBuy" name="filterBuyOrSell" value="buy" checked />
 					<label for="listBuy">Achats</label>
-					<div id="buyFilterCheckbox">
+					<div id="buyFilterCheckbox"class="connectedParams" >
 						<input type="checkbox" id="buyInProgressAuctions" name="buyInProgressAuctions" value="c" checked />
 						<label for="buyInProgressAuctions">enchères ouvertes</label>
 						<input type="checkbox" id="buyParticipatingInProgressAuctions" name="buyParticipatingInProgressAuctions" value="c" />
@@ -72,10 +72,10 @@
 						<label for="buyParticipatingEnded">mes enchères remportées</label>
 					</div>
 				</div>
-				<div id="sellFilterParams">
+				<div id="sellFilterParams"class="connectedParams" >
 					<input type="radio" id="listSell" name="filterBuyOrSell" value="sell" />
 					<label for="listSell">Mes ventes</label>
-					<div id="sellFilterCheckbox">
+					<div id="sellFilterCheckbox"class="connectedParams" >
 						<input type="checkbox" id="sellInProgress" name="sellInProgress" value="c" />
 						<label for="sellInProgress">mes ventes en cours</label>
 						<input type="checkbox" id="sellCreated" name="sellCreated" value="c" />
@@ -100,6 +100,25 @@
 			</div>
 		</c:forEach>
 	</div>
+	
+	<script type="text/javascript">
+	
+	window.onload = toggleVisibility;
+	
+		function toggleVisibility() {
+			var user = "${currentUser.getUserName()}";
+			if(user !== ""){
+				console.log("connected");
+				var c = document.getElementsByClassName("connectedParams");
+				for(i = 0; i < c.length; i++) {
+					c[i].style.display = "block";
+				}
+			} else {
+				console.log("disconnected");
+			}
+		}
+	
+	</script>
 	
 </body>
 </html>
