@@ -12,10 +12,11 @@
 <body>
 
 	<% 
-	User currentUser = null;
-	if (session.getAttribute("currentUser") != null) {
-		currentUser = (User) session.getAttribute("currentUser");
-	} %>
+		User currentUser = null;
+		if (session.getAttribute("currentUser") != null) {
+			currentUser = (User) session.getAttribute("currentUser");
+		}
+	%>
 	
 	<header>
 		<h1>ENI-Enchères</h1>
@@ -37,6 +38,8 @@
 		<% }%>
 		
 	</header>
+	
+	<div class="banniere secondary">${info}</div>
 	
 	<% if (session.getAttribute("currentUser") != null) { %>
 	
