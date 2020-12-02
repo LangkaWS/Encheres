@@ -96,7 +96,7 @@
 		</tbody>
 	</table>
 		<div class="submitBox">
-			<input type="submit" value="Créer" id="submitButton" class="formButton" />
+			<input type="submit" value="Créer" class="formButton submitButton" />
 			<button class="formButton cancelButton" onclick="location.href='.'">Annuler</button>
 		</div>
 	</form>
