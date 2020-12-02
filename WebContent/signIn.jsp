@@ -44,7 +44,7 @@
 			<input type="checkbox" id="rememberMe" name="rememberMe" /><label for="rememberMe">Se souvenir de moi</label>
 		</div>
 		<div class="submitBox">
-			<input type="submit" value="Se connecter" id="submitButton" class="formButton" />
+			<input type="submit" value="Se connecter" class="formButton submitButton" />
 		</div>
 	</form>
 	<div class="submitBox">
