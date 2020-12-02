@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import fr.eni.encheres.bll.BLLException;
 import fr.eni.encheres.bll.UserManager;
@@ -26,7 +27,12 @@ public class ServletShowUser extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int userId = Integer.parseInt(request.getParameter("userId"));
+		int userId = 0;
+		if (request.getParameter("userId") == null) {
+			userId = (int) request.getAttribute("userId");
+		} else {
+			userId = Integer.parseInt(request.getParameter("userId"));
+		}
 		try {
 			User u = um.getUser(userId);
 			request.setAttribute("user", u);
