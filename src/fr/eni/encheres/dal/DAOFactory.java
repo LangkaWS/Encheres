@@ -2,7 +2,6 @@ package fr.eni.encheres.dal;
 
 import fr.eni.encheres.bll.bo.PickUp;
 import fr.eni.encheres.bll.bo.Category;
-import fr.eni.encheres.bll.bo.User;
 
 public abstract class DAOFactory {
 	

@@ -43,8 +43,10 @@ public class BidManager {
 			if(this.validateBid(bid, article, newBidder)) {
 				//Give back credits to previous bidder
 				User previousBidder = userDAO.selectById(article.getBuyerId());
-				previousBidder.setCredit(previousBidder.getCredit() + article.getSellingPrice());
+				if(previousBidder != null) {
+					previousBidder.setCredit(previousBidder.getCredit() + article.getSellingPrice());
 				userDAO.update(previousBidder);
+				}
 				
 				//Take credits from new bidder
 				newBidder.setCredit(newBidder.getCredit() - bid.getAmount());
@@ -71,15 +73,18 @@ public class BidManager {
 			article = articleDAO.selectById(bid.getArticleId());
 			newBidder = userDAO.selectById(bid.getBuyerId());
 			if(this.validateBid(bid, article, newBidder)) {
-				//Give back credits to previous bidder
 				User previousBidder = userDAO.selectById(article.getBuyerId());
-				previousBidder.setCredit(previousBidder.getCredit() + article.getSellingPrice());
-				userDAO.update(previousBidder);
-				
-				//Take credits from new bidder
-				newBidder.setCredit(newBidder.getCredit() - bid.getAmount());
-				userDAO.update(newBidder);
-				
+				if(previousBidder.getUserId() == newBidder.getUserId()) {
+					newBidder.setCredit(newBidder.getCredit() - (bid.getAmount() - article.getSellingPrice()));
+					userDAO.update(newBidder);
+				} else {
+					//Give back credits to previous bidder
+					previousBidder.setCredit(previousBidder.getCredit() + article.getSellingPrice());
+					userDAO.update(previousBidder);
+					//Take credits from new bidder
+					newBidder.setCredit(newBidder.getCredit() - bid.getAmount());
+					userDAO.update(newBidder);
+				}
 				//Update article selling price and buyer ID
 				article.setSellingPrice(bid.getAmount());
 				article.setBuyerId(bid.getBuyerId());
@@ -90,7 +95,19 @@ public class BidManager {
 			}
 		} catch (DALException e) {
 			e.printStackTrace();
+			throw new BLLException("Something went wrong...");
 		}
+	}
+	
+	public Bid getBid(int articleId, int buyerId) throws BLLException {
+		Bid bid = null;
+		try {
+			bid = bidDAO.selectByIds(articleId, buyerId);
+		} catch (DALException e) {
+			e.printStackTrace();
+			throw new BLLException("Bid selection (articleId " + articleId + ", buyerId " + buyerId + ") failed - ", e);
+		}
+		return bid;
 	}
 	
 	private boolean validateBid(Bid bid, Article article, User bidder) throws BLLException {
@@ -113,7 +130,7 @@ public class BidManager {
 	private boolean validateBidArticle(Article a) throws BLLException {
 		boolean isValid = false;
 		if(a != null) {
-			if(a.getState().equals("in-progress")) {
+			if(a.getState().equals("in progress")) {
 				isValid = true;
 			} else if(a.getState().equals("created")){
 				throw new BLLException("Auction has not started yet.");

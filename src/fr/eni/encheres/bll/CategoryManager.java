@@ -5,7 +5,6 @@ import java.util.List;
 
 import fr.eni.encheres.bll.bo.Category;
 import fr.eni.encheres.dal.DALException;
-import fr.eni.encheres.dal.DAO;
 import fr.eni.encheres.dal.DAOFactory;
 import fr.eni.encheres.dal.SingleIdDAO;
 
@@ -32,17 +31,6 @@ public class CategoryManager {
 		}
 	}
 	
-	public List<Category> getListCategories() throws BLLException {
-		List<Category> categories = new ArrayList<Category>();
-		try {
-			categories = categoryDAO.selectAll();
-		} catch (DALException e) {
-			e.printStackTrace();
-			throw new BLLException("Category listing failed - ", e);
-		}
-		return categories;
-	}
-	
 	public void updateCategory(Category c) throws BLLException {
 		try {
 			if (!this.validateCategory(c.getName())) {
@@ -55,7 +43,7 @@ public class CategoryManager {
 		}
 	}
 	
-	public void removeCategory(int id) throws BLLException {
+	public void deleteCategory(int id) throws BLLException {
 		try {
 			categoryDAO.delete(id);
 		} catch (DALException e) {
@@ -64,13 +52,26 @@ public class CategoryManager {
 		}
 	}
 	
-	public void selectCategory(int id) throws BLLException {
+	public Category getCategory(int id) throws BLLException {
+		Category c = null;
 		try {
-			categoryDAO.selectById(id);
+			c = categoryDAO.selectById(id);
 		} catch (DALException e) {
 			e.printStackTrace();
 			throw new BLLException("Category selecting failed - ", e);
 		}
+		return c;
+	}
+	
+	public List<Category> getListCategories() throws BLLException {
+		List<Category> categories = new ArrayList<Category>();
+		try {
+			categories = categoryDAO.selectAll();
+		} catch (DALException e) {
+			e.printStackTrace();
+			throw new BLLException("Category listing failed - ", e);
+		}
+		return categories;
 	}
 	
 	private boolean validateCategory(String name) throws BLLException {

@@ -5,7 +5,6 @@ import java.util.List;
 import fr.eni.encheres.bll.bo.User;
 import fr.eni.encheres.dal.DALException;
 import fr.eni.encheres.dal.DAOFactory;
-import fr.eni.encheres.dal.SingleIdDAO;
 import fr.eni.encheres.dal.UserDAO;
 
 public class UserManager {

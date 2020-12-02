@@ -14,10 +14,10 @@ public class BidDAOJDBCImpl implements BidDAO {
 	private static final String INSERT = "INSERT INTO BIDS(buyerId, articleId, amount, bidDate) VALUES (?, ?, ?, ?);";
 	private static final String UPDATE = "UPDATE BIDS SET "
 			+ "amount = ?, "
-			+ "bidDate = ?, "
+			+ "bidDate = ? "
 			+ "WHERE buyerId = ? "
 			+ "AND articleId = ?;";
-	private static final String DELETE = "DELETE FROM BIDS WHERE articleId = ? AND buyerId = ?;";
+	//private static final String DELETE = "DELETE FROM BIDS WHERE articleId = ? AND buyerId = ?;";
 	private static final String SELECT_ALL = "SELECT * FROM BIDS;";
 	private static final String SELECT_BY_ID = "SELECT * FROM BIDS WHERE articleId = ? AND buyerId = ?;";
 	
@@ -60,6 +60,8 @@ public class BidDAOJDBCImpl implements BidDAO {
 			pstmt = con.prepareStatement(UPDATE);
 			pstmt.setInt(1, data.getAmount());
 			pstmt.setTimestamp(2, Timestamp.valueOf(data.getBidDate()));
+			pstmt.setInt(3, data.getBuyerId());
+			pstmt.setInt(4, data.getArticleId());
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

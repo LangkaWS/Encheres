@@ -10,7 +10,7 @@ public class Article {
 	private LocalDateTime auctionStartDate;
 	private LocalDateTime auctionEndDate;
 	private Integer startPrice;
-	private Integer sellingPrice;
+	private Integer sellingPrice = startPrice;
 	private String state = "created"; // DEFAULT "created"
 	private Integer sellerId;
 	private Integer buyerId;
