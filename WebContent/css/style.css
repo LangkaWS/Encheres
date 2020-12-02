@@ -178,11 +178,11 @@ h2 {
 
 /* USER PAGES : SHOW, EDIT */
 
-.showPage {
+.userPage {
 	text-align: center;
 }
 
-.showPage h1 {
+.userPage h1 {
 	margin: 40px auto;
 }
 
@@ -191,11 +191,15 @@ h2 {
 	justify-content: center;
 }
 
-.showPage td {
+.userPage td {
 	text-align: left;
 	padding: 10px;
 }
 
-.showPage button {
+.userPage button {
 	margin-top: 20px;
+}
+
+.userPage p {
+	margin: 30px 40px;
 }
