@@ -63,7 +63,7 @@
 						<input type="submit" value="Modifier mes informations" class="formButton submitButton">
 					</form>
 					<form method="POST" action="<%=request.getContextPath()%>/ServletDeleteUser">
-						<input type="submit" value="Supprimer mon compte" class="formButton dangerButton">
+						<input type="submit" value="Supprimer mon compte" class="formButton dangerButton" onclick="if (! confirm('Are you sure ?')) { return false; }">
 					</form>
 				<% } %>
 			<% } %>
