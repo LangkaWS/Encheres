@@ -28,6 +28,7 @@ h2 {
 	text-align: center;
 }
 
+<<<<<<< Updated upstream
 .submitButton {
 	background-color: var(--primary-color);
 }
@@ -40,16 +41,23 @@ h2 {
 	background-color: var(--warning);
 }
 
-.error {
+.alert {
 	width: 80%;
 	margin: 20px auto;
 	padding: 5px;
 	text-align: center;
 	border-radius: 3px;
+}
+	
+.error {
 	background-color: var(--error);
 }
 
-.error:empty {
+.info {
+	background-color: var(--primary-color);
+}
+
+.error:empty, .info:empty {
 	display: none;
 }
 
@@ -166,6 +174,18 @@ h2 {
 	color: white;
 }
 
+.submitButton {
+	background-color: var(--primary-color);
+}
+
+.cancelButton {
+	background-color: var(--secondary-color);
+}
+
+.dangerButton {
+	background-color: var(--danger-color);
+}
+
 .pageTitle {
 	display: flex;
 	justify-content: space-around;
@@ -202,4 +222,8 @@ h2 {
 
 .userPage p {
 	margin: 30px 40px;
+}
+
+.userPage input.formButton.submitButton {
+	margin: 20px auto;
 }
