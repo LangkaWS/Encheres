@@ -4,7 +4,7 @@
 
 :root {
 	--primary-color: #11b37a;
-	--secondary-color: #114ab3;
+	--secondary-color: #5FA5DE;
 	--cust-gray: #363636;
 	--warning: #ff7919;
 	--error: #ff193c;
@@ -28,7 +28,6 @@ h2 {
 	text-align: center;
 }
 
-<<<<<<< Updated upstream
 .submitButton {
 	background-color: var(--primary-color);
 }
@@ -41,7 +40,7 @@ h2 {
 	background-color: var(--warning);
 }
 
-.alert {
+.banniere {
 	width: 80%;
 	margin: 20px auto;
 	padding: 5px;
@@ -53,11 +52,11 @@ h2 {
 	background-color: var(--error);
 }
 
-.info {
+.secondary {
 	background-color: var(--primary-color);
 }
 
-.error:empty, .info:empty {
+.error:empty, .secondary:empty {
 	display: none;
 }
 
@@ -178,12 +177,8 @@ h2 {
 	background-color: var(--primary-color);
 }
 
-.cancelButton {
-	background-color: var(--secondary-color);
-}
-
 .dangerButton {
-	background-color: var(--danger-color);
+	background-color: var(--error);
 }
 
 .pageTitle {
