@@ -12,18 +12,16 @@
 		<header>
 			<h1>ENI-Enchères</h1>
 		</header>
-		<div class="showPage">
+		<div class="userPage">
 			<% User u = (User) request.getAttribute("user"); %>
 			<% 
 				User currentUser = null;
 				if (session.getAttribute("currentUser") != null) {
 					currentUser = (User) session.getAttribute("currentUser");
-					} 
+				} 
 			%>
-			<% if(currentUser != null) { %>
-				<% if(currentUser.getUserId() == u.getUserId()) { %>
-					<h1>Mon profil : <%= u.getUserName() %></h1>
-				<% } %>
+			<% if(currentUser != null && currentUser.getUserId() == u.getUserId()) { %>
+				<h1>Mon profil : <%= u.getUserName() %></h1>
 			<% } else { %>
 				<h1>Profil de <%= u.getUserName() %> </h1>
 			<% } %>
@@ -59,6 +57,13 @@
 					</tr>
 				</table>
 			</div>
+			<% if(currentUser != null) { %>
+				<% if(currentUser.getUserId() == u.getUserId()) { %>
+					<form method="GET" action="<%=request.getContextPath()%>/ServletEditUser">
+						<input type="submit" value="Modifier mes informations" class="formButton submitButton">
+					</form>
+				<% } %>
+			<% } %>
 			<button class="formButton cancelButton" onclick="location.href='.'">Retour</button>
 		</div>
 	</body>
