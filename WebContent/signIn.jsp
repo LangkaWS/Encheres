@@ -16,7 +16,7 @@
 		<h1 class="mainTitle">Se connecter</h1>
 	</div>
 	
-	<div class="error">${exception}</div>
+	<div class="banniere error">${exception}</div>
 
 	<form id="signInForm" method="POST" action="<%=request.getContextPath()%>/ServletSignIn">
 		<table class="signUpInFormTable">

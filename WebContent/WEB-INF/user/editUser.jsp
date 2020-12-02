@@ -9,22 +9,21 @@
 		<link rel="stylesheet" href="css/style.css">
 	</head>
 	<body>
+		<% 
+			User currentUser = null;
+			if (session.getAttribute("currentUser") != null) {
+				currentUser = (User) session.getAttribute("currentUser");
+			} 
+		%>
 		<header>
 			<h1>ENI-Enchères</h1>
 		</header>
 		<div class="userPage"> 
-			<% 
-				User currentUser = null;
-				if (session.getAttribute("currentUser") != null) {
-					currentUser = (User) session.getAttribute("currentUser");
-				} 
-			%>
-		
 			<h2>Editer mon profil</h2>
 			
 			<p>Laissez vides les champs que vous ne souhaitez pas modifier. Renseignez votre mot de passe actuel pour confirmer les changements.</p>
 			
-			<div class="error">${exception}</div>
+			<div class="banniere error">${exception}</div>
 			
 			<form id="editForm" method="POST" action="<%=request.getContextPath()%>/ServletEditUser">
 			<table class="signUpInFormTable">

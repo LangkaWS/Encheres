@@ -26,7 +26,17 @@ public class ServletDeleteUser extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		HttpSession session = request.getSession();
+		User currentUser = (User) session.getAttribute("currentUser");
+		if (currentUser == null) {
+			request.setAttribute("exception", "Vous devez être connecté pour accéder à cette page.");
+			RequestDispatcher rd = request.getRequestDispatcher("/signIn.jsp");
+			rd.forward(request, response);
+		} else {
+			request.setAttribute("userId", currentUser.getUserId());
+			RequestDispatcher rd = request.getRequestDispatcher("/ServletShowUser");
+			rd.forward(request, response);
+		}
 	}
 
 	/**

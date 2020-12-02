@@ -14,7 +14,7 @@
 
 	<h2>Mon profil</h2>
 	
-	<div class="error">${exception}</div>
+	<div class="banniere error">${exception}</div>
 	
 	<form id="signUpForm" method="POST" action="<%=request.getContextPath()%>/ServletSignUp">
 	<table class="signUpInFormTable">
