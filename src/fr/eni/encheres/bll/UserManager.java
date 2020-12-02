@@ -62,10 +62,21 @@ public class UserManager {
 		return u;
 	}
 	
-	public User getUser(String email) throws BLLException {
+	public User getUserByEmail(String email) throws BLLException {
 		User u = null;
 		try {
 			u = userDAO.selectUserByEmail(email);
+		} catch (DALException e) {
+			e.printStackTrace();
+			throw new BLLException("User selection failed - ", e);
+		}
+		return u;
+	}
+	
+	public User getUserByUserName(String userName) throws BLLException {
+		User u = null;
+		try {
+			u = userDAO.selectUserByUserName(userName);
 		} catch (DALException e) {
 			e.printStackTrace();
 			throw new BLLException("User selection failed - ", e);

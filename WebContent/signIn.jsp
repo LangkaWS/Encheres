@@ -23,10 +23,10 @@
 			<tbody>
 				<tr>
 					<td class="tableLabel">
-						<label for="emailInput">Email : </label>
+						<label for="emailInput">Email ou pseudo: </label>
 					</td>
 					<td class="tableLabel">
-						<input type="text" id="emailInput" name="emailInput" value="${email}"/> <br />
+						<input type="text" id="emailInput" name="loginInput" value="${loginInput}"/> <br />
 					</td>
 				</tr>
 				<tr>

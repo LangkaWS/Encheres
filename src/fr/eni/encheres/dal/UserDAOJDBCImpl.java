@@ -30,6 +30,7 @@ public class UserDAOJDBCImpl implements UserDAO {
 	private static final String SELECT_ALL = "SELECT * FROM USERS;";
 	private static final String SELECT_BY_ID = "SELECT * FROM USERS WHERE userId = ?;";
 	private static final String SELECT_BY_EMAIL = "SELECT * FROM USERS WHERE email = ?;";
+	private static final String SELECT_BY_USERNAME = "SELECT * FROM USERS WHERE userName = ?;";
 
 	@Override
 	public void insert(User data) throws DALException {
@@ -255,6 +256,50 @@ public class UserDAOJDBCImpl implements UserDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DALException("DATA ACCESS LAYER EXCEPTION : User selection by email from database failed - ", e);
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new DALException("Close failed - ", e);
+			}
+		}
+		return user;
+	}
+
+	public User selectUserByUserName(String userName) throws DALException {
+		User user = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con = ConnectionProvider.getConnection();
+			pstmt = con.prepareStatement(SELECT_BY_USERNAME);
+			pstmt.setString(1, userName);
+			ResultSet rs = pstmt.executeQuery();
+			if(rs.next()) {
+				user = new User(
+						rs.getInt(1),
+						rs.getString(2),
+						rs.getString(3),
+						rs.getString(4),
+						rs.getString(5),
+						rs.getString(6),
+						rs.getString(7),
+						rs.getString(8),
+						rs.getString(9),
+						rs.getString(10),
+						rs.getInt(11),
+						(rs.getInt(12) == 1)	
+						);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DALException("DATA ACCESS LAYER EXCEPTION : User selection by username from database failed - ", e);
 		} finally {
 			try {
 				if (pstmt != null) {

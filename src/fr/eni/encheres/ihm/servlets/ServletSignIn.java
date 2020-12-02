@@ -27,16 +27,20 @@ public class ServletSignIn extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String email = request.getParameter("emailInput");
+		String loginInput = request.getParameter("loginInput");
 		String password = request.getParameter("passwordInput");
 		
 		HttpSession session = request.getSession();
 		
 		try {
-			User user = um.getUser(email);
+			User user = um.getUserByEmail(loginInput);
 			if (user == null) {
-				throw new BLLException("Error - User seems to not exist.");
-			} else if (!user.getPassword().equals(password)) {
+				user = um.getUserByUserName(loginInput);
+				if (user == null) {
+					throw new BLLException("Error - User doesn't seem to exist.");
+				}
+			}
+			if (!user.getPassword().equals(password)) {
 				throw new BLLException("Error - Wrong password.");
 			} else {
 				session.setAttribute("currentUser", user);
@@ -47,7 +51,7 @@ public class ServletSignIn extends HttpServlet {
 		} catch (BLLException e) {
 			e.printStackTrace();
 			request.setAttribute("exception", e);
-			request.setAttribute("email", email);
+			request.setAttribute("loginInput", loginInput);
 			request.setAttribute("password", password);
 			RequestDispatcher rd = request.getRequestDispatcher("/signIn.jsp");
 			rd.forward(request, response);
