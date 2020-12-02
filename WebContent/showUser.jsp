@@ -62,6 +62,9 @@
 					<form method="GET" action="<%=request.getContextPath()%>/ServletEditUser">
 						<input type="submit" value="Modifier mes informations" class="formButton submitButton">
 					</form>
+					<form method="POST" action="<%=request.getContextPath()%>/ServletDeleteUser">
+						<input type="submit" value="Supprimer mon compte" class="formButton dangerButton">
+					</form>
 				<% } %>
 			<% } %>
 			<button class="formButton cancelButton" onclick="location.href='.'">Retour</button>
