@@ -207,10 +207,12 @@ public class ArticleManager {
 			isValid = false;
 			throw new BLLException("Article seller id is invalid.");
 		}
+		/*
 		if (!this.validateArticleBuyerId(a.getBuyerId())) {
 			isValid = false;
 			throw new BLLException("Article buyer id is invalid.");
 		}
+		*/
 		if (!this.validateArticleCategoryId(a.getCategoryId())) {
 			isValid = false;
 			throw new BLLException("Article category id is invalid.");
@@ -277,7 +279,7 @@ public class ArticleManager {
 	
 	private boolean validateArticleState(String state) throws BLLException {
 		boolean isValid = true;
-		if (state != "created" || state != "in progress" || state != "ended") {
+		if (!state.equals("created") && !state.equals("in progress") && !state.equals("ended")) {
 			isValid = false;
 			throw new BLLException("The state isn't valid.");
 		}
@@ -300,6 +302,7 @@ public class ArticleManager {
 		return isValid;
 	}
 	
+	/*
 	private boolean validateArticleBuyerId(Integer buyerId) throws BLLException {
 		boolean isValid = true;
 		if (buyerId == null) {
@@ -315,6 +318,7 @@ public class ArticleManager {
 		}
 		return isValid;
 	}
+	*/
 	
 	private boolean validateArticleCategoryId(Integer categoryId) throws BLLException {
 		boolean isValid = true;
