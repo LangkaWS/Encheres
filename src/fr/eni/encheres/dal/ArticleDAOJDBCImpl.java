@@ -95,10 +95,18 @@ public class ArticleDAOJDBCImpl implements ArticleDAO {
 			pstmt.setTimestamp(3, Timestamp.valueOf(data.getAuctionStartDate()));
 			pstmt.setTimestamp(4, Timestamp.valueOf(data.getAuctionEndDate()));
 			pstmt.setInt(5, data.getStartPrice());
-			pstmt.setInt(6, data.getSellingPrice());
+			if (data.getSellingPrice() == null) {
+				pstmt.setNull(6, java.sql.Types.INTEGER);
+			} else {
+				pstmt.setInt(6, data.getSellingPrice());
+			}
 			pstmt.setString(7, data.getState());
 			pstmt.setInt(8, data.getSellerId());
-			pstmt.setInt(9, data.getBuyerId());
+			if (data.getBuyerId() == null) {
+				pstmt.setNull(9, java.sql.Types.INTEGER);
+			} else {
+				pstmt.setInt(9, data.getBuyerId());
+			}
 			pstmt.setInt(10, data.getCategoryId());
 			pstmt.setInt(11, data.getPickUpId());
 			pstmt.setInt(12, data.getArticleId());

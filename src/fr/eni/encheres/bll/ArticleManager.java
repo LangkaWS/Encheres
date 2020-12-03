@@ -175,10 +175,6 @@ public class ArticleManager {
 		
 	private boolean validateArticle(Article a) throws BLLException {
 		boolean isValid = true;
-		if (a.getArticleId() != null) {
-			isValid = false;
-			throw new BLLException("Inserting article failed, article already exists.");
-		}
 		if (!this.validateArticleName(a.getName())) {
 			isValid = false;
 			throw new BLLException("Article name is invalid.");
