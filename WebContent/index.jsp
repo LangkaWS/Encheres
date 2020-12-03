@@ -7,6 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="../css/style.css">
 <title>ENI-Enchères</title>
 </head>
 <body>
@@ -38,6 +39,7 @@
 	</header>
 	
 	<div class="banniere secondary">${info}</div>
+	<div class="banniere warning">${warning}</div>
 	
 	<% if (session.getAttribute("currentUser") != null) { %>
 	
