@@ -29,7 +29,7 @@ public class ServletDeleteUser extends HttpServlet {
 		HttpSession session = request.getSession();
 		User currentUser = (User) session.getAttribute("currentUser");
 		if (currentUser == null) {
-			request.setAttribute("exception", "Vous devez être connecté pour accéder à cette page.");
+			request.setAttribute("exception", "You have to be logged in if you want to access this page.");
 			RequestDispatcher rd = request.getRequestDispatcher("/signIn.jsp");
 			rd.forward(request, response);
 		} else {
@@ -53,11 +53,12 @@ public class ServletDeleteUser extends HttpServlet {
 		try {
 			um.deleteUser(currentUser.getUserId());
 			session.invalidate();
-			request.setAttribute("info", "Votre compte a bien été supprimé");
+			request.setAttribute("info", "Account deleted.");
 			RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
 			rd.forward(request, response);
 		} catch (BLLException e) {
 			e.printStackTrace();
+			request.setAttribute("warning", "We couldn't delete your account : " + e.getMessage());
 			RequestDispatcher rd = request.getRequestDispatcher("/ServletShowUser?userId=\" + currentUser.getUserId()");
 			rd.forward(request, response);
 		}

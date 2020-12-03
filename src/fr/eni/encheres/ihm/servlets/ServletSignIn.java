@@ -14,6 +14,7 @@ import fr.eni.encheres.bll.BLLException;
 import fr.eni.encheres.bll.ManagerFactory;
 import fr.eni.encheres.bll.UserManager;
 import fr.eni.encheres.bll.bo.User;
+import fr.eni.encheres.ihm.IHMException;
 
 /**
  * Servlet implementation class ServletSignIn
@@ -32,28 +33,33 @@ public class ServletSignIn extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 		
-		try {
-			User user = um.getUserByEmail(loginInput);
-			if (user == null) {
-				user = um.getUserByUserName(loginInput);
+		if (session.getAttribute("currentUser") == null) {		
+			try {
+				User user = um.getUserByEmail(loginInput);
 				if (user == null) {
-					throw new BLLException("Error - User doesn't seem to exist.");
+					user = um.getUserByUserName(loginInput);
+					if (user == null) {
+						throw new BLLException("Business Exception - User doesn't seem to exist.");
+					}
 				}
-			}
-			if (!user.getPassword().equals(password)) {
-				throw new BLLException("Error - Wrong password.");
-			} else {
-				session.setAttribute("currentUser", user);
-				
-				RequestDispatcher rd = request.getRequestDispatcher("/index");
+				if (!user.getPassword().equals(password)) {
+					throw new IHMException("IHM Exception - Wrong password.");
+				} else {
+					session.setAttribute("currentUser", user);
+					
+					RequestDispatcher rd = request.getRequestDispatcher("/index");
+					rd.forward(request, response);
+				}
+			} catch (BLLException | IHMException e) {
+				e.printStackTrace();
+				request.setAttribute("exception", e);
+				request.setAttribute("loginInput", loginInput);
+				request.setAttribute("password", password);
+				RequestDispatcher rd = request.getRequestDispatcher("/signIn.jsp");
 				rd.forward(request, response);
 			}
-		} catch (BLLException e) {
-			e.printStackTrace();
-			request.setAttribute("exception", e);
-			request.setAttribute("loginInput", loginInput);
-			request.setAttribute("password", password);
-			RequestDispatcher rd = request.getRequestDispatcher("/signIn.jsp");
+		} else {
+			RequestDispatcher rd = request.getRequestDispatcher("/index");
 			rd.forward(request, response);
 		}
 	}

@@ -14,6 +14,7 @@ import fr.eni.encheres.bll.BLLException;
 import fr.eni.encheres.bll.ManagerFactory;
 import fr.eni.encheres.bll.UserManager;
 import fr.eni.encheres.bll.bo.User;
+import fr.eni.encheres.ihm.IHMException;
 
 /**
  * Servlet implementation class ServletEditUser
@@ -100,17 +101,18 @@ public class ServletEditUser extends HttpServlet {
 		
 		try {
 			if(!currentPassword.equals(currentUser.getPassword())) {
-				throw new BLLException("Error - The password seems wrong. Please check again.");
+				throw new IHMException("IHM Error - The password seems wrong. Please check again.");
 			}
 			if(!newPassword.equals(confirmPassword)) {
-				throw new BLLException("Error - The new password does not match confirmation password. Please check again.");
+				throw new IHMException("IHM Error - The new password does not match confirmation password. Please check again.");
 			}
 			um.updateUser(editUser);
 			System.out.println(editUser.toString());
+			request.setAttribute("info", "Your account has been updated.");
 			session.setAttribute("currentUser", editUser);
 			RequestDispatcher rd = request.getRequestDispatcher("/ServletShowUser?userId=" + currentUser.getUserId());
 			rd.forward(request, response);
-		} catch (BLLException e) {
+		} catch (BLLException | IHMException e) {
 			e.printStackTrace();
 			request.setAttribute("exception", "An error occured : " + e.getMessage());
 			request.setAttribute("userName", userName);
@@ -123,7 +125,7 @@ public class ServletEditUser extends HttpServlet {
 			request.setAttribute("town", town);
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/user/editUser.jsp");
 			rd.forward(request, response);
-		}
+		} 
 	}
 
 }

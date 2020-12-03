@@ -8,11 +8,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import fr.eni.encheres.bll.BLLException;
 import fr.eni.encheres.bll.ManagerFactory;
 import fr.eni.encheres.bll.UserManager;
 import fr.eni.encheres.bll.bo.User;
+import fr.eni.encheres.ihm.IHMException;
 
 /**
  * Servlet implementation class ServletSignUp
@@ -33,6 +35,7 @@ public class ServletSignUp extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		HttpSession session = request.getSession();
 		request.setCharacterEncoding("UTF-8");
 		
 		String userName = request.getParameter("userNameInput");
@@ -56,13 +59,14 @@ public class ServletSignUp extends HttpServlet {
 		
 		try {
 			if(!password.equals(confirmPassword)) {
-				throw new BLLException("Error - The password and the confirmation are different. Please check again.");
+				throw new IHMException("Error - The password and the confirmation are different. Please check again.");
 			}
 			um.addUser(newUser);
 			System.out.println(newUser.toString());
+			session.setAttribute("currentUser", newUser);
 			RequestDispatcher rd = request.getRequestDispatcher("/index");
 			rd.forward(request, response);
-		} catch (BLLException e) {
+		} catch (BLLException | IHMException e) {
 			e.printStackTrace();
 			request.setAttribute("exception", "An error occured : " + e.getMessage());
 			request.setAttribute("userName", userName);
