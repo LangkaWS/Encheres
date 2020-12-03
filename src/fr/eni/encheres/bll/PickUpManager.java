@@ -78,7 +78,13 @@ public class PickUpManager {
 	
 	private boolean validateStreet(String street) throws BLLException {
 		boolean isValid = true;
-		if(!street.matches("(?i)^[a-z0-9 ,.'-]+$")) {
+		
+		if(!(street.length() <= 50)) {
+			isValid = false;
+			throw new BLLException("The street must be up to 50 characters long.");
+		}
+		
+		if(!street.matches("(?i)^[A-Za-zÀ-ÖØ-öø-ÿ0-9 ,.'-]+$")) {
 			isValid = false;
 			throw new BLLException("The street must contain only letters, numbers, white spaces and some special characters (,.'-)");
 		}
@@ -96,9 +102,15 @@ public class PickUpManager {
 	
 	private boolean validateTown(String town) throws BLLException {
 		boolean isValid = true;
-		if(!town.matches("(?i)^[a-z0-9 ,.'-]+$")) {
+		
+		if(!(town.length() <= 30)) {
 			isValid = false;
-			throw new BLLException("The town must contain only letters, numbers, white spaces and some special characters (,.'-)");
+			throw new BLLException("The town must be up to 30 characters long.");
+		}
+		
+		if(!town.matches("(?i)^[A-Za-zÀ-ÖØ-öø-ÿ ,.'-]+$")) {
+			isValid = false;
+			throw new BLLException("The town must contain only letters, white spaces and some special characters (,.'-)");
 		}
 		return isValid;
 	}

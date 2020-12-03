@@ -7,16 +7,16 @@ import java.util.List;
 import fr.eni.encheres.bll.bo.Article;
 import fr.eni.encheres.bll.bo.Category;
 import fr.eni.encheres.bll.bo.PickUp;
-import fr.eni.encheres.bll.bo.User;
 import fr.eni.encheres.dal.ArticleDAO;
 import fr.eni.encheres.dal.DALException;
 import fr.eni.encheres.dal.DAOFactory;
 import fr.eni.encheres.dal.SingleIdDAO;
+import fr.eni.encheres.dal.UserDAO;
 
 public class ArticleManager {
 	
 	private ArticleDAO articleDAO;
-	private SingleIdDAO<User> userDAO;
+	private UserDAO userDAO;
 	private SingleIdDAO<Category> categoryDAO;
 	private SingleIdDAO<PickUp> pickUpDAO;
 	
