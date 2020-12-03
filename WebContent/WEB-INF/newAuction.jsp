@@ -23,7 +23,7 @@
 		<br />
 		
 		<label for="articleDescription">Description : </label>
-		<textarea id="articleDescription" name="articleDescription" rows="3" value="${art.description}" required></textarea>
+		<textarea id="articleDescription" name="articleDescription" rows="3" required>${art.description}</textarea>
 		<br />
 		
 		<label for="category">Catégorie : </label>
