@@ -7,13 +7,13 @@ import fr.eni.encheres.dal.ArticleDAO;
 import fr.eni.encheres.dal.BidDAO;
 import fr.eni.encheres.dal.DALException;
 import fr.eni.encheres.dal.DAOFactory;
-import fr.eni.encheres.dal.SingleIdDAO;
+import fr.eni.encheres.dal.UserDAO;
 
 public class BidManager {
 	
 	private BidDAO bidDAO;
 	private ArticleDAO articleDAO;
-	private SingleIdDAO<User> userDAO;
+	private UserDAO userDAO;
 	
 	public BidManager() {
 		this.bidDAO = DAOFactory.getBidDAO();
