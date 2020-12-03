@@ -22,6 +22,8 @@
 		<h1>ENI-Enchères</h1>
 		
 		<% if (session.getAttribute("currentUser") != null) { %>
+		
+			<a class="logLink" id="newAuctionLink" href="<%=request.getContextPath()%>/newAuction">Vendre un article</a>
 			
 			<form id="showDashBoard" method="POST" action="<%=request.getContextPath()%>/ServletShowUser?userId=<%= currentUser.getUserId()%>">
 				<a class="logLink" id="dashBoardLink" onclick="this.closest('form').submit();return false;">Mon profil</a>
