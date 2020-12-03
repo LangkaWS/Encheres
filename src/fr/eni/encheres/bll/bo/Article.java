@@ -10,7 +10,7 @@ public class Article {
 	private LocalDateTime auctionStartDate;
 	private LocalDateTime auctionEndDate;
 	private Integer startPrice;
-	private Integer sellingPrice = startPrice;
+	private Integer sellingPrice;
 	private String state = "created"; // DEFAULT "created"
 	private Integer sellerId;
 	private Integer buyerId;
@@ -48,7 +48,7 @@ public class Article {
 		this.auctionStartDate = auctionStartDate;
 		this.auctionEndDate = auctionEndDate;
 		this.startPrice = startPrice;
-		this.state = state;
+		this.sellingPrice = startPrice;
 		this.sellerId = sellerId;
 		this.categoryId = categoryId;
 		this.pickUpId = pickUpId;
