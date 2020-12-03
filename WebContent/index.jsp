@@ -22,17 +22,13 @@
 		<h1>ENI-Enchères</h1>
 		
 		<% if (session.getAttribute("currentUser") != null) { %>
+						
+			<a class="logLink" id="logOutLink" href="<%=request.getContextPath()%>/ServletSignOut">Se déconnecter</a>
+			
+			<a class="logLink" id="dashBoardLink" href="<%=request.getContextPath()%>/ServletShowUser?userId=<%= currentUser.getUserId()%>">Mon profil</a>
 		
 			<a class="logLink" id="newAuctionLink" href="<%=request.getContextPath()%>/newAuction">Vendre un article</a>
 			
-			<form id="showDashBoard" method="POST" action="<%=request.getContextPath()%>/ServletShowUser?userId=<%= currentUser.getUserId()%>">
-				<a class="logLink" id="dashBoardLink" onclick="this.closest('form').submit();return false;">Mon profil</a>
-			</form>
-			<form id="signOutForm" method="POST" action="<%=request.getContextPath()%>/ServletSignOut">
-				<a class="logLink" id="logOutLink" onclick="this.closest('form').submit();return false;">Se déconnecter</a>
-			</form>
-
-		
 		<% } else { %>
 		
 			<a href="signIn" class="logLink">S'inscrire - Se connecter</a>

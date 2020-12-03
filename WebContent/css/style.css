@@ -28,6 +28,18 @@ h2 {
 	text-align: center;
 }
 
+.button {
+	text-decoration: none;
+}
+
+.userOwnerButton {
+	margin: 40px auto;
+}
+
+a.button:hover {
+	cursor: default;
+}
+
 .submitButton {
 	background-color: var(--primary-color);
 }
@@ -56,7 +68,7 @@ h2 {
 	background-color: var(--primary-color);
 }
 
-.error:empty, .secondary:empty {
+.error:empty, .secondary:empty, .warning:empty {
 	display: none;
 }
 
@@ -119,10 +131,7 @@ h2 {
     color: -webkit-link;
     cursor: pointer;
     text-decoration: underline;
-}
-
-#logOutLink{
-	margin-right: 20px;
+    margin-left: 20px;
 }
 
 /* SIGN UP AND IN PAGES */
@@ -165,16 +174,12 @@ h2 {
 
 .formButton {
 	padding: 10px 20px;;
-	margin: 0px auto;
+	margin: 30px auto;
 	min-width: 140px;
 	border: none;
 	border-radius: 3px;
 	box-shadow: 3px 3px var(--cust-gray);
 	color: white;
-}
-
-.submitButton {
-	background-color: var(--primary-color);
 }
 
 .dangerButton {
@@ -204,6 +209,7 @@ h2 {
 #tableShowUser {
 	display: flex;
 	justify-content: center;
+	margin-bottom: 30px;
 }
 
 .userPage td {
@@ -212,7 +218,7 @@ h2 {
 }
 
 .userPage button {
-	margin-top: 20px;
+	margin-top: 10px;
 }
 
 .userPage p {
