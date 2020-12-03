@@ -13,6 +13,8 @@
 			<h1>ENI-Enchères</h1>
 		</header>
 		<div class="userPage">
+			<div class="banniere warning">${warning}</div>
+			<div class="banniere secondary">${info}</div>
 			<% User u = (User) request.getAttribute("user"); %>
 			<% 
 				User currentUser = null;
@@ -57,15 +59,13 @@
 					</tr>
 				</table>
 			</div>
-			<% if(currentUser != null) { %>
-				<% if(currentUser.getUserId() == u.getUserId()) { %>
-					<form method="GET" action="<%=request.getContextPath()%>/ServletEditUser">
-						<input type="submit" value="Modifier mes informations" class="formButton submitButton">
-					</form>
-					<form method="POST" action="<%=request.getContextPath()%>/ServletDeleteUser">
-						<input type="submit" value="Supprimer mon compte" class="formButton dangerButton" onclick="if (! confirm('Are you sure ?')) { return false; }">
-					</form>
-				<% } %>
+			<% if(currentUser != null && currentUser.getUserId() == u.getUserId()) { %>
+				<div class="userOwnerButton">
+					<a class="formButton submitButton button" href="<%=request.getContextPath()%>/ServletEditUser">Modifier mes informations</a>
+				</div>
+				<div class="userOwnerButton">
+					<a class="formButton dangerButton button" href="<%=request.getContextPath()%>/ServletDeleteUser"  onclick="if (! confirm('Are you sure ?')) { return false; }">Supprimer mon compte</a>
+				</div>
 			<% } %>
 			<button class="formButton cancelButton" onclick="location.href='.'">Retour</button>
 		</div>
