@@ -33,7 +33,6 @@ public class ServletEditArticle extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		Integer articleId = Integer.parseInt(request.getParameter("id"));
-		System.out.println(articleId);
 		
 		Article art = null;
 		
@@ -42,8 +41,6 @@ public class ServletEditArticle extends HttpServlet {
 		} catch (BLLException e) {
 			e.printStackTrace();
 		}
-		
-		System.out.println(art.toString());
 		
 		request.setAttribute("art", art);
 		
