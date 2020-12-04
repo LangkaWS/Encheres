@@ -1,6 +1,7 @@
 <%@page import="fr.eni.encheres.bll.bo.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -10,7 +11,7 @@
 	</head>
 	<body>
 	
-		<%@include file="/WEB-INF/fragments/navbar.jspf" %>
+		<c:import url="/WEB-INF/fragments/navbar.jspf" />
 
 		<div class="userPage">
 			<div class="banner warning">${warning}</div>
@@ -22,49 +23,49 @@
 			<% } else { %>
 
 				<% if(currentUser != null && currentUser.getUserId() == u.getUserId()) { %>
-					<h1>Mon profil : <%= u.getUserName() %></h1>
+					<h1>Mon profil : ${user.userName}</h1>
 				<% } else { %>
-					<h1>Profil de <%= u.getUserName() %> </h1>
+					<h1>Profil de ${user.userName} </h1>
 				<% } %>
 				
 				<div id="tableShowUser">
 					<table>
 						<tr>
 							<td>Nom :</td>
-							<td><%= u.getLastName() %></td>
+							<td>${user.lastName}</td>
 						</tr>
 						<tr>
 							<td>Prénom :</td>
-							<td><%= u.getFirstName() %></td>
+							<td>${user.firstName}</td>
 						</tr>
 						<tr>
 							<td>Email :</td>
-							<td><%= u.getEmail() %></td>
+							<td>${user.email}</td>
 						</tr>
 						<tr>
 							<td>Numéro de téléphone :</td>
-							<td><%= u.getPhone() %></td>
+							<td>${user.phone}</td>
 						</tr>
 						<tr>
 							<td>Adresse :</td>
-							<td><%= u.getStreet() %></td>
+							<td>${user.street}</td>
 						</tr>
 						<tr>
 							<td></td>
-							<td><%= u.getZipCode() %></td>
+							<td>${user.zipCode}</td>
 						</tr>
 						<tr>
 							<td></td>
-							<td><%= u.getTown() %></td>
+							<td>${user.town}</td>
 						</tr>
 					</table>
 				</div>
 				<% if(currentUser != null && currentUser.getUserId() == u.getUserId()) { %>
 					<div class="userOwnerButton">
-						<a class="formButton submitButton button" href="<%=request.getContextPath()%>/edit/user">Modifier mes informations</a>
+						<a class="formButton submitButton button" href="${contextPath}/edit/user">Modifier mes informations</a>
 					</div>
 					<div class="userOwnerButton">
-						<a class="formButton dangerButton button" href="<%=request.getContextPath()%>/delete/user?val=ok"  onclick="if (! confirm('Are you sure ?')) { return false; }">Supprimer mon compte</a>
+						<a class="formButton dangerButton button" href="${contextPath}/delete/user?val=ok"  onclick="if (! confirm('Are you sure ?')) { return false; }">Supprimer mon compte</a>
 					</div>
 				<% } %>
 			<% } %>
