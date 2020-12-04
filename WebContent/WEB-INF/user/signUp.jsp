@@ -10,7 +10,7 @@
 </head>
 <body>
 
-	<c:import url="/WEB-INF/fragments/navbar.jspf" />
+	<%@include file="/WEB-INF/fragments/navbar.jspf" %>
 
 	<h2>Mon profil</h2>
 	

@@ -10,7 +10,7 @@
 </head>
 <body>
 
-	<c:import url="/WEB-INF/fragments/navbar.jspf" />
+	<%@include file="/WEB-INF/fragments/navbar.jspf" %>
 	
 	<div class="pageTitle">
 		<h1 class="mainTitle">Se connecter</h1>

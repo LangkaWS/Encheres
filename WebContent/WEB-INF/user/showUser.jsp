@@ -11,7 +11,7 @@
 	</head>
 	<body>
 	
-		<c:import url="/WEB-INF/fragments/navbar.jspf" />
+		<%@include file="/WEB-INF/fragments/navbar.jspf" %>
 
 		<div class="userPage">
 			<div class="banner warning">${warning}</div>
