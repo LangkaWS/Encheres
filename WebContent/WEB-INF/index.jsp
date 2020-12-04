@@ -13,6 +13,9 @@
 
 <p>Hello there !</p>
 <p>It's a me, Mario !</p>
+	<p>Hello there !</p>
+
+	<p>Hello</p>
 
 	<%@include file="/WEB-INF/fragments/navbar.jspf" %>
 	
