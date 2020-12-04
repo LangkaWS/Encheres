@@ -12,31 +12,7 @@
 </head>
 <body>
 
-	<% 
-		User currentUser = null;
-		if (session.getAttribute("currentUser") != null) {
-			currentUser = (User) session.getAttribute("currentUser");
-		}
-	%>
-	
-	<header>
-		<h1>ENI-Enchères</h1>
-		
-		<% if (session.getAttribute("currentUser") != null) { %>
-						
-			<a class="logLink" id="logOutLink" href="<%=request.getContextPath()%>/ServletSignOut">Se déconnecter</a>
-			
-			<a class="logLink" id="dashBoardLink" href="<%=request.getContextPath()%>/ServletShowUser?userId=<%= currentUser.getUserId()%>">Mon profil</a>
-		
-			<a class="logLink" id="newAuctionLink" href="<%=request.getContextPath()%>/newAuction">Vendre un article</a>
-			
-		<% } else { %>
-		
-			<a href="signIn" class="logLink">S'inscrire - Se connecter</a>
-		
-		<% }%>
-		
-	</header>
+	<%@include file="WEB-INF/fragments/navbar.jspf" %>
 	
 	<div class="banniere secondary">${info}</div>
 	<div class="banniere warning">${warning}</div>

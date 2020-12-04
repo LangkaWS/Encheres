@@ -9,15 +9,9 @@
 		<link rel="stylesheet" href="css/style.css">
 	</head>
 	<body>
-		<% 
-			User currentUser = null;
-			if (session.getAttribute("currentUser") != null) {
-				currentUser = (User) session.getAttribute("currentUser");
-			} 
-		%>
-		<header>
-			<h1>ENI-Enchères</h1>
-		</header>
+	
+		<%@include file="../fragments/navbar.jspf" %>
+		
 		<div class="userPage"> 
 			<h2>Editer mon profil</h2>
 			
