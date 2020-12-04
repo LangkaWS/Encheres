@@ -10,11 +10,11 @@
 	</head>
 	<body>
 	
-		<%@include file="WEB-INF/fragments/navbar.jspf" %>
+		<%@include file="/WEB-INF/fragments/navbar.jspf" %>
 
 		<div class="userPage">
-			<div class="banniere warning">${warning}</div>
-			<div class="banniere secondary">${info}</div>
+			<div class="banner warning">${warning}</div>
+			<div class="banner secondary">${info}</div>
 			<% User u = (User) request.getAttribute("user"); %>
 
 			<% if(u == null) { %>

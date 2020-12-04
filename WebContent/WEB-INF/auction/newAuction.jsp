@@ -10,7 +10,7 @@
 </head>
 <body>
 
-	<%@include file="../fragments/navbar.jspf" %>
+	<%@include file="/WEB-INF/fragments/navbar.jspf" %>
 	
 	<h2>Nouvelle vente</h2>
 	

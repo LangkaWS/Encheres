@@ -5,20 +5,19 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="../css/style.css">
 <title>ENI-Enchères</title>
 </head>
 <body>
 
-	<%@include file="WEB-INF/fragments/navbar.jspf" %>
+	<%@include file="/WEB-INF/fragments/navbar.jspf" %>
 	
 	<div class="pageTitle">
 		<h1 class="mainTitle">Se connecter</h1>
 	</div>
 	
-	<div class="banniere error">${exception}</div>
+	<div class="banner error">${exception}</div>
 
-	<form id="signInForm" method="POST" action="<%=request.getContextPath()%>/ServletSignIn">
+	<form id="signInForm" method="POST" action="<%=request.getContextPath()%>/signIn">
 		<table class="signUpInFormTable">
 			<tbody>
 				<tr>

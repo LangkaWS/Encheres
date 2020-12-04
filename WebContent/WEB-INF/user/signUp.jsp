@@ -9,13 +9,13 @@
 </head>
 <body>
 
-	<%@include file="WEB-INF/fragments/navbar.jspf" %>
+	<%@include file="/WEB-INF/fragments/navbar.jspf" %>
 
 	<h2>Mon profil</h2>
 	
-	<div class="banniere error">${exception}</div>
+	<div class="banner error">${exception}</div>
 	
-	<form id="signUpForm" method="POST" action="<%=request.getContextPath()%>/ServletSignUp">
+	<form id="signUpForm" method="POST" action="<%=request.getContextPath()%>/signUp">
 	<table class="signUpInFormTable">
 		<tbody>
 			<tr>

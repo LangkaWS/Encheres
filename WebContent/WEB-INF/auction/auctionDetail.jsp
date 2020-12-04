@@ -12,7 +12,7 @@
 </head>
 <body>
 
-	<%@include file="../fragments/navbar.jspf" %>
+	<%@include file="/WEB-INF/fragments/navbar.jspf" %>
 	
 	<h2>Détail vente</h2>
 	
