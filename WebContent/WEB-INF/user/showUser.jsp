@@ -64,7 +64,7 @@
 						<a class="formButton submitButton button" href="<%=request.getContextPath()%>/edit/user">Modifier mes informations</a>
 					</div>
 					<div class="userOwnerButton">
-						<a class="formButton dangerButton button" href="<%=request.getContextPath()%>/deleteUser"  onclick="if (! confirm('Are you sure ?')) { return false; }">Supprimer mon compte</a>
+						<a class="formButton dangerButton button" href="<%=request.getContextPath()%>/delete/user?val=ok"  onclick="if (! confirm('Are you sure ?')) { return false; }">Supprimer mon compte</a>
 					</div>
 				<% } %>
 			<% } %>
