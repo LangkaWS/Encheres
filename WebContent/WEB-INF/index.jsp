@@ -12,6 +12,7 @@
 <body>
 
 <p>Hello there !</p>
+<p>It's a me, Mario !</p>
 
 	<%@include file="/WEB-INF/fragments/navbar.jspf" %>
 	
