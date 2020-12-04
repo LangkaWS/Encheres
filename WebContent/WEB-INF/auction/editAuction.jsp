@@ -5,18 +5,16 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="../css/style.css">
 <title>ENI-Enchères</title>
 </head>
 <body>
 
-	<header>
-		<h1>ENI-Enchères</h1>
-	</header>
+	<%@include file="../fragments/navbar.jspf" %>
 	
-	<h2>Nouvelle vente</h2>
+	<h2>Modifier une vente</h2>
 	
-	<form method="POST" action="<%=request.getContextPath()%>/newAuction">
+	<form method="POST" action="<%=request.getContextPath()%>/edit/auctionDetail?id=${art.articleId}">
 	
 		<label for="articleName">Article : </label>
 		<input type="text" id="articleName" name="articleName" value="${art.name}" required />
@@ -29,7 +27,7 @@
 		<label for="category">Catégorie : </label>
 		<select id="category" name="category" required>
 			<c:forEach var="c" items="${applicationScope.catList}">
-				<option value="${c.categoryId}">${c.name}</option>
+				<option value="${c.categoryId}" ${c.categoryId == art.categoryId ? "selected" : ""}>${c.name}</option>
 			</c:forEach>
 		</select>
 		<br />
@@ -41,7 +39,7 @@
 		<input type="number" id="articleStartPrice" name="articleStartPrice" value="${art.startPrice}" required />
 		<br />
 		
-		<!-- Fonctionne pour Chrome, Edge et Opera -->
+		<!-- Pour Chrome, Edge et Opera -->
 		
 		<label for="startDate">Début de l'enchère : </label>
 		<input type="datetime-local" id="startDate" name="startDate" min="1899-01-01T00:00" value="${art.auctionStartDate}" required />
@@ -50,7 +48,7 @@
 		<label for="endDate">Fin de l'enchère : </label>
 		<input type="datetime-local" id="endDate" name="endDate" min="1899-01-01T00:00" value="${art.auctionEndDate}" required />
 		<br />
-		
+	
 		<fieldset>
 		
 		<legend>Retrait</legend>
@@ -68,7 +66,7 @@
 		</fieldset>
 		
 		<input type="submit" value="Enregistrer" class="formButton submitButton" />
-		<button class="formButton cancelButton" onclick="location.href='.'">Annuler</button>	
+		<button class="formButton cancelButton" onclick="location.href='<%=request.getContextPath()%>/auctionDetail?id=${art.articleId}'">Annuler</button>	
 	</form>
 	
 
