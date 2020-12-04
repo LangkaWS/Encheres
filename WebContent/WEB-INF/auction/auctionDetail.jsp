@@ -51,7 +51,8 @@
 		<li>Ma proposition : <form method="POST" action="<%=request.getContextPath()%>/outbid"><input type="number" name="newBidAmount" min="${art.sellingPrice +1}" value="${art.sellingPrice +1}" /> <button type="submit" name="submitButton" value="${art.articleId}" class="formButton submitButton">Enchérir</button></form></li>
 		
 	<%} else if(((Article)request.getAttribute("art")).getState().equals("created") && ((Article)request.getAttribute("art")).getSellerId() == ((User) session.getAttribute("currentUser")).getUserId()) {%>
-		<button type="submit" name="editButton" value="${art.articleId}" class="formButton submitButton" onclick="location.href='<%=request.getContextPath()%>/edit/auctionDetail?id=${art.articleId}'">Modifier</button>
+		<button type="submit" name="editButton" value="${art.articleId}" class="formButton submitButton" onclick="location.href='<%=request.getContextPath()%>/edit/auction?id=${art.articleId}'">Modifier</button>
+		<button type="submit" name="editButton" value="${art.articleId}" class="formButton dangerButton" onclick="location.href='<%=request.getContextPath()%>/delete/auction?id=${art.articleId}'">Supprimer</button>
 	<%} else if(((Article)request.getAttribute("art")).getState().equals("created")) {%>
 		<li>Cette vente n'a pas encore commencé</li>
 	<%} else if(((Article)request.getAttribute("art")).getState().equals("ended") && ((Article)request.getAttribute("art")).getBuyerId() == ((User) session.getAttribute("currentUser")).getUserId()) { %>
