@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import fr.eni.encheres.bll.ArticleManager;
 import fr.eni.encheres.bll.BLLException;
@@ -30,7 +31,13 @@ public class ServletFilterArticles extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int userId = ((User) request.getSession().getAttribute("currentUser")).getUserId();
+		HttpSession session = request.getSession();
+		
+		Integer userId = null;
+		
+		if(session.getAttribute("currentUser") != null) {
+			userId = ((User) session.getAttribute("currentUser")).getUserId();
+		}
 		
 		String category = request.getParameter("selectCategory");
 		String contains = request.getParameter("filterSearch");
@@ -47,73 +54,84 @@ public class ServletFilterArticles extends HttpServlet {
 		List<Article> tmp2List = new ArrayList<>();
 		List<Article> filteredList = new ArrayList<>();
 		try {
-			//If the user is a buyer
-			if(buyOrSell.equals("buy")) {
-				
-				//Listing in progress auctions
-				if(buyInProgressAuctions != null && buyInProgressAuctions.equals("c")) {
-					requestList = am.getArticlesInProgress();
-					for(Article a : requestList) {
-						if(!tmpList.contains(a)) {
-							tmpList.add(a);
+			
+			if(userId != null) {
+				//If the user is a buyer
+				if(buyOrSell.equals("buy")) {
+					
+					//Listing in progress auctions
+					if(buyInProgressAuctions != null && buyInProgressAuctions.equals("c")) {
+						requestList = am.getArticlesInProgress();
+						for(Article a : requestList) {
+							if(!tmpList.contains(a)) {
+								tmpList.add(a);
+							}
+						}
+					}
+					
+					//Listing in progress auctions to which the user participates
+					if(buyParticipatingInProgressAuctions != null && buyParticipatingInProgressAuctions.equals("c")) {
+						requestList = am.getInProgressArticlesByParticipatingBuyer(userId);
+						for(Article a : requestList) {
+							if(!tmpList.contains(a)) {
+								tmpList.add(a);
+							}
+						}
+					}
+					
+					//Listing ended auctions where the user is the final buyer
+					if(buyParticipatingEnded != null && buyParticipatingEnded.equals("c")) {
+						requestList = am.getWonArticles(userId);
+						for(Article a : requestList) {
+							if(!tmpList.contains(a)) {
+								tmpList.add(a);
+							}
 						}
 					}
 				}
 				
-				//Listing in progress auctions to which the user participates
-				if(buyParticipatingInProgressAuctions != null && buyParticipatingInProgressAuctions.equals("c")) {
-					requestList = am.getInProgressArticlesByParticipatingBuyer(userId);
-					for(Article a : requestList) {
-						if(!tmpList.contains(a)) {
-							tmpList.add(a);
+				//If the user is a seller
+				if(buyOrSell.equals("sell")) {
+					
+					//Listing seller's current selling list
+					if(sellInProgress != null && sellInProgress.equals("c")) {
+						requestList = am.getArticlesOfSellerByState(userId, "in progress");
+						for(Article a : requestList) {
+							if(!tmpList.contains(a)) {
+								tmpList.add(a);
+							}
+						}
+					}
+					
+					//Listing seller's created articles (but not in progress)
+					if(sellCreated != null && sellCreated.equals("c")) {
+						requestList = am.getArticlesOfSellerByState(userId, "created");
+						for(Article a : requestList) {
+							if(!tmpList.contains(a)) {
+								tmpList.add(a);
+							}
+						}
+					}
+					
+					//Listing seller's ended articles
+					if(sellEnded != null && sellEnded.equals("c")) {
+						requestList = am.getArticlesOfSellerByState(userId, "ended");
+						for(Article a : requestList) {
+							if(!tmpList.contains(a)) {
+								tmpList.add(a);
+							}
 						}
 					}
 				}
-				
-				//Listing ended auctions where the user is the final buyer
-				if(buyParticipatingEnded != null && buyParticipatingEnded.equals("c")) {
-					requestList = am.getWonArticles(userId);
-					for(Article a : requestList) {
-						if(!tmpList.contains(a)) {
-							tmpList.add(a);
-						}
+			} else {
+				requestList = am.getArticlesInProgress();
+				for(Article a : requestList) {
+					if(!tmpList.contains(a)) {
+						tmpList.add(a);
 					}
 				}
 			}
 			
-			//If the user is a seller
-			if(buyOrSell.equals("sell")) {
-				
-				//Listing seller's current selling list
-				if(sellInProgress != null && sellInProgress.equals("c")) {
-					requestList = am.getArticlesOfSellerByState(userId, "in progress");
-					for(Article a : requestList) {
-						if(!tmpList.contains(a)) {
-							tmpList.add(a);
-						}
-					}
-				}
-				
-				//Listing seller's created articles (but not in progress)
-				if(sellCreated != null && sellCreated.equals("c")) {
-					requestList = am.getArticlesOfSellerByState(userId, "created");
-					for(Article a : requestList) {
-						if(!tmpList.contains(a)) {
-							tmpList.add(a);
-						}
-					}
-				}
-				
-				//Listing seller's ended articles
-				if(sellEnded != null && sellEnded.equals("c")) {
-					requestList = am.getArticlesOfSellerByState(userId, "ended");
-					for(Article a : requestList) {
-						if(!tmpList.contains(a)) {
-							tmpList.add(a);
-						}
-					}
-				}
-			}
 			
 			//Filter by name
 			if(!contains.equals("")) {
