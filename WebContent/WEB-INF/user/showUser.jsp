@@ -22,7 +22,7 @@
 				<h3>Oops... Wrong URL</h3>
 			</c:if>
 			
-			<c:if test="${ user == null }">
+			<c:if test="${ user != null }">
 				<c:if test="${currentUser != null && currentUser.userId == user.userId }">
 					<h1>Mon profil : ${user.userName}</h1>
 				</c:if>
