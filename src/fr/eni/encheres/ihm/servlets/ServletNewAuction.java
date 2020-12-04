@@ -29,7 +29,7 @@ public class ServletNewAuction extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/newAuction.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/auction/newAuction.jsp");
 		rd.forward(request, response);
 	}
 

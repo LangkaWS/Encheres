@@ -5,12 +5,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="../css/style.css">
 <title>ENI-Enchères</title>
 </head>
 <body>
-	<header>
-		<h1>ENI-Enchères</h1>
-	</header>
+
+	<%@include file="WEB-INF/fragments/navbar.jspf" %>
 	
 	<div class="pageTitle">
 		<h1 class="mainTitle">Se connecter</h1>
@@ -23,7 +23,7 @@
 			<tbody>
 				<tr>
 					<td class="tableLabel">
-						<label for="emailInput">Email ou pseudo: </label>
+						<label for="emailInput">Email ou pseudo : </label>
 					</td>
 					<td class="tableLabel">
 						<input type="text" id="emailInput" name="loginInput" value="${loginInput}"/> <br />

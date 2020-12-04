@@ -33,12 +33,4 @@
     <servlet-name>signUp</servlet-name>
     <url-pattern>/signUp</url-pattern>
   </servlet-mapping>
-  <servlet>
-    <servlet-name>showUser</servlet-name>
-    <jsp-file>/showUser.jsp</jsp-file>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>showUser</servlet-name>
-    <url-pattern>/users/*</url-pattern>
-  </servlet-mapping>
 </web-app>

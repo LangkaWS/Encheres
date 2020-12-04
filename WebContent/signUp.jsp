@@ -8,9 +8,8 @@
 <title>ENI-Enchères</title>
 </head>
 <body>
-	<header>
-		<h1>ENI-Enchères</h1>
-	</header>
+
+	<%@include file="WEB-INF/fragments/navbar.jspf" %>
 
 	<h2>Mon profil</h2>
 	

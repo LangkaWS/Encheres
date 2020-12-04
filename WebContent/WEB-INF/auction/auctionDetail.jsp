@@ -12,9 +12,7 @@
 </head>
 <body>
 
-	<header>
-		<h1>ENI-Enchères</h1>
-	</header>
+	<%@include file="../fragments/navbar.jspf" %>
 	
 	<h2>Détail vente</h2>
 	

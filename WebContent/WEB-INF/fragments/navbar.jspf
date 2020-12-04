@@ -1,0 +1,27 @@
+<%@page import="fr.eni.encheres.bll.bo.User"%>
+<% 
+	User currentUser = null;
+	if (session.getAttribute("currentUser") != null) {
+		currentUser = (User) session.getAttribute("currentUser");
+	} 
+%>
+<header>
+
+	<h1 id="logo"><a href=".">ENI-Enchères</a></h1>
+	
+	<% if (session.getAttribute("currentUser") != null) { %>
+		
+		<div id="navbar">
+			<ul>
+				<li class="navbar"><a class="logLink" id="logOutLink" href="<%=request.getContextPath()%>/ServletSignOut">Se déconnecter</a></li>
+				<li class="navbar"><a class="logLink" id="dashBoardLink" href="<%=request.getContextPath()%>/ServletShowUser?userId=<%= currentUser.getUserId() %>">Mon profil</a></li>
+				<li class="navbar"><a class="logLink" id="newAuctionLink" href="<%=request.getContextPath()%>/newAuction">Vendre un article</a></li>
+			</ul>
+		</div>
+		
+	<% } else { %>
+	
+		<a href="signIn" class="logLink">S'inscrire - Se connecter</a>
+	
+	<% }%>
+</header>

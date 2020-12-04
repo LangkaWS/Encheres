@@ -59,7 +59,7 @@ a.button:hover {
 	text-align: center;
 	border-radius: 3px;
 }
-	
+
 .error {
 	background-color: var(--error);
 }
@@ -70,6 +70,22 @@ a.button:hover {
 
 .error:empty, .secondary:empty, .warning:empty {
 	display: none;
+}
+
+/* NAVBAR */
+
+
+ul#navbar {
+	list-style-type: none;
+}
+
+li.navbar {
+	display: inline;
+}
+
+h1 a {
+	text-decoration: none;
+	color: black;
 }
 
 /* WELCOME PAGE */

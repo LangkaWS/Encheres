@@ -9,15 +9,9 @@
 		<link rel="stylesheet" href="css/style.css">
 	</head>
 	<body>
-		<% 
-			User currentUser = null;
-			if (session.getAttribute("currentUser") != null) {
-				currentUser = (User) session.getAttribute("currentUser");
-			} 
-		%>
-		<header>
-			<h1>ENI-Enchères</h1>
-		</header>
+	
+		<%@include file="../fragments/navbar.jspf" %>
+		
 		<div class="userPage"> 
 			<h2>Editer mon profil</h2>
 			
@@ -33,13 +27,13 @@
 							<label for="userNameInput">Pseudo : </label>
 						</td>
 						<td class="tableInput">
-							<input type="text" id="userNameInput" name="userNameInput" placeholder="<%= currentUser.getUserName() %>" value="${userName}" />
+							<input type="text" id="userNameInput" name="userNameInput" value="<%= currentUser.getUserName() %>" />
 						</td>
 						<td class="tableLabel">
 							<label for="lastNameInput">Nom : </label>
 						</td>
 						<td class="tableInput">
-							<input type="text" id="lastNameInput" name="lastNameInput" placeholder="<%= currentUser.getLastName() %>" value="${lastName}" />
+							<input type="text" id="lastNameInput" name="lastNameInput" value="<%= currentUser.getLastName() %>" />
 						</td>
 					</tr>
 					
@@ -48,13 +42,13 @@
 							<label for="firstNameInput">Prénom : </label>
 						</td>
 						<td class="tableInput">
-							<input type="text" id="firstNameInput" name="firstNameInput" placeholder="<%= currentUser.getFirstName() %>" value="${firstName}" />
+							<input type="text" id="firstNameInput" name="firstNameInput" value="<%= currentUser.getFirstName() %>" />
 						</td>
 						<td class="tableLabel">
 							<label for="emailInput">Email : </label>
 						</td>
 						<td class="tableInput">
-							<input type="email" id="emailInput" name="emailInput" placeholder="<%= currentUser.getEmail() %>" value="${email}" />
+							<input type="email" id="emailInput" name="emailInput" value="<%= currentUser.getEmail() %>" />
 						</td>
 					</tr>
 					
@@ -63,13 +57,13 @@
 							<label for="phoneInput">Téléphone : </label>
 						</td>
 						<td class="tableInput">
-							<input type="tel" id="phoneInput" name="phoneInput" pattern="[0-9]{10}" placeholder="<%= currentUser.getPhone() %>" value="${phone}"/>
+							<input type="tel" id="phoneInput" name="phoneInput" pattern="[0-9]{10}" value="<%= currentUser.getPhone() %>"/>
 						</td>
 						<td class="tableLabel">
 							<label for="streetInput">Rue : </label>
 						</td>
 						<td class="tableInput">
-							<input type="text" id="streetInput" name="streetInput" placeholder="<%= currentUser.getStreet() %>" value="${street}" />
+							<input type="text" id="streetInput" name="streetInput" value="<%= currentUser.getStreet() %>" />
 						</td>
 					</tr>
 					
@@ -78,13 +72,13 @@
 							<label for="zipCodeInput">Code postal : </label>
 						</td>
 						<td class="tableInput">
-							<input type="text" id="zipCodeInput" name="zipCodeInput" placeholder="<%= currentUser.getZipCode() %>" pattern="[0-9]{5}" value="${zipCode}" />
+							<input type="text" id="zipCodeInput" name="zipCodeInput" pattern="[0-9]{5}" value="<%= currentUser.getZipCode() %>" />
 						</td>
 						<td class="tableLabel">
 							<label for="townInput">Ville : </label>
 						</td>
 						<td class="tableInput">
-							<input type="text" id="townInput" name="townInput" placeholder="<%= currentUser.getTown() %>" value="${town}" />
+							<input type="text" id="townInput" name="townInput" value="<%= currentUser.getTown() %>" />
 						</td>
 					</tr>
 					

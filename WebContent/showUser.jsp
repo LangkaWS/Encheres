@@ -9,63 +9,64 @@
 		<title>Profil utilisateur</title>
 	</head>
 	<body>
-		<header>
-			<h1>ENI-Enchères</h1>
-		</header>
+	
+		<%@include file="WEB-INF/fragments/navbar.jspf" %>
+
 		<div class="userPage">
 			<div class="banniere warning">${warning}</div>
 			<div class="banniere secondary">${info}</div>
 			<% User u = (User) request.getAttribute("user"); %>
-			<% 
-				User currentUser = null;
-				if (session.getAttribute("currentUser") != null) {
-					currentUser = (User) session.getAttribute("currentUser");
-				} 
-			%>
-			<% if(currentUser != null && currentUser.getUserId() == u.getUserId()) { %>
-				<h1>Mon profil : <%= u.getUserName() %></h1>
+
+			<% if(u == null) { %>
+				<h3>Oops... Wrong URL</h3>
 			<% } else { %>
-				<h1>Profil de <%= u.getUserName() %> </h1>
-			<% } %>
-			<div id="tableShowUser">
-				<table>
-					<tr>
-						<td>Nom :</td>
-						<td><%= u.getLastName() %></td>
-					</tr>
-					<tr>
-						<td>Prénom :</td>
-						<td><%= u.getFirstName() %></td>
-					</tr>
-					<tr>
-						<td>Email :</td>
-						<td><%= u.getEmail() %></td>
-					</tr>
-					<tr>
-						<td>Numéro de téléphone :</td>
-						<td><%= u.getPhone() %></td>
-					</tr>
-					<tr>
-						<td>Adresse :</td>
-						<td><%= u.getStreet() %></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td><%= u.getZipCode() %></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td><%= u.getTown() %></td>
-					</tr>
-				</table>
-			</div>
-			<% if(currentUser != null && currentUser.getUserId() == u.getUserId()) { %>
-				<div class="userOwnerButton">
-					<a class="formButton submitButton button" href="<%=request.getContextPath()%>/ServletEditUser">Modifier mes informations</a>
+
+				<% if(currentUser != null && currentUser.getUserId() == u.getUserId()) { %>
+					<h1>Mon profil : <%= u.getUserName() %></h1>
+				<% } else { %>
+					<h1>Profil de <%= u.getUserName() %> </h1>
+				<% } %>
+				
+				<div id="tableShowUser">
+					<table>
+						<tr>
+							<td>Nom :</td>
+							<td><%= u.getLastName() %></td>
+						</tr>
+						<tr>
+							<td>Prénom :</td>
+							<td><%= u.getFirstName() %></td>
+						</tr>
+						<tr>
+							<td>Email :</td>
+							<td><%= u.getEmail() %></td>
+						</tr>
+						<tr>
+							<td>Numéro de téléphone :</td>
+							<td><%= u.getPhone() %></td>
+						</tr>
+						<tr>
+							<td>Adresse :</td>
+							<td><%= u.getStreet() %></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td><%= u.getZipCode() %></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td><%= u.getTown() %></td>
+						</tr>
+					</table>
 				</div>
-				<div class="userOwnerButton">
-					<a class="formButton dangerButton button" href="<%=request.getContextPath()%>/ServletDeleteUser"  onclick="if (! confirm('Are you sure ?')) { return false; }">Supprimer mon compte</a>
-				</div>
+				<% if(currentUser != null && currentUser.getUserId() == u.getUserId()) { %>
+					<div class="userOwnerButton">
+						<a class="formButton submitButton button" href="<%=request.getContextPath()%>/ServletEditUser">Modifier mes informations</a>
+					</div>
+					<div class="userOwnerButton">
+						<a class="formButton dangerButton button" href="<%=request.getContextPath()%>/ServletDeleteUser"  onclick="if (! confirm('Are you sure ?')) { return false; }">Supprimer mon compte</a>
+					</div>
+				<% } %>
 			<% } %>
 			<button class="formButton cancelButton" onclick="location.href='.'">Retour</button>
 		</div>
