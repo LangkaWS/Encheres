@@ -36,7 +36,7 @@ public class ServletShowUser extends HttpServlet {
 		try {
 			User u = um.getUser(userId);
 			request.setAttribute("user", u);
-			RequestDispatcher rd = request.getRequestDispatcher("/users/" + userId);
+			RequestDispatcher rd = request.getRequestDispatcher("showUser.jsp");
 			rd.forward(request, response);
 		} catch (BLLException e) {
 			e.printStackTrace();
