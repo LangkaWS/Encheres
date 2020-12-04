@@ -6,11 +6,8 @@
 	} 
 %>
 <header>
-	<% if (session.getAttribute("currentUser") != null) { %>
-		<h1 id="logo"><a href=".">ENI-Enchères</a></h1>
-	<% } else { %>
-		<h1 id="logo">ENI-Enchères</h1>
-	<% } %>
+
+	<h1 id="logo"><a href=".">ENI-Enchères</a></h1>
 	
 	<% if (session.getAttribute("currentUser") != null) { %>
 		
