@@ -60,7 +60,7 @@ public class ServletArticleDetail extends HttpServlet {
 		request.setAttribute("seller", seller.getUserName());
 		request.setAttribute("buyer", buyer == null ? "noBuyer" : buyer.getUserName());
 		
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/auctionDetail.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/auction/auctionDetail.jsp");
 		rd.forward(request, response);
 	}
 

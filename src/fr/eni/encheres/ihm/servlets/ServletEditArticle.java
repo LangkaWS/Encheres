@@ -67,7 +67,7 @@ public class ServletEditArticle extends HttpServlet {
 			} else {
 				request.setAttribute("art", art);
 				
-				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/editAuction.jsp");
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/auction/editAuction.jsp");
 				rd.forward(request, response);
 			}
 		}
