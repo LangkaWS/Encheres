@@ -34,8 +34,7 @@ public class ServletSignUp extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		HttpSession session = request.getSession();
+
 		request.setCharacterEncoding("UTF-8");
 		
 		String userName = request.getParameter("userNameInput");
@@ -49,8 +48,6 @@ public class ServletSignUp extends HttpServlet {
 		String password = request.getParameter("passwordInput");
 		String confirmPassword = request.getParameter("confirmPasswordInput");
 		
-
-		
 		User newUser = new User(userName, lastName, firstName, email, phone, street, zipCode, town, password);
 		
 		System.out.println(newUser.toString());
@@ -63,7 +60,7 @@ public class ServletSignUp extends HttpServlet {
 			}
 			um.addUser(newUser);
 			System.out.println(newUser.toString());
-			session.setAttribute("currentUser", newUser);
+			request.getSession().setAttribute("currentUser", newUser);
 			RequestDispatcher rd = request.getRequestDispatcher("/index");
 			rd.forward(request, response);
 		} catch (BLLException | IHMException e) {

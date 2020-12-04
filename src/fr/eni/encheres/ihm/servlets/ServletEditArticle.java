@@ -32,9 +32,7 @@ public class ServletEditArticle extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		
-		User currentUser = (User) session.getAttribute("currentUser");
+		User currentUser = (User) request.getSession().getAttribute("currentUser");
 		
 		if (request.getParameter("id") == null) {
 			request.setAttribute("warning", "Article not found.");

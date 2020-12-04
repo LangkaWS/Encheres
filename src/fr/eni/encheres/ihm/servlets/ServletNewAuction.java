@@ -71,7 +71,7 @@ public class ServletNewAuction extends HttpServlet {
 			request.setAttribute("art", article);
 			request.setAttribute("pickUp", pickUp);
 			
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/newAuction.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/auction/newAuction.jsp");
 			rd.forward(request, response);
 		}
 		

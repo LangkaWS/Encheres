@@ -26,8 +26,7 @@ public class ServletDeleteUser extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		User currentUser = (User) session.getAttribute("currentUser");
+		User currentUser = (User) request.getSession().getAttribute("currentUser");
 		if (currentUser == null) {
 			request.setAttribute("exception", "You have to be logged in if you want to access this page.");
 			RequestDispatcher rd = request.getRequestDispatcher("/signIn.jsp");
