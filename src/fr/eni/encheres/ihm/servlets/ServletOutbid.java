@@ -42,7 +42,7 @@ public class ServletOutbid extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		response.sendRedirect(request.getContextPath() + "/auctionDetail?id=" + articleId);
+		response.sendRedirect(request.getContextPath() + "/auction?id=" + articleId);
 	}
 
 	/**

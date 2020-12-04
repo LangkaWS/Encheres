@@ -14,7 +14,7 @@
 	
 	<h2>Modifier une vente</h2>
 	
-	<form method="POST" action="<%=request.getContextPath()%>/edit/auctionDetail?id=${art.articleId}">
+	<form method="POST" action="<%=request.getContextPath()%>/edit/auction?id=${art.articleId}">
 	
 		<label for="articleName">Article : </label>
 		<input type="text" id="articleName" name="articleName" value="${art.name}" required />
@@ -66,7 +66,7 @@
 		</fieldset>
 		
 		<input type="submit" value="Enregistrer" class="formButton submitButton" />
-		<button class="formButton cancelButton" onclick="location.href='<%=request.getContextPath()%>/auctionDetail?id=${art.articleId}'">Annuler</button>	
+		<button class="formButton cancelButton" onclick="location.href='<%=request.getContextPath()%>/auction?id=${art.articleId}'">Annuler</button>	
 	</form>
 	
 

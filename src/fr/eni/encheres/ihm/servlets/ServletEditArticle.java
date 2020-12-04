@@ -20,7 +20,7 @@ import fr.eni.encheres.bll.bo.User;
 /**
  * Servlet implementation class ServletEditArticle
  */
-@WebServlet("/edit/auctionDetail")
+@WebServlet("/edit/auction")
 public class ServletEditArticle extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
@@ -46,25 +46,24 @@ public class ServletEditArticle extends HttpServlet {
 			
 			try {
 				art = am.getArticleById(articleId);
+				if (currentUser == null) {
+					request.setAttribute("exception", "Access denied, you're not logged in.");
+					
+					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/user/signIn.jsp");
+					rd.forward(request, response);
+				} else if (currentUser.getUserId() != art.getSellerId()) {
+					request.setAttribute("warning", "Access denied, you're not the owner of the article.");
+					
+					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/index.jsp");
+					rd.forward(request, response);
+				} else {
+					request.setAttribute("art", art);
+					
+					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/auction/editAuction.jsp");
+					rd.forward(request, response);
+				}
 			} catch (BLLException e) {
 				e.printStackTrace();
-			}
-			
-			if (currentUser == null) {
-				request.setAttribute("exception", "Access denied, you're not logged in.");
-				
-				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/user/signIn.jsp");
-				rd.forward(request, response);
-			} else if (currentUser.getUserId() != art.getSellerId()) {
-				request.setAttribute("warning", "Access denied, you're not the owner of the article.");
-				
-				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/index.jsp");
-				rd.forward(request, response);
-			} else {
-				request.setAttribute("art", art);
-				
-				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/auction/editAuction.jsp");
-				rd.forward(request, response);
 			}
 		}
 	}
@@ -102,7 +101,7 @@ public class ServletEditArticle extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		response.sendRedirect(request.getContextPath() + "/auctionDetail?id=" + articleId);
+		response.sendRedirect(request.getContextPath() + "/auction?id=" + articleId);
 		
 	}
 

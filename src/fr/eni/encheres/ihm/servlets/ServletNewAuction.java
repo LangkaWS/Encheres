@@ -64,7 +64,7 @@ public class ServletNewAuction extends HttpServlet {
 			article.setPickUpId(pickUp.getPickUpId());
 			am.addArticle(article);
 			
-			response.sendRedirect(request.getContextPath() + "/auctionDetail?id=" + article.getArticleId());
+			response.sendRedirect(request.getContextPath() + "/auction?id=" + article.getArticleId());
 		} catch (BLLException e) {
 			e.printStackTrace();
 			
