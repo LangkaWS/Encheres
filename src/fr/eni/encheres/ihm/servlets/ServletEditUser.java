@@ -29,7 +29,6 @@ public class ServletEditUser extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		if (request.getSession().getAttribute("currentUser") == null) {
 			request.setAttribute("exception", "Vous devez être connecté pour accéder à cette page.");
 			
@@ -67,30 +66,6 @@ public class ServletEditUser extends HttpServlet {
 		int credit = currentUser.getCredit();
 		boolean admin = currentUser.isAdmin();
 		
-		if (userName.equals("")) {
-			userName = currentUser.getUserName();
-		}
-		if (lastName.equals("")) {
-			lastName = currentUser.getLastName();
-		}
-		if (firstName.equals("")) {
-			firstName = currentUser.getFirstName();
-		}
-		if (email.equals("")) {
-			email = currentUser.getEmail();
-		}
-		if (phone.equals("")) {
-			phone = currentUser.getPhone();
-		}
-		if (street.equals("")) {
-			street = currentUser.getStreet();
-		}
-		if (zipCode.equals("")) {
-			zipCode = currentUser.getZipCode();
-		}
-		if (town.equals("")) {
-			town = currentUser.getTown();
-		}
 		if (newPassword.equals(confirmPassword) && newPassword.equals("")) {
 			newPassword = currentUser.getPassword();
 			confirmPassword = currentUser.getPassword();
@@ -129,5 +104,4 @@ public class ServletEditUser extends HttpServlet {
 			rd.forward(request, response);
 		} 
 	}
-
 }
