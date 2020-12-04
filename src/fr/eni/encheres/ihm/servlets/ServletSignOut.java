@@ -21,6 +21,7 @@ public class ServletSignOut extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.getSession().invalidate();
+		
 		RequestDispatcher rd = request.getRequestDispatcher("/index");
 		rd.forward(request, response);
 	}
