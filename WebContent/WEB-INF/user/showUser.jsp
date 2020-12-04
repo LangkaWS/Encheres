@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -16,18 +17,19 @@
 		<div class="userPage">
 			<div class="banner warning">${warning}</div>
 			<div class="banner secondary">${info}</div>
-			<% User u = (User) request.getAttribute("user"); %>
-
-			<% if(u == null) { %>
+			
+			<c:if test="${ user == null }">
 				<h3>Oops... Wrong URL</h3>
-			<% } else { %>
-
-				<% if(currentUser != null && currentUser.getUserId() == u.getUserId()) { %>
+			</c:if>
+			
+			<c:if test="${ user == null }">
+				<c:if test="${currentUser != null && currentUser.userId == user.userId }">
 					<h1>Mon profil : ${user.userName}</h1>
-				<% } else { %>
+				</c:if>
+				<c:if test="${currentUser == null || currentUser.userId != user.userId }">
 					<h1>Profil de ${user.userName} </h1>
-				<% } %>
-				
+				</c:if>
+			
 				<div id="tableShowUser">
 					<table>
 						<tr>
@@ -60,15 +62,15 @@
 						</tr>
 					</table>
 				</div>
-				<% if(currentUser != null && currentUser.getUserId() == u.getUserId()) { %>
+				<c:if test="${currentUser != null && currentUser.userId == user.userId }">
 					<div class="userOwnerButton">
 						<a class="formButton submitButton button" href="${contextPath}/edit/user">Modifier mes informations</a>
 					</div>
 					<div class="userOwnerButton">
 						<a class="formButton dangerButton button" href="${contextPath}/delete/user?val=ok"  onclick="if (! confirm('Are you sure ?')) { return false; }">Supprimer mon compte</a>
 					</div>
-				<% } %>
-			<% } %>
+				</c:if>
+			</c:if>
 			<button class="formButton cancelButton" onclick="location.href='.'">Retour</button>
 		</div>
 	</body>
