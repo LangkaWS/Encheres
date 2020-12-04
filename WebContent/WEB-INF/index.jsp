@@ -11,12 +11,6 @@
 </head>
 <body>
 
-<p>Hello there !</p>
-<p>It's a me, Mario !</p>
-	<p>Hello there !</p>
-
-	<p>Hello</p>
-
 	<%@include file="/WEB-INF/fragments/navbar.jspf" %>
 	
 	<div class="banner secondary">${info}</div>
@@ -49,27 +43,27 @@
 			</div>
 			<div id="searchParamsConnected">
 				<div id="buyFilterParams"class="connectedParams" >
-					<input type="radio" id="listBuy" name="filterBuyOrSell" value="buy" checked />
-					<label for="listBuy">Achats</label>
+					<input type="radio" id="listBuy" name="filterBuyOrSell" value="buy" onclick="toggleBuyButtons()" />
+					<label for="listBuy" onclick="toggleBuyButtons()">Achats</label>
 					<div id="buyFilterCheckbox"class="connectedParams" >
-						<input type="checkbox" id="buyInProgressAuctions" name="buyInProgressAuctions" value="c" checked />
-						<label for="buyInProgressAuctions">enchères ouvertes</label>
+						<input type="checkbox" id="buyInProgressAuctions" name="buyInProgressAuctions" value="c" />
+						<label for="buyInProgressAuctions" class="buyFilterLabel">enchères ouvertes</label>
 						<input type="checkbox" id="buyParticipatingInProgressAuctions" name="buyParticipatingInProgressAuctions" value="c" />
-						<label for="buyParticipatingInProgressAuctions">mes enchères en cours</label>
+						<label for="buyParticipatingInProgressAuctions" class="buyFilterLabel">mes enchères en cours</label>
 						<input type="checkbox" id="buyParticipatingEnded" name="buyParticipatingEnded" value="c" />
-						<label for="buyParticipatingEnded">mes enchères remportées</label>
+						<label for="buyParticipatingEnded" class="buyFilterLabel">mes enchères remportées</label>
 					</div>
 				</div>
 				<div id="sellFilterParams"class="connectedParams" >
-					<input type="radio" id="listSell" name="filterBuyOrSell" value="sell" />
-					<label for="listSell">Mes ventes</label>
+					<input type="radio" id="listSell" name="filterBuyOrSell" value="sell" onclick="toggleSellButtons()" />
+					<label for="listSell" onclick="toggleSellButtons()">Mes ventes</label>
 					<div id="sellFilterCheckbox"class="connectedParams" >
 						<input type="checkbox" id="sellInProgress" name="sellInProgress" value="c" />
-						<label for="sellInProgress">mes ventes en cours</label>
+						<label for="sellInProgress" class="sellFilterLabel">mes ventes en cours</label>
 						<input type="checkbox" id="sellCreated" name="sellCreated" value="c" />
-						<label for="sellCreated">ventes non débutées</label>
+						<label for="sellCreated" class="sellFilterLabel">ventes non débutées</label>
 						<input type="checkbox" id="sellEnded" name="sellEnded" value="c" />
-						<label for="sellEnded">ventes terminées</label>
+						<label for="sellEnded" class="sellFilterLabel">ventes terminées</label>
 					</div>
 				</div>
 			</div>
@@ -90,19 +84,62 @@
 	</div>
 	
 	<script type="text/javascript">
+	window.onload = toggleVisibility();
 	
-	window.onload = toggleVisibility;
+	function toggleBuyButtons() {
+		enableLabel("buyFilterLabel");
+		enableCheckbox("buyInProgressAuctions");
+		enableCheckbox("buyParticipatingInProgressAuctions");
+		enableCheckbox("buyParticipatingEnded");
+		
+		disableLabel("sellFilterLabel");
+		disableCheckbox("sellInProgress");
+		disableCheckbox("sellCreated");
+		disableCheckbox("sellEnded");
+	}
+	
+	function toggleSellButtons() {
+		enableLabel("sellFilterLabel");
+		enableCheckbox("sellInProgress");
+		enableCheckbox("sellCreated");
+		enableCheckbox("sellEnded");
+		
+		disableLabel("buyFilterLabel");
+		disableCheckbox("buyInProgressAuctions");
+		disableCheckbox("buyParticipatingInProgressAuctions");
+		disableCheckbox("buyParticipatingEnded");
+	}
+	
+	function disableCheckbox(elementId) {
+		document.getElementById(elementId).checked = false;
+		document.getElementById(elementId).disabled = true;
+	}
+	
+	function enableCheckbox(elementId) {
+		document.getElementById(elementId).disabled = false;
+	}
+	
+	function enableLabel(className) {
+		var list = document.getElementsByClassName(className);
+		for(var i = 0; i < list.length; i++) {
+			list[i].style.color = "black";
+		}
+	}
+	
+	function disableLabel(className) {
+		var list = document.getElementsByClassName(className);
+		for(var i = 0; i < list.length; i++) {
+			list[i].style.color = "gray";
+		}
+	}
 	
 		function toggleVisibility() {
 			var user = "${currentUser.getUserName()}";
 			if(user !== ""){
-				console.log("connected");
 				var c = document.getElementsByClassName("connectedParams");
 				for(i = 0; i < c.length; i++) {
 					c[i].style.display = "block";
 				}
-			} else {
-				console.log("disconnected");
 			}
 		}
 	
