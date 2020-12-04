@@ -16,7 +16,7 @@ import fr.eni.encheres.bll.bo.User;
 /**
  * Servlet implementation class ServletOutbid
  */
-@WebServlet("/ServletOutbid")
+@WebServlet("/outbid")
 public class ServletOutbid extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	

@@ -72,8 +72,7 @@ public class ServletSignIn extends HttpServlet {
 				rd.forward(request, response);
 			}
 		} else {
-			RequestDispatcher rd = request.getRequestDispatcher("/index");
-			rd.forward(request, response);
+			response.sendRedirect("/index");
 		}
 	}
 

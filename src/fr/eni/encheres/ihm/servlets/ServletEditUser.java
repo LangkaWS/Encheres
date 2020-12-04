@@ -19,7 +19,7 @@ import fr.eni.encheres.ihm.IHMException;
 /**
  * Servlet implementation class ServletEditUser
  */
-@WebServlet("/ServletEditUser")
+@WebServlet("/edit/user")
 public class ServletEditUser extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
@@ -85,8 +85,7 @@ public class ServletEditUser extends HttpServlet {
 			request.setAttribute("info", "Your account has been updated.");
 			session.setAttribute("currentUser", editUser);
 			
-			RequestDispatcher rd = request.getRequestDispatcher("/ServletShowUser?userId=" + currentUser.getUserId());
-			rd.forward(request, response);
+			response.sendRedirect(request.getContextPath() + "/user?id=" + currentUser.getUserId());
 		} catch (BLLException | IHMException e) {
 			e.printStackTrace();
 			

@@ -6,7 +6,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Insert title here</title>
-		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="../css/style.css">
 	</head>
 	<body>
 	
@@ -19,7 +19,7 @@
 			
 			<div class="banner error">${exception}</div>
 			
-			<form id="editForm" method="POST" action="<%=request.getContextPath()%>/ServletEditUser">
+			<form id="editForm" method="POST" action="<%=request.getContextPath()%>/edit/user">
 			<table class="signUpInFormTable">
 				<tbody>
 					<tr>
@@ -111,7 +111,7 @@
 					<input type="submit" value="Modifier" class="formButton submitButton" />
 				</div>
 				<div class="submitBox">
-					<button class="formButton cancelButton" onclick="location.href='/Encheres/ServletShowUser?userId=<%= currentUser.getUserId() %>'">Annuler</button>
+					<button class="formButton cancelButton" onclick="location.href='<%=request.getContextPath()%>/user?id=<%= currentUser.getUserId() %>'">Annuler</button>
 				</div>
 			</form>
 		</div>

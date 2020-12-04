@@ -16,7 +16,7 @@ import fr.eni.encheres.bll.bo.User;
 /**
  * Servlet implementation class ServletShowUser
  */
-@WebServlet("/ServletShowUser")
+@WebServlet("/user")
 public class ServletShowUser extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
@@ -26,11 +26,11 @@ public class ServletShowUser extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int userId = 0;
-		if (request.getParameter("userId") == null) {
+		Integer userId = null;
+		if (request.getParameter("id") == null) {
 			userId = (int) request.getAttribute("userId");
 		} else {
-			userId = Integer.parseInt(request.getParameter("userId"));
+			userId = Integer.parseInt(request.getParameter("id"));
 		}
 		try {
 			User u = um.getUser(userId);

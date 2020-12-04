@@ -48,7 +48,7 @@
 	
 	<%if(((Article)request.getAttribute("art")).getState().equals("in progress")) {
 	%>
-		<li>Ma proposition : <form method="POST" action="<%=request.getContextPath()%>/ServletOutbid"><input type="number" name="newBidAmount" min="${art.sellingPrice +1}" value="${art.sellingPrice +1}" /> <button type="submit" name="submitButton" value="${art.articleId}" class="formButton submitButton">Enchérir</button></form></li>
+		<li>Ma proposition : <form method="POST" action="<%=request.getContextPath()%>/outbid"><input type="number" name="newBidAmount" min="${art.sellingPrice +1}" value="${art.sellingPrice +1}" /> <button type="submit" name="submitButton" value="${art.articleId}" class="formButton submitButton">Enchérir</button></form></li>
 		
 	<%} else if(((Article)request.getAttribute("art")).getState().equals("created") && ((Article)request.getAttribute("art")).getSellerId() == ((User) session.getAttribute("currentUser")).getUserId()) {%>
 		<button type="submit" name="editButton" value="${art.articleId}" class="formButton submitButton" onclick="location.href='<%=request.getContextPath()%>/edit/auctionDetail?id=${art.articleId}'">Modifier</button>
