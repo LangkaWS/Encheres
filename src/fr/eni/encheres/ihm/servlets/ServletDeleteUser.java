@@ -61,7 +61,7 @@ public class ServletDeleteUser extends HttpServlet {
 		} catch (BLLException e) {
 			e.printStackTrace();
 			request.setAttribute("warning", "We couldn't delete your account : " + e.getMessage());
-			RequestDispatcher rd = request.getRequestDispatcher("/ServletShowUser?userId=\" + currentUser.getUserId()");
+			RequestDispatcher rd = request.getRequestDispatcher("/ServletShowUser?userId=" + currentUser.getUserId());
 			rd.forward(request, response);
 		}
 		
