@@ -8,7 +8,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import fr.eni.encheres.bll.BLLException;
 import fr.eni.encheres.bll.UserManager;
@@ -36,7 +35,8 @@ public class ServletShowUser extends HttpServlet {
 		try {
 			User u = um.getUser(userId);
 			request.setAttribute("user", u);
-			RequestDispatcher rd = request.getRequestDispatcher("showUser.jsp");
+			
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/user/showUser.jsp");
 			rd.forward(request, response);
 		} catch (BLLException e) {
 			e.printStackTrace();

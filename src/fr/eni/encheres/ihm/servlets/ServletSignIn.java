@@ -19,15 +19,26 @@ import fr.eni.encheres.ihm.IHMException;
 /**
  * Servlet implementation class ServletSignIn
  */
-@WebServlet("/ServletSignIn")
+@WebServlet("/signIn")
 public class ServletSignIn extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
 	private UserManager um = ManagerFactory.getUserManager();
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/user/signIn.jsp");
+		rd.forward(request, response);
+
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String loginInput = request.getParameter("loginInput");
 		String password = request.getParameter("passwordInput");
 		
@@ -52,23 +63,18 @@ public class ServletSignIn extends HttpServlet {
 				}
 			} catch (BLLException | IHMException e) {
 				e.printStackTrace();
+				
 				request.setAttribute("exception", e);
 				request.setAttribute("loginInput", loginInput);
 				request.setAttribute("password", password);
-				RequestDispatcher rd = request.getRequestDispatcher("/signIn.jsp");
+				
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/user/signIn.jsp");
 				rd.forward(request, response);
 			}
 		} else {
 			RequestDispatcher rd = request.getRequestDispatcher("/index");
 			rd.forward(request, response);
 		}
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
 	}
 
 }

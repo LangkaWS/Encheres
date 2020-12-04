@@ -22,14 +22,14 @@ import fr.eni.encheres.bll.bo.Category;
 @WebServlet("/index")
 public class ServletSelectAllActiveAuctions extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	ArticleManager am = new ArticleManager();
+	CategoryManager cm = new CategoryManager();
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		ArticleManager am = new ArticleManager();
-		CategoryManager cm = new CategoryManager();
 		
 		List<Article> artList = null;
 		List<Category> catList = null;
@@ -44,7 +44,7 @@ public class ServletSelectAllActiveAuctions extends HttpServlet {
 		request.setAttribute("artList", artList);
 		this.getServletContext().setAttribute("catList", catList);
 		
-		RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/index.jsp");
 		rd.forward(request, response);
 		
 	}

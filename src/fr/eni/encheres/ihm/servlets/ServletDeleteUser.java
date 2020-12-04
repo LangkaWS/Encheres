@@ -21,16 +21,18 @@ import fr.eni.encheres.bll.bo.User;
 @WebServlet("/ServletDeleteUser")
 public class ServletDeleteUser extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	UserManager um = ManagerFactory.getUserManager();
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		User currentUser = (User) session.getAttribute("currentUser");
+		User currentUser = (User) request.getSession().getAttribute("currentUser");
 		if (currentUser == null) {
 			request.setAttribute("exception", "You have to be logged in if you want to access this page.");
-			RequestDispatcher rd = request.getRequestDispatcher("/signIn.jsp");
+			
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/user/signIn.jsp");
 			rd.forward(request, response);
 		} else {
 			request.setAttribute("userId", currentUser.getUserId());
@@ -44,8 +46,6 @@ public class ServletDeleteUser extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		UserManager um = ManagerFactory.getUserManager();
-		
 		HttpSession session = request.getSession();
 		
 		User currentUser = (User) session.getAttribute("currentUser");
@@ -53,8 +53,10 @@ public class ServletDeleteUser extends HttpServlet {
 		try {
 			um.deleteUser(currentUser.getUserId());
 			session.invalidate();
+			
 			request.setAttribute("info", "Account deleted.");
-			RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
+			
+			RequestDispatcher rd = request.getRequestDispatcher("/index");
 			rd.forward(request, response);
 		} catch (BLLException e) {
 			e.printStackTrace();

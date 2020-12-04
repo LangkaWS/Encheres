@@ -24,6 +24,9 @@ import fr.eni.encheres.bll.bo.User;
 public class ServletNewAuction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
+	PickUpManager pm = new PickUpManager();
+	ArticleManager am = new ArticleManager();
+	
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -56,9 +59,6 @@ public class ServletNewAuction extends HttpServlet {
 		
 		Article article = new Article(articleName, articleDescription, startDate, endDate, articleStartPrice, "created", sellerId, category, 0);
 		
-		PickUpManager pm = new PickUpManager();
-		ArticleManager am = new ArticleManager();
-		
 		try {
 			pm.addPickUp(pickUp);
 			article.setPickUpId(pickUp.getPickUpId());
@@ -71,7 +71,7 @@ public class ServletNewAuction extends HttpServlet {
 			request.setAttribute("art", article);
 			request.setAttribute("pickUp", pickUp);
 			
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/newAuction.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/auction/newAuction.jsp");
 			rd.forward(request, response);
 		}
 		

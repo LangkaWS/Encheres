@@ -22,15 +22,18 @@ import fr.eni.encheres.ihm.IHMException;
 @WebServlet("/ServletEditUser")
 public class ServletEditUser extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	UserManager um = ManagerFactory.getUserManager();
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		if (session.getAttribute("currentUser") == null) {
+		
+		if (request.getSession().getAttribute("currentUser") == null) {
 			request.setAttribute("exception", "Vous devez être connecté pour accéder à cette page.");
-			RequestDispatcher rd = request.getRequestDispatcher("/signIn.jsp");
+			
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/user/signIn.jsp");
 			rd.forward(request, response);
 		} else {
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/user/editUser.jsp");
@@ -42,8 +45,6 @@ public class ServletEditUser extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		UserManager um = ManagerFactory.getUserManager();
 		
 		HttpSession session = request.getSession();
 		
@@ -97,8 +98,6 @@ public class ServletEditUser extends HttpServlet {
 		
 		User editUser = new User(userId, userName, lastName, firstName, email, phone, street, zipCode, town, newPassword, credit, admin);
 		
-		System.out.println(editUser.toString());
-		
 		try {
 			if(!currentPassword.equals(currentUser.getPassword())) {
 				throw new IHMException("IHM Error - The password seems wrong. Please check again.");
@@ -107,13 +106,15 @@ public class ServletEditUser extends HttpServlet {
 				throw new IHMException("IHM Error - The new password does not match confirmation password. Please check again.");
 			}
 			um.updateUser(editUser);
-			System.out.println(editUser.toString());
+			
 			request.setAttribute("info", "Your account has been updated.");
 			session.setAttribute("currentUser", editUser);
+			
 			RequestDispatcher rd = request.getRequestDispatcher("/ServletShowUser?userId=" + currentUser.getUserId());
 			rd.forward(request, response);
 		} catch (BLLException | IHMException e) {
 			e.printStackTrace();
+			
 			request.setAttribute("exception", "An error occured : " + e.getMessage());
 			request.setAttribute("userName", userName);
 			request.setAttribute("lastName", lastName);
@@ -123,6 +124,7 @@ public class ServletEditUser extends HttpServlet {
 			request.setAttribute("street", street);
 			request.setAttribute("zipCode", zipCode);
 			request.setAttribute("town", town);
+			
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/user/editUser.jsp");
 			rd.forward(request, response);
 		} 
