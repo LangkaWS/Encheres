@@ -11,6 +11,8 @@
 </head>
 <body>
 
+<p>Hello there !</p>
+
 	<%@include file="/WEB-INF/fragments/navbar.jspf" %>
 	
 	<div class="banner secondary">${info}</div>
