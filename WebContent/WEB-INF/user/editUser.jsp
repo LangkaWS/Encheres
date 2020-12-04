@@ -10,14 +10,14 @@
 	</head>
 	<body>
 	
-		<%@include file="../fragments/navbar.jspf" %>
+		<%@include file="/WEB-INF/fragments/navbar.jspf" %>
 		
 		<div class="userPage"> 
 			<h2>Editer mon profil</h2>
 			
 			<p>Laissez vides les champs que vous ne souhaitez pas modifier. Renseignez votre mot de passe actuel pour confirmer les changements.</p>
 			
-			<div class="banniere error">${exception}</div>
+			<div class="banner error">${exception}</div>
 			
 			<form id="editForm" method="POST" action="<%=request.getContextPath()%>/ServletEditUser">
 			<table class="signUpInFormTable">
