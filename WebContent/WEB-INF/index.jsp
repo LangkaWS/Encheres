@@ -1,6 +1,7 @@
 <%@page import="fr.eni.encheres.bll.bo.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
@@ -16,15 +17,16 @@
 	<div class="banner secondary">${info}</div>
 	<div class="banner warning">${warning}</div>
 	
-	<% if (session.getAttribute("currentUser") != null) { %>
+	<c:if test="${currentUser != null }">
+
 	
-		<h2>Bienvenue, <%= currentUser.getUserName() %> !</h2>
+		<h2>Bienvenue, ${currentUser.userName} !</h2>
 	
-	<% } else { %>
-	
+	</c:if>
+	<c:if test="${currentUser == null }">
 		<h3>Vous n'êtes pas encore authentifié... Inscrivez-vous ou connectez-vous !</h3>
 	
-	<% }%>
+	</c:if>
 	
 	<h2>Liste des enchères</h2>
 	<form id="searchDiv" method="POST" action="<%=request.getContextPath()%>/filter">
