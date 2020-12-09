@@ -27,13 +27,13 @@
 							<label for="userNameInput">Pseudo : </label>
 						</td>
 						<td class="tableInput">
-							<input type="text" id="userNameInput" name="userNameInput" value="<%= currentUser.getUserName() %>" />
+							<input type="text" id="userNameInput" name="userNameInput" value="${currentUser.userName }" />
 						</td>
 						<td class="tableLabel">
 							<label for="lastNameInput">Nom : </label>
 						</td>
 						<td class="tableInput">
-							<input type="text" id="lastNameInput" name="lastNameInput" value="<%= currentUser.getLastName() %>" />
+							<input type="text" id="lastNameInput" name="lastNameInput" value="${currentUser.lastName }" />
 						</td>
 					</tr>
 					
@@ -42,13 +42,13 @@
 							<label for="firstNameInput">Prénom : </label>
 						</td>
 						<td class="tableInput">
-							<input type="text" id="firstNameInput" name="firstNameInput" value="<%= currentUser.getFirstName() %>" />
+							<input type="text" id="firstNameInput" name="firstNameInput" value="${currentUser.firstName }" />
 						</td>
 						<td class="tableLabel">
 							<label for="emailInput">Email : </label>
 						</td>
 						<td class="tableInput">
-							<input type="email" id="emailInput" name="emailInput" value="<%= currentUser.getEmail() %>" />
+							<input type="email" id="emailInput" name="emailInput" value="${currentUser.email }" />
 						</td>
 					</tr>
 					
@@ -57,13 +57,13 @@
 							<label for="phoneInput">Téléphone : </label>
 						</td>
 						<td class="tableInput">
-							<input type="tel" id="phoneInput" name="phoneInput" pattern="[0-9]{10}" value="<%= currentUser.getPhone() %>"/>
+							<input type="tel" id="phoneInput" name="phoneInput" pattern="[0-9]{10}" value="${currentUser.phone }"/>
 						</td>
 						<td class="tableLabel">
 							<label for="streetInput">Rue : </label>
 						</td>
 						<td class="tableInput">
-							<input type="text" id="streetInput" name="streetInput" value="<%= currentUser.getStreet() %>" />
+							<input type="text" id="streetInput" name="streetInput" value="${currentUser.street }" />
 						</td>
 					</tr>
 					
@@ -72,13 +72,13 @@
 							<label for="zipCodeInput">Code postal : </label>
 						</td>
 						<td class="tableInput">
-							<input type="text" id="zipCodeInput" name="zipCodeInput" pattern="[0-9]{5}" value="<%= currentUser.getZipCode() %>" />
+							<input type="text" id="zipCodeInput" name="zipCodeInput" pattern="[0-9]{5}" value="${currentUser.zipCode }" />
 						</td>
 						<td class="tableLabel">
 							<label for="townInput">Ville : </label>
 						</td>
 						<td class="tableInput">
-							<input type="text" id="townInput" name="townInput" value="<%= currentUser.getTown() %>" />
+							<input type="text" id="townInput" name="townInput" value="${currentUser.town }" />
 						</td>
 					</tr>
 					
@@ -111,7 +111,7 @@
 					<input type="submit" value="Modifier" class="formButton submitButton" />
 				</div>
 				<div class="submitBox">
-					<button class="formButton cancelButton" onclick="location.href='<%=request.getContextPath()%>/user?id=<%= currentUser.getUserId() %>'">Annuler</button>
+					<button class="formButton cancelButton" onclick="location.href='<%=request.getContextPath()%>/user?id=${currentUser.userId }'">Annuler</button>
 				</div>
 			</form>
 		</div>
