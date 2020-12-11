@@ -111,7 +111,7 @@
 					<input type="submit" value="Modifier" class="formButton submitButton" />
 				</div>
 				<div class="submitBox">
-					<button class="formButton cancelButton" onclick="location.href='<%=request.getContextPath()%>/user?id=${currentUser.userId }'">Annuler</button>
+					<button class="formButton cancelButton" onclick="location.href='${pageContext.request.contextPath}/user?id=${currentUser.userId }'">Annuler</button>
 				</div>
 			</form>
 		</div>

@@ -64,10 +64,10 @@
 				</div>
 				<c:if test="${currentUser != null && currentUser.userId == user.userId }">
 					<div class="userOwnerButton">
-						<a class="formButton submitButton button" href="<%=request.getContextPath()%>/edit/user">Modifier mes informations</a>
+						<a class="formButton submitButton button" href="${pageContext.request.contextPath}/edit/user">Modifier mes informations</a>
 					</div>
 					<div class="userOwnerButton">
-						<a class="formButton dangerButton button" href="<%=request.getContextPath()%>/delete/user?val=ok"  onclick="if (! confirm('Are you sure ?')) { return false; }">Supprimer mon compte</a>
+						<a class="formButton dangerButton button" href="${pageContext.request.contextPath}/delete/user?val=ok"  onclick="if (! confirm('Are you sure ?')) { return false; }">Supprimer mon compte</a>
 					</div>
 				</c:if>
 			</c:if>

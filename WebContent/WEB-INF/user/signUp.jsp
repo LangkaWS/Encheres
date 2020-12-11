@@ -16,7 +16,7 @@
 	
 	<div class="banner error">${exception}</div>
 	
-	<form id="signUpForm" method="POST" action="<%=request.getContextPath()%>/signUp">
+	<form id="signUpForm" method="POST" action="${pageContext.request.contextPath}/signUp">
 	<table class="signUpInFormTable">
 		<tbody>
 			<tr>

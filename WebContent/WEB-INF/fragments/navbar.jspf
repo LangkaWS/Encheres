@@ -9,9 +9,9 @@
 		
 		<div id="navbar">
 			<ul>
-				<li class="navbar"><a class="logLink" id="logOutLink" href="<%=request.getContextPath()%>/signOut">Se déconnecter</a></li>
-				<li class="navbar"><a class="logLink" id="dashBoardLink" href="<%=request.getContextPath()%>/user?id=${currentUser.userId}">Mon profil</a></li>
-				<li class="navbar"><a class="logLink" id="newAuctionLink" href="<%=request.getContextPath()%>/newAuction">Vendre un article</a></li>
+				<li class="navbar"><a class="logLink" id="logOutLink" href="${pageContext.request.contextPath}/signOut">Se déconnecter</a></li>
+				<li class="navbar"><a class="logLink" id="dashBoardLink" href="${pageContext.request.contextPath}/user?id=${currentUser.userId}">Mon profil</a></li>
+				<li class="navbar"><a class="logLink" id="newAuctionLink" href="${pageContext.request.contextPath}/newAuction">Vendre un article</a></li>
 			</ul>
 		</div>
 	</c:if>

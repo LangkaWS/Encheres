@@ -77,7 +77,7 @@
 	
 	<div id="articlesDisplayWelcome">
 		<c:forEach var="a" items="${artList}">
-			<div class="articleTile" onclick="location.href='<%=request.getContextPath()%>/auction?id=${a.articleId}'">
+			<div class="articleTile" onclick="location.href='${pageContext.request.contextPath}/auction?id=${a.articleId}'">
 				<p class="articleName">${a.name}</p>
 				<p class="articleDescription">${a.description}</p>
 				<p class="articlePrice">${a.startPrice}</p>
