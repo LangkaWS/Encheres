@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@page import="fr.eni.encheres.bll.bo.User"%>
 <%@page import="fr.eni.encheres.bll.bo.Article"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>

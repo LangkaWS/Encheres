@@ -1,4 +1,5 @@
 <%@page import="fr.eni.encheres.bll.bo.User"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -19,7 +20,7 @@
 			
 			<div class="banner error">${exception}</div>
 			
-			<form id="editForm" method="POST" action="<%=request.getContextPath()%>/edit/user">
+			<form id="editForm" method="POST" action="${pageContext.request.contextPath}/edit/user">
 			<table class="signUpInFormTable">
 				<tbody>
 					<tr>
