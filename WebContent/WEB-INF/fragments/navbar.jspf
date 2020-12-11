@@ -2,11 +2,9 @@
 
 <header>
 
-	<h1 id="logo"><a href=".">ENI-Enchères</a></h1>
+	<h1 id="logo"><a href="/Encheres">ENI-Enchères</a></h1>
 	
 	<c:if test="${currentUser != null}">
-
-		
 		<div id="navbar">
 			<ul>
 				<li class="navbar"><a class="logLink" id="logOutLink" href="${pageContext.request.contextPath}/signOut">Se déconnecter</a></li>
@@ -17,7 +15,7 @@
 	</c:if>
 	
 	<c:if test="${currentUser == null}">
-		<a href="signIn" class="logLink">S'inscrire - Se connecter</a>
+		<a href="${pageContext.request.contextPath}/signIn" class="logLink">S'inscrire - Se connecter</a>
 	</c:if>
 
 </header>
