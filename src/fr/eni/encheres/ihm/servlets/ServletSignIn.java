@@ -29,10 +29,12 @@ public class ServletSignIn extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/user/signIn.jsp");
-		rd.forward(request, response);
-
+		if (request.getSession().getAttribute("currentUser") != null) {
+			response.sendRedirect("/Encheres");
+		} else {
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/user/signIn.jsp");
+			rd.forward(request, response);
+		}
 	}
 
 	/**
