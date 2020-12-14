@@ -158,7 +158,28 @@ public class ServletFilterArticles extends HttpServlet {
 			e.printStackTrace();
 		}
 		
+		
+		
 		request.setAttribute("artList", filteredList);
+		request.setAttribute("buySell", request.getParameter("filterBuyOrSell"));
+		
+		if(request.getParameter("buyInProgressAuctions") != null && request.getParameter("buyInProgressAuctions").equals("c")) {
+			request.setAttribute("f1", "buyInProgressAuctions");
+		} else if(request.getParameter("sellInProgress") != null && request.getParameter("sellInProgress").equals("c")) {
+			request.setAttribute("f1", "sellInProgress");
+		}
+		
+		if(request.getParameter("buyParticipatingInProgressAuctions") != null && request.getParameter("buyParticipatingInProgressAuctions").equals("c")) {
+			request.setAttribute("f2", "buyParticipatingInProgressAuctions");
+		} else if(request.getParameter("sellCreated") != null && request.getParameter("sellCreated").equals("c")) {
+			request.setAttribute("f2", "sellCreated");
+		}
+		
+		if(request.getParameter("buyParticipatingEnded") != null && request.getParameter("buyParticipatingEnded").equals("c")) {
+			request.setAttribute("f3", "buyParticipatingEnded");
+		} else if(request.getParameter("sellEnded") != null && request.getParameter("sellEnded").equals("c")) {
+			request.setAttribute("f3", "sellEnded");
+		}
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/index.jsp");
 		rd.forward(request, response);

@@ -57,6 +57,8 @@ public class ServletSignIn extends HttpServlet {
 					throw new IHMException("IHM Exception - Wrong password.");
 				} else {
 					session.setAttribute("currentUser", user);
+					request.setAttribute("buySell", "buy");
+					request.setAttribute("f1", "buyInProgressAuctions");
 					
 					RequestDispatcher rd = request.getRequestDispatcher("/index");
 					rd.forward(request, response);

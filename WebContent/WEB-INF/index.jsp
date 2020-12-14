@@ -29,7 +29,7 @@
 	</c:if>
 	
 	<h2>Liste des enchères</h2>
-	<form id="searchDiv" method="POST" action="<%=request.getContextPath()%>/filter">
+	<form id="searchDiv" method="GET" action="<%=request.getContextPath()%>/filter">
 		<div id="searchParams">
 			<div id="searchParamsPublic">
 				<label for="filterSearch">Filtres :</label><br />
@@ -43,32 +43,36 @@
 					</c:forEach>
 				</select>
 			</div>
+			
 			<div id="searchParamsConnected">
+			
 				<div id="buyFilterParams"class="connectedParams" >
-					<input type="radio" id="listBuy" name="filterBuyOrSell" value="buy" onclick="toggleBuyButtons()" />
+					<input type="radio" id="listBuy" name="filterBuyOrSell" value="buy" onclick="toggleBuySell('buy')" />
 					<label for="listBuy" onclick="toggleBuyButtons()">Achats</label>
 					<div id="buyFilterCheckbox"class="connectedParams" >
-						<input type="checkbox" id="buyInProgressAuctions" name="buyInProgressAuctions" value="c" />
+						<input type="checkbox" id="buyInProgressAuctions" class="buyBox" name="buyInProgressAuctions" value="c" />
 						<label for="buyInProgressAuctions" class="buyFilterLabel">enchères ouvertes</label>
-						<input type="checkbox" id="buyParticipatingInProgressAuctions" name="buyParticipatingInProgressAuctions" value="c" />
+						<input type="checkbox" id="buyParticipatingInProgressAuctions" class="buyBox" name="buyParticipatingInProgressAuctions" value="c" />
 						<label for="buyParticipatingInProgressAuctions" class="buyFilterLabel">mes enchères en cours</label>
-						<input type="checkbox" id="buyParticipatingEnded" name="buyParticipatingEnded" value="c" />
+						<input type="checkbox" id="buyParticipatingEnded" class="buyBox" name="buyParticipatingEnded" value="c" />
 						<label for="buyParticipatingEnded" class="buyFilterLabel">mes enchères remportées</label>
 					</div>
 				</div>
+				
 				<div id="sellFilterParams"class="connectedParams" >
-					<input type="radio" id="listSell" name="filterBuyOrSell" value="sell" onclick="toggleSellButtons()" />
+					<input type="radio" id="listSell" name="filterBuyOrSell" value="sell" onclick="toggleBuySell('sell')" />
 					<label for="listSell" onclick="toggleSellButtons()">Mes ventes</label>
 					<div id="sellFilterCheckbox"class="connectedParams" >
-						<input type="checkbox" id="sellInProgress" name="sellInProgress" value="c" />
+						<input type="checkbox" id="sellInProgress" class="sellBox" name="sellInProgress" value="c" />
 						<label for="sellInProgress" class="sellFilterLabel">mes ventes en cours</label>
-						<input type="checkbox" id="sellCreated" name="sellCreated" value="c" />
+						<input type="checkbox" id="sellCreated" class="sellBox" name="sellCreated" value="c" />
 						<label for="sellCreated" class="sellFilterLabel">ventes non débutées</label>
-						<input type="checkbox" id="sellEnded" name="sellEnded" value="c" />
+						<input type="checkbox" id="sellEnded" class="sellBox" name="sellEnded" value="c" />
 						<label for="sellEnded" class="sellFilterLabel">ventes terminées</label>
 					</div>
 				</div>
 			</div>
+			
 		</div>
 		<div id="searchButtonDiv">
 			<input type="submit" value="Rechercher" id="searchButton">
@@ -85,6 +89,16 @@
 		</c:forEach>
 	</div>
 	
+	<script>
+		var user = "${currentUser.getUserName()}";
+		var buySell = "${buySell}";
+		var f1 = "${f1}";
+		var f2 = "${f2}";
+		var f3 = "${f3}";
+	</script>
+	<script src="js/main.js"></script>
+	
+	<!--  
 	<script type="text/javascript">
 	window.onload = toggleVisibility();
 	
@@ -146,6 +160,7 @@
 		}
 	
 	</script>
+	-->
 	
 </body>
 </html>
